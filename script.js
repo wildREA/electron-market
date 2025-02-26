@@ -46,7 +46,8 @@ const car1 = {
   
   // Additional Info
   VTEC: true,
-  productionNotes: 'Originally a JDM special; US models were limited (≈4000 units)',
+  productionNotes: "The 1996 Honda Integra Type R DC2 epitomizes Honda’s commitment to performance and precision engineering, featuring the celebrated B18C5 engine that delivers 197 hp and 181 Nm of torque. Developed with a focus on lightweight construction, advanced aerodynamics, and meticulous tuning for enhanced handling, this limited-production model became a cult classic among enthusiasts, embodying the pure “driver’s car” ethos that set new benchmarks for spirited performance in the realm of Japanese sports sedans.",
+  additionalInfo: 'Originally a JDM special; US models were limited (≈4000 units)',
   reviews: [
     'Praised as one of the best front-wheel-drive performance cars',
     'Acclaimed for its engaging, high-revving character and race-inspired handling'
@@ -99,6 +100,7 @@ const car2 = {
   },
   
   // Additional Info
+  productionNotes: 'The 2001 Toyota Corolla, part of the long‑running E110 series, was designed to deliver exceptional reliability and fuel efficiency with its 1.8L 1ZZ‑FE engine producing 125 hp and 125 Nm torque, manufactured across various international facilities to meet diverse market demands and solidify its reputation as one of the world’s most dependable and economical vehicles.',
   additionalInfo: 'The 2001 Toyota Corolla is renowned for its reliability and fuel efficiency, making it an economical and practical choice for daily commuting.',
   reviews: [
     'Praised for its low maintenance costs and enduring reliability.',
@@ -151,6 +153,7 @@ const car3 = {
   },
   
   // Additional Info
+  productionNotes: 'Built on the modern S550 platform, the 2024 Ford Mustang Dark Horse is a limited‑edition performance variant that marries heritage muscle with cutting‑edge technology, featuring a 5.0L V8 Coyote engine that produces 500 hp and 419 Nm torque, alongside track‑oriented enhancements and aerodynamic refinements tailored for enthusiasts seeking a blend of raw power and modern precision.',
   additionalInfo: 'Blending classic muscle car heritage with modern engineering, the 2024 Mustang Dark Horse delivers exhilarating performance and an unmistakably aggressive design.',
   reviews: [
     'Celebrated for its dynamic performance and bold styling.',
@@ -203,6 +206,7 @@ const car4 = {
   },
   
   // Additional Info
+  productionNotes: "The 1998 BMW M3 E46 marks an early phase in BMW’s celebrated M3 lineage, powered by the revered 3.2L DOHC inline‑6 S54 engine delivering 333 hp and 262 Nm torque, and built with meticulous German engineering that blends precision handling and motorsport-inspired design, setting the standard for future performance-oriented models.",
   additionalInfo: 'The BMW M3 E46 is celebrated for its balance between performance and everyday usability, combining raw power with precise handling.',
   reviews: [
     'A timeless performance sedan that delivers thrilling dynamics.',
@@ -256,6 +260,7 @@ const car5 = {
   },
   
   // Additional Info
+  productionNotes: "Debuting in 2022, the Aston Martin Valkyrie is a hypercar that pushes engineering boundaries with its 6.6L V12 engine, enhanced by hybrid electric assistance to deliver an astonishing 1160 hp and 800 Nm torque, all housed within an ultra-light carbon fiber monocoque, making it an exclusive masterpiece developed in collaboration with motorsport experts for unparalleled performance.",
   additionalInfo: 'The Aston Martin Valkyrie is a hypercar developed with Red Bull Racing, pushing the boundaries of aerodynamics and performance for an unparalleled driving experience.',
   reviews: [
     'A masterpiece of engineering and design.',
@@ -308,6 +313,7 @@ const car6 = {
   },
   
   // Additional Info
+  productionNotes: "Introduced by Alpina in 2012, the B3 GT3 transforms the conventional BMW 3 Series into a high‑performance track machine through its 3.0L twin‑turbo inline‑6 engine that delivers 500 hp and 450 Nm torque, enhanced by specialized suspension and aerodynamic upgrades that combine luxurious refinement with aggressive sporting prowess.",
   additionalInfo: 'The Alpina B3 GT3 is a high-performance variant of the BMW 3 Series, engineered for both track and road with exceptional handling and aggressive styling.',
   reviews: [
     'Praised for its blend of luxury and track-ready performance.',
@@ -361,6 +367,7 @@ const car7 = {
   },
   
   // Additional Info
+  productionNotes: "The 1999 Nissan Skyline R34 GTR, celebrated for its iconic status, is powered by the legendary 2.6L twin‑turbo RB26DETT engine that churns out 320 hp and 289 Nm torque, built with advanced electronics and aerodynamic design elements that have made it a revered model among collectors and performance enthusiasts across the globe.",
   additionalInfo: 'The Nissan Skyline R34 GTR V-spec is a legendary sports car known for its advanced engineering and exhilarating performance, making it a favorite among enthusiasts.',
   reviews: [
     'Celebrated for its rally heritage and technological innovation.',
@@ -413,6 +420,7 @@ const car8 = {
   },
   
   // Additional Info
+  productionNotes: "Part of the mature W204 generation, the 2013 Mercedes-Benz AMG C63 boasts a 4.0L V8 Biturbo engine producing 451 hp and 443 Nm torque, embodying a perfect fusion of luxury and performance through precise German engineering, dynamic handling, and distinctive AMG styling that caters to drivers seeking both daily comfort and high‑octane excitement.",
   additionalInfo: 'The Mercedes Benz AMG C63 blends luxury with high performance, featuring a powerful V8 engine and refined driving dynamics for an exhilarating experience.',
   reviews: [
     'Acclaimed for its potent engine and sophisticated design.',
@@ -466,6 +474,7 @@ const car9 = {
   },
   
   // Additional Info
+  productionNotes: "The 2016 Ferrari 488 GTB redefined mid‑engine supercar performance with its 3.9L twin‑turbo V8 engine, producing 661 hp and 561 Nm torque, all integrated with a DCT transmission and a chassis derived from the iconic Fiorano track car, offering a harmonious blend of cutting‑edge aerodynamics, Italian craftsmanship, and exclusive design that underscores Ferrari’s racing heritage.",
   additionalInfo: 'The Ferrari 488 GTB DCT is a masterpiece of Italian engineering, offering blistering performance and exquisite design that defines the modern supercar experience.',
   reviews: [
     'A benchmark in supercar performance and design.',
@@ -519,6 +528,7 @@ const car10 = {
   },
   
   // Additional Info
+  productionNotes: "As the progenitor of BMW’s illustrious M3 series, the 1986 E30 M3 is celebrated for its agile 2.3L DOHC inline‑4 S14 engine that produces 192 hp and 170 Nm torque, crafted with a focus on lightweight construction and motorsport‑inspired precision, which laid the foundation for the performance ethos that continues to define the M3 legacy.",
   additionalInfo: 'The 1986 BMW M3 marks the iconic beginning of BMW\'s M division, delivering raw performance and timeless design that has set benchmarks for performance sedans.',
   reviews: [
     'Celebrated for its agile handling and classic design.',
@@ -571,6 +581,7 @@ const car11 = {
   },
   
   // Additional Info
+  productionNotes: "The 2006 Opel Vectra C Z02, a sportier variant of the mainstream Vectra, features a 2.0L inline‑4 engine (Z20NET) delivering 138 hp and 200 Nm torque, paired with performance‑oriented tuning and enhanced suspension, positioning it as a dynamic alternative that combines everyday practicality with a spirited driving experience for the European market.",
   additionalInfo: 'The Opel Vectra C Z02 is a reliable sedan offering a balanced mix of performance and everyday practicality, ideal for daily commuting.',
   reviews: [
     'Noted for its solid performance in everyday driving.',
@@ -623,6 +634,7 @@ const car12 = {
   },
   
   // Additional Info
+  productionNotes: "Enhancing the Vectra C’s appeal, the 2006 Opel Vectra OPC takes performance to the next level with a turbocharged 2.0L inline‑4 engine (Z20NET OPC) that produces 200 hp and 250 Nm torque, complemented by aggressive chassis and suspension upgrades, making it a limited-edition, performance‑focused sedan for those seeking a premium and dynamic driving experience.",
   additionalInfo: 'The Opel Vectra C OPC elevates the standard Vectra with a turbocharged engine and sport-tuned dynamics, offering an exhilarating driving experience without sacrificing everyday usability.',
   reviews: [
     'Praised for its dynamic performance and agile handling.',
@@ -676,6 +688,7 @@ const car13 = {
   },
   
   // Additional Info
+  productionNotes: "Hailing from the S197 generation, the 2005 Ford Mustang GT Coupe blends classic American muscle with modern engineering through its robust 4.6L V8 engine delivering 300 hp and 320 Nm torque, designed to offer an accessible yet exhilarating performance while maintaining the iconic styling and heritage that has made the Mustang a perennial favorite.",
   additionalInfo: 'The 2005 Ford Mustang GT Coupé offers classic American muscle with a robust V8 engine and distinctive styling that blends performance with everyday usability.',
   reviews: [
     'Celebrated for its raw power and iconic design.',
@@ -729,6 +742,7 @@ const car14 = {
   },
   
   // Additional Info
+  productionNotes: "Produced in limited numbers from 1987 to 1992 to commemorate Ferrari’s 40th anniversary, the F40 is an engineering icon featuring a 2.9L twin‑turbo V8 engine that generates 471 hp and 426 Nm torque, coupled with a revolutionary carbon‑Kevlar composite chassis that reduced weight and enhanced rigidity, establishing it as one of the most legendary supercars in automotive history.",
   additionalInfo: 'The Ferrari F40 is an automotive legend, renowned for its raw performance, minimalist design, and status as one of the last true analog supercars.',
   reviews: [
     'A masterpiece of automotive engineering and raw performance.',
@@ -781,6 +795,7 @@ const car15 = {
   },
   
   // Additional Info
+  productionNotes: "Embodying the zenith of bespoke luxury, the 2025 Rolls‑Royce Phantom is crafted with a 6.75L V12 twin‑turbo engine producing 563 hp and 664 Nm torque, all wrapped in an exquisitely customizable, hand‑crafted architecture that seamlessly blends cutting‑edge power with timeless opulence, designed for a discerning clientele who demand unparalleled refinement and individuality.",
   additionalInfo: 'The Rolls Royce Phantom 2025 redefines automotive luxury with unparalleled craftsmanship, cutting-edge technology, and an exquisitely refined driving experience. Every detail is meticulously designed to ensure supreme comfort and performance.',
   reviews: [
     'An epitome of luxury and sophistication.',
@@ -822,7 +837,7 @@ function selectCar(brand, model, year, price, extraInfo) {
   
   // Display the car details in a SweetAlert modal
   Swal.fire({
-    title: `${brand} ${model}`,
+    title: `${year} ${brand} ${model}`,
     html: detailsHTML,
     confirmButtonText: 'Close'
   });
