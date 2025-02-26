@@ -60,8 +60,8 @@ const car2 = {
   year: 2001,
   price: 3000,
   image: 'images/cars/toyota_corolla_2001.jpg',
-  flag: 'images/flags/japan.jpg',
-  country: 'Japan',
+  flag: 'images/flags/danmark.jpg',
+  country: 'Denmark',
 
   // Engine & Performance
   engine: '1.8L inline-4 (1ZZ-FE)',
@@ -159,77 +159,637 @@ const car3 = {
 };
 
 const car4 = {
-  brand: 'Ford',
-  model: 'Mustang Dark Horse',
-  year: 2024,
-  price: 28000,
-  image: 'images/cars/ford_mustang_dark_horse_2024.jpg',
-  flag: 'images/flags/japan.jpg',
-  country: ''
+  brand: 'BMW',
+  model: 'M3 E46',
+  year: 1998,
+  price: 13500,
+  image: 'images/cars/bmw_m3_e46_1998.jpg',
+  flag: 'images/flags/germany.jpg',
+  country: 'Germany',
+
+  // Engine & Performance
+  engine: '3.2L DOHC inline-6 (S54)',
+  horsepower: 333,            // Approximately 333 hp
+  torque: 262,                // Approximately 262 lb-ft
+  transmission: '6-speed manual',
+  drivetrain: 'RWD',
+  redline: '7800 rpm',
+  acceleration: '0-100 km/h in 5.2s',
+  topSpeed: '250 km/h (155 mph)',
+  weight: '≈1450 kg',
+  powerToWeight: '≈4.4 kg/hp',
+  
+  // Chassis & Suspension
+  platform: 'E46',
+  suspension: 'Double wishbone front, multi-link rear',
+  brakes: {
+    front: 'Ventilated discs (≈350mm)',
+    rear: 'Ventilated discs (≈340mm)'
+  },
+  limitedSlipDiff: true,
+  
+  // Exterior & Aerodynamics
+  bodyStyle: '2-door coupe',
+  aerodynamics: {
+    kit: 'Subtle aerodynamic tweaks with integrated spoiler'
+  },
+  
+  // Interior & Features
+  interior: {
+    seats: 'Sport seats with leather trim',
+    steeringWheel: 'M Sport steering wheel',
+    gearKnob: 'Aluminum shift knob',
+    instrumentation: 'Digital and analog gauges with a sporty cluster'
+  },
+  
+  // Additional Info
+  additionalInfo: 'The BMW M3 E46 is celebrated for its balance between performance and everyday usability, combining raw power with precise handling.',
+  reviews: [
+    'A timeless performance sedan that delivers thrilling dynamics.',
+    'A perfect blend of luxury and sportiness.'
+  ]
 };
 
 const car5 = {
-  brand: 'Ford',
-  model: 'Mustang Dark Horse',
-  year: 2024,
-  price: 28000,
-  image: 'images/cars/ford_mustang_dark_horse_2024.jpg',
-  flag: 'images/flags/japan.jpg',
-  country: ''
+  brand: 'Aston Martin',
+  model: 'Valkyrie',
+  year: 2022,
+  price: 3345000,
+  image: 'images/cars/aston_martin_valkyrie_2022.jpg',
+  flag: 'images/flags/monaco.jpg',
+  country: 'Monaco',
+
+  // Engine & Performance
+  engine: '6.5L V12 with hybrid electric assistance',
+  horsepower: 1160,           // Approximately 1160 hp
+  torque: 800,                // Approximately 800 lb-ft
+  transmission: '7-speed automated manual',
+  drivetrain: 'RWD',
+  redline: '9000 rpm',
+  acceleration: '0-100 km/h in 2.5s',
+  topSpeed: '350 km/h (217 mph)',
+  weight: '≈1240 kg',
+  powerToWeight: '≈1.07 kg/hp',
+  
+  // Chassis & Suspension
+  platform: 'Carbon fiber monocoque',
+  suspension: 'Race-tuned adaptive suspension',
+  brakes: {
+    front: 'Carbon-ceramic discs',
+    rear: 'Carbon-ceramic discs'
+  },
+  limitedSlipDiff: true,
+  
+  // Exterior & Aerodynamics
+  bodyStyle: 'Mid-engine coupe',
+  aerodynamics: {
+    kit: 'Advanced active aerodynamics with extensive carbon fiber elements',
+    liftReduction: 'Minimized lift through aerodynamic design'
+  },
+  
+  // Interior & Features
+  interior: {
+    seats: 'Custom leather and Alcantara sport seats',
+    steeringWheel: 'Race-inspired multifunctional steering wheel',
+    gearKnob: 'Integrated shift paddles',
+    instrumentation: 'Digital display with performance telemetry'
+  },
+  
+  // Additional Info
+  additionalInfo: 'The Aston Martin Valkyrie is a hypercar developed with Red Bull Racing, pushing the boundaries of aerodynamics and performance for an unparalleled driving experience.',
+  reviews: [
+    'A masterpiece of engineering and design.',
+    'A rare blend of track-level performance and cutting-edge technology.'
+  ]
 };
 
 const car6 = {
-  brand: 'Ford',
-  model: 'Mustang Dark Horse',
-  year: 2024,
-  price: 28000,
-  image: 'images/cars/ford_mustang_dark_horse_2024.jpg',
-  flag: 'images/flags/japan.jpg',
-  country: ''
+  brand: 'Alpina',
+  model: 'B3 GT3',
+  year: 2012,
+  price: 80000,
+  image: 'images/cars/alpina_b3_gt3_2012.jpg',
+  flag: 'images/flags/germany.jpg',
+  country: 'Germany',
+
+  // Engine & Performance
+  engine: '3.0L Twin-turbo inline-6',
+  horsepower: 500,            // Approximately 500 hp
+  torque: 450,                // Approximately 450 lb-ft
+  transmission: '6-speed manual',
+  drivetrain: 'RWD',
+  redline: '7500 rpm',
+  acceleration: '0-100 km/h in 4.0s',
+  topSpeed: '290 km/h (180 mph)',
+  weight: '≈1350 kg',
+  powerToWeight: '≈2.7 kg/hp',
+  
+  // Chassis & Suspension
+  platform: 'Based on BMW 3 Series',
+  suspension: 'Race-tuned adaptive suspension',
+  brakes: {
+    front: 'High-performance ventilated discs',
+    rear: 'High-performance ventilated discs'
+  },
+  limitedSlipDiff: true,
+  
+  // Exterior & Aerodynamics
+  bodyStyle: '2-door coupe',
+  aerodynamics: {
+    kit: 'Aggressive GT body kit with enhanced downforce elements'
+  },
+  
+  // Interior & Features
+  interior: {
+    seats: 'Sport seats with premium leather and Alcantara',
+    steeringWheel: 'M Performance steering wheel',
+    gearKnob: 'Aluminum shift knob',
+    instrumentation: 'Analog and digital displays for performance metrics'
+  },
+  
+  // Additional Info
+  additionalInfo: 'The Alpina B3 GT3 is a high-performance variant of the BMW 3 Series, engineered for both track and road with exceptional handling and aggressive styling.',
+  reviews: [
+    'Praised for its blend of luxury and track-ready performance.',
+    'A true performance machine that retains everyday usability.'
+  ]
 };
 
 const car7 = {
-  brand: 'Ford',
-  model: 'Mustang Dark Horse',
-  year: 2024,
-  price: 28000,
-  image: 'images/cars/ford_mustang_dark_horse_2024.jpg',
-  flag: 'images/flags/japan.jpg',
-  country: ''
+  brand: 'Nissan',
+  model: 'Skyline R34 GTR V-spec',
+  year: 1999,
+  price: 110000,
+  image: 'images/cars/nissan_skyline_r34_gtr_v-spec_1999.jpg',
+  flag: 'images/flags/us.jpg',
+  country: 'USA',
+
+  // Engine & Performance
+  engine: '2.6L twin-turbo inline-6 (RB26DETT)',
+  horsepower: 320,            // Approximately 320 hp
+  torque: 289,                // Approximately 289 lb-ft
+  transmission: '6-speed manual',
+  drivetrain: 'AWD',
+  redline: '7500 rpm',
+  acceleration: '0-100 km/h in 4.9s',
+  topSpeed: '250 km/h (155 mph)',
+  weight: '≈1600 kg',
+  powerToWeight: '≈5.0 kg/hp',
+  
+  // Chassis & Suspension
+  platform: 'R34 chassis',
+  suspension: 'Multi-link suspension with performance tuning',
+  brakes: {
+    front: 'Ventilated discs',
+    rear: 'Ventilated discs'
+  },
+  limitedSlipDiff: true,
+  
+  // Exterior & Aerodynamics
+  bodyStyle: '4-door coupe',
+  aerodynamics: {
+    kit: 'Aerodynamic enhancements including front lip and rear spoiler',
+    liftReduction: 'Optimized for high-speed stability'
+  },
+  
+  // Interior & Features
+  interior: {
+    seats: 'Recaro sport seats',
+    steeringWheel: 'Leather-wrapped sport steering wheel',
+    gearKnob: 'Carbon fiber shift knob',
+    instrumentation: 'Digital cluster with performance readouts'
+  },
+  
+  // Additional Info
+  additionalInfo: 'The Nissan Skyline R34 GTR V-spec is a legendary sports car known for its advanced engineering and exhilarating performance, making it a favorite among enthusiasts.',
+  reviews: [
+    'Celebrated for its rally heritage and technological innovation.',
+    'An icon of Japanese performance tuning that continues to captivate fans worldwide.'
+  ]
 };
 
 const car8 = {
-  brand: 'Ford',
-  model: 'Mustang Dark Horse',
-  year: 2024,
-  price: 28000,
-  image: 'images/cars/ford_mustang_dark_horse_2024.jpg',
-  flag: 'images/flags/japan.jpg',
-  country: ''
+  brand: 'Mercedes Benz',
+  model: 'AMG C63',
+  year: 2013,
+  price: 48000,
+  image: 'images/cars/mercedes_benz_amg_c63_2013.jpg',
+  flag: 'images/flags/danmark.jpg',
+  country: 'Denmark',
+
+  // Engine & Performance
+  engine: '4.0L V8 Biturbo',
+  horsepower: 451,            // Approximately 451 hp
+  torque: 443,                // Approximately 443 lb-ft
+  transmission: '7-speed automatic',
+  drivetrain: 'RWD',
+  redline: '7200 rpm',
+  acceleration: '0-100 km/h in 4.2s',
+  topSpeed: '250 km/h (155 mph)',
+  weight: '≈1650 kg',
+  powerToWeight: '≈3.7 kg/hp',
+  
+  // Chassis & Suspension
+  platform: 'W204',
+  suspension: 'Sport-tuned suspension with adaptive dampers',
+  brakes: {
+    front: 'Ventilated discs (≈360mm)',
+    rear: 'Ventilated discs (≈350mm)'
+  },
+  limitedSlipDiff: true,
+  
+  // Exterior & Aerodynamics
+  bodyStyle: '4-door sedan',
+  aerodynamics: {
+    kit: 'Aggressive AMG styling with performance aerodynamic elements'
+  },
+  
+  // Interior & Features
+  interior: {
+    seats: 'Leather sport seats with premium trim',
+    steeringWheel: 'Flat-bottomed AMG steering wheel',
+    gearKnob: 'Sporty shift knob',
+    instrumentation: 'High-resolution digital display with performance stats'
+  },
+  
+  // Additional Info
+  additionalInfo: 'The Mercedes Benz AMG C63 blends luxury with high performance, featuring a powerful V8 engine and refined driving dynamics for an exhilarating experience.',
+  reviews: [
+    'Acclaimed for its potent engine and sophisticated design.',
+    'A benchmark in performance sedans that balances power with comfort.'
+  ]
 };
 
 const car9 = {
-  brand: 'Ford',
-  model: 'Mustang Dark Horse',
-  year: 2024,
-  price: 28000,
-  image: 'images/cars/ford_mustang_dark_horse_2024.jpg',
-  flag: 'images/flags/japan.jpg',
-  country: ''
+  brand: 'Ferrari',
+  model: '488 GTB DCT',
+  year: 2016,
+  price: 159000,
+  image: 'images/cars/ferrari_488_gtb_dct_2016.jpg',
+  flag: 'images/flags/danmark.jpg',
+  country: 'Denmark',
+
+  // Engine & Performance
+  engine: '3.9L twin-turbo V8',
+  horsepower: 661,            // Approximately 661 hp
+  torque: 561,                // Approximately 561 lb-ft
+  transmission: '7-speed dual-clutch transmission',
+  drivetrain: 'RWD',
+  redline: '8300 rpm',
+  acceleration: '0-100 km/h in 3.0s',
+  topSpeed: '330 km/h (205 mph)',
+  weight: '≈1475 kg',
+  powerToWeight: '≈2.23 kg/hp',
+  
+  // Chassis & Suspension
+  platform: 'Fiorano-based chassis',
+  suspension: 'Race-tuned suspension with adaptive dampers',
+  brakes: {
+    front: 'Carbon-ceramic ventilated discs',
+    rear: 'Carbon-ceramic ventilated discs'
+  },
+  limitedSlipDiff: true,
+  
+  // Exterior & Aerodynamics
+  bodyStyle: '2-door coupe',
+  aerodynamics: {
+    kit: 'Active aerodynamics with high-speed stability enhancements',
+    liftReduction: 'Enhanced downforce through integrated spoilers'
+  },
+  
+  // Interior & Features
+  interior: {
+    seats: 'Sport seats with carbon fiber accents',
+    steeringWheel: 'Racing-inspired steering wheel',
+    gearKnob: 'Integrated paddle shifters',
+    instrumentation: 'Digital displays with track-focused metrics'
+  },
+  
+  // Additional Info
+  additionalInfo: 'The Ferrari 488 GTB DCT is a masterpiece of Italian engineering, offering blistering performance and exquisite design that defines the modern supercar experience.',
+  reviews: [
+    'A benchmark in supercar performance and design.',
+    'Praised for its precision engineering and breathtaking speed.'
+  ]
 };
 
 const car10 = {
+  brand: 'BMW',
+  model: 'M3',
+  year: 1986,
+  price: 67000,
+  image: 'images/cars/bmw_m3_coupe_1986.jpg',
+  flag: 'images/flags/danmark.jpg',
+  country: 'Denmark',
+
+  // Engine & Performance
+  engine: '2.3L DOHC inline-4 (S14)',
+  horsepower: 192,            // Approximately 192 hp
+  torque: 170,                // Approximately 170 lb-ft
+  transmission: '5-speed manual',
+  drivetrain: 'RWD',
+  redline: '7000 rpm',
+  acceleration: '0-100 km/h in 6.8s',
+  topSpeed: '240 km/h (149 mph)',
+  weight: '≈1250 kg',
+  powerToWeight: '≈6.5 kg/hp',
+  
+  // Chassis & Suspension
+  platform: 'E30',
+  suspension: 'Sport-tuned suspension with double wishbone front',
+  brakes: {
+    front: 'Ventilated discs',
+    rear: 'Solid discs'
+  },
+  limitedSlipDiff: true,
+  
+  // Exterior & Aerodynamics
+  bodyStyle: '2-door coupe',
+  aerodynamics: {
+    kit: 'Classic M3 design with subtle aerodynamic enhancements',
+    liftReduction: 'Optimized for high-speed stability'
+  },
+  
+  // Interior & Features
+  interior: {
+    seats: 'Sport bucket seats with a classic design',
+    steeringWheel: 'Traditional M3 styled steering wheel',
+    gearKnob: 'Standard shift knob',
+    instrumentation: 'Analog gauges with a performance-focused layout'
+  },
+  
+  // Additional Info
+  additionalInfo: 'The 1986 BMW M3 marks the iconic beginning of BMW\'s M division, delivering raw performance and timeless design that has set benchmarks for performance sedans.',
+  reviews: [
+    'Celebrated for its agile handling and classic design.',
+    'A pioneer that established the legacy of BMW performance cars.'
+  ]
+};
+
+const car11 = {
+  brand: 'Opel',
+  model: 'Vectra C Z02',
+  year: 2006,
+  price: 5000,
+  image: 'images/cars/opel_vectra_c_z02_2006.jpg',
+  flag: 'images/flags/ukraine.jpg',
+  country: 'Ukraine',
+
+  // Engine & Performance
+  engine: '2.0L inline-4 (Z20NET)',
+  horsepower: 138,             // 138 hp
+  torque: 200,                 // Approximately 200 Nm (≈148 lb-ft)
+  transmission: '5-speed manual',
+  drivetrain: 'FWD',
+  redline: '6500 rpm',
+  acceleration: '0-100 km/h in 9.5s',
+  topSpeed: '210 km/h (130 mph)',
+  weight: '≈1300 kg',
+  powerToWeight: '≈9.4 kg/hp',
+  
+  // Chassis & Suspension
+  platform: 'Vectra C',
+  suspension: 'Front MacPherson struts, rear multi-link',
+  brakes: {
+    front: 'Ventilated discs',
+    rear: 'Solid discs'
+  },
+  limitedSlipDiff: false,
+  
+  // Exterior & Aerodynamics
+  bodyStyle: '4-door sedan',
+  aerodynamics: {
+    design: 'Streamlined design with efficient airflow'
+  },
+  
+  // Interior & Features
+  interior: {
+    seats: 'Comfort cloth seats',
+    steeringWheel: 'Tilt-adjustable',
+    gearKnob: 'Standard shift knob',
+    instrumentation: 'Analog gauges with digital clock'
+  },
+  
+  // Additional Info
+  additionalInfo: 'The Opel Vectra C Z02 is a reliable sedan offering a balanced mix of performance and everyday practicality, ideal for daily commuting.',
+  reviews: [
+    'Noted for its solid performance in everyday driving.',
+    'An affordable and dependable sedan with refined handling.'
+  ]
+};
+
+const car12 = {
+  brand: 'Opel',
+  model: 'Vectra C OPC',
+  year: 2006,
+  price: 7500,
+  image: 'images/cars/opel_vectra_c_opc_2006.jpg',
+  flag: 'images/flags/germany.jpg',
+  country: 'Germany',
+
+  // Engine & Performance
+  engine: '2.0L turbocharged inline-4 (Z20NET OPC)',
+  horsepower: 200,             // 200 hp (estimated for OPC)
+  torque: 250,                 // Approximately 250 Nm (≈184 lb-ft)
+  transmission: '6-speed manual',
+  drivetrain: 'FWD',
+  redline: '7000 rpm',
+  acceleration: '0-100 km/h in 8.5s',
+  topSpeed: '230 km/h (143 mph)',
+  weight: '≈1280 kg',
+  powerToWeight: '≈6.4 kg/hp',
+  
+  // Chassis & Suspension
+  platform: 'Vectra C',
+  suspension: 'Sport-tuned with lowered ride height',
+  brakes: {
+    front: 'Upgraded ventilated discs',
+    rear: 'Upgraded ventilated discs'
+  },
+  limitedSlipDiff: true,
+  
+  // Exterior & Aerodynamics
+  bodyStyle: '4-door sedan',
+  aerodynamics: {
+    kit: 'Aggressive body kit with enhanced airflow and reduced lift'
+  },
+  
+  // Interior & Features
+  interior: {
+    seats: 'Recaro sport seats with leather trim',
+    steeringWheel: 'Performance-oriented, leather-wrapped',
+    gearKnob: 'Aluminum shift knob',
+    instrumentation: 'Digital performance display with analog backup'
+  },
+  
+  // Additional Info
+  additionalInfo: 'The Opel Vectra C OPC elevates the standard Vectra with a turbocharged engine and sport-tuned dynamics, offering an exhilarating driving experience without sacrificing everyday usability.',
+  reviews: [
+    'Praised for its dynamic performance and agile handling.',
+    'A perfect blend of practicality and enhanced sporty performance.'
+  ]
+};
+
+const car13 = {
   brand: 'Ford',
-  model: 'Mustang Dark Horse',
-  year: 2024,
-  price: 28000,
-  image: 'images/cars/ford_mustang_dark_horse_2024.jpg',
-  flag: 'images/flags/japan.jpg',
-  country: ''
+  model: 'Mustang GT Coupé',
+  year: 2005,
+  price: 25000,
+  image: 'images/cars/ford_mustang_gt_coupe_2005.jpg',
+  flag: 'images/flags/usa.jpg',
+  country: 'USA',
+
+  // Engine & Performance
+  engine: '4.6L V8',
+  horsepower: 300,             // Approximately 300 hp
+  torque: 320,                 // Approximately 320 lb-ft
+  transmission: '5-speed manual',
+  drivetrain: 'RWD',
+  redline: '6500 rpm',
+  acceleration: '0-100 km/h in 5.3s',
+  topSpeed: '250 km/h (155 mph)',
+  weight: '≈1600 kg',
+  powerToWeight: '≈5.3 kg/hp',
+  
+  // Chassis & Suspension
+  platform: 'S197',
+  suspension: 'Independent front suspension, live rear axle with performance tuning',
+  brakes: {
+    front: 'Ventilated discs (≈350mm)',
+    rear: 'Ventilated discs (≈340mm)'
+  },
+  limitedSlipDiff: true,
+  
+  // Exterior & Aerodynamics
+  bodyStyle: '2-door coupe',
+  aerodynamics: {
+    kit: 'Subtle aerodynamic enhancements with a prominent front grille and rear spoiler',
+    liftReduction: 'Optimized for improved downforce'
+  },
+  
+  // Interior & Features
+  interior: {
+    seats: 'Sport bucket seats with leather trim',
+    steeringWheel: 'Leather-wrapped sport steering wheel',
+    gearKnob: 'Standard shift knob',
+    instrumentation: 'Analog gauges with a central tachometer and digital clock'
+  },
+  
+  // Additional Info
+  additionalInfo: 'The 2005 Ford Mustang GT Coupé offers classic American muscle with a robust V8 engine and distinctive styling that blends performance with everyday usability.',
+  reviews: [
+    'Celebrated for its raw power and iconic design.',
+    'A perfect blend of performance and heritage in a modern package.'
+  ]
+};
+
+const car14 = {
+  brand: 'Ferrari',
+  model: 'F40',
+  year: 1987,
+  price: 1500000,
+  image: 'images/cars/ferrari_f40.jpg',
+  flag: 'images/flags/italy.jpg',
+  country: 'Italy',
+
+  // Engine & Performance
+  engine: '2.9L twin-turbo V8',
+  horsepower: 471,             // Approximately 471 hp
+  torque: 426,                 // Approximately 426 lb-ft
+  transmission: '5-speed manual',
+  drivetrain: 'RWD',
+  redline: '7000 rpm',
+  acceleration: '0-100 km/h in 3.8s',
+  topSpeed: '324 km/h (201 mph)',
+  weight: '≈1100 kg',
+  powerToWeight: '≈2.3 kg/hp',
+  
+  // Chassis & Suspension
+  platform: 'Carbon-kevlar composite chassis',
+  suspension: 'Double wishbone front and rear with race-tuned dampers',
+  brakes: {
+    front: 'Ventilated discs',
+    rear: 'Ventilated discs'
+  },
+  limitedSlipDiff: true,
+  
+  // Exterior & Aerodynamics
+  bodyStyle: '2-door coupe',
+  aerodynamics: {
+    kit: 'Iconic, minimalist bodywork designed for maximum downforce',
+    liftReduction: 'Engineered for extreme aerodynamic efficiency'
+  },
+  
+  // Interior & Features
+  interior: {
+    seats: 'Stripped-down racing seats with minimal amenities',
+    steeringWheel: 'Spartan, functional steering wheel',
+    gearKnob: 'Classic manual gear lever',
+    instrumentation: 'Analog gauges with a central tachometer'
+  },
+  
+  // Additional Info
+  additionalInfo: 'The Ferrari F40 is an automotive legend, renowned for its raw performance, minimalist design, and status as one of the last true analog supercars.',
+  reviews: [
+    'A masterpiece of automotive engineering and raw performance.',
+    'Its iconic design and exhilarating driving experience make it a timeless classic.'
+  ]
+};
+
+const car15 = {
+  brand: 'Rolls Royce',
+  model: 'Phantom',
+  year: 2025,
+  price: 450000,
+  image: 'images/cars/rolls_royce_phantom_2025.jpg',
+  flag: 'images/flags/uk.jpg',
+  country: 'United Kingdom',
+
+  // Engine & Performance
+  engine: '6.75L V12 twin-turbo',
+  horsepower: 563,           // Approximately 563 hp
+  torque: 664,               // Approximately 664 lb-ft
+  transmission: '8-speed automatic',
+  drivetrain: 'RWD',
+  redline: '6000 rpm',
+  acceleration: '0-100 km/h in 5.2s',
+  topSpeed: '250 km/h (155 mph)',
+  weight: '≈2500 kg',
+  powerToWeight: '≈4.4 kg/hp',
+  
+  // Chassis & Suspension
+  platform: 'Bespoke luxury architecture',
+  suspension: 'Adaptive air suspension tuned for supreme comfort',
+  brakes: {
+    front: 'Advanced ventilated discs',
+    rear: 'Advanced ventilated discs'
+  },
+  limitedSlipDiff: false,
+  
+  // Exterior & Aerodynamics
+  bodyStyle: '4-door sedan',
+  aerodynamics: {
+    design: 'Hand-crafted body with integrated aerodynamic enhancements for reduced drag and refined presence'
+  },
+  
+  // Interior & Features
+  interior: {
+    seats: 'Hand-stitched leather seats with customizable embroidery',
+    steeringWheel: 'Wood-rimmed multifunction steering wheel',
+    gearKnob: 'Elegant automatic gear lever',
+    instrumentation: 'Digital displays with analog-inspired dials and a bespoke infotainment system'
+  },
+  
+  // Additional Info
+  additionalInfo: 'The Rolls Royce Phantom 2025 redefines automotive luxury with unparalleled craftsmanship, cutting-edge technology, and an exquisitely refined driving experience. Every detail is meticulously designed to ensure supreme comfort and performance.',
+  reviews: [
+    'An epitome of luxury and sophistication.',
+    'A masterpiece that seamlessly blends advanced engineering with timeless elegance.'
+  ]
 };
 
 // Array of car objects
-const cars = [car1, car2, car3, car4, car5, car6, car7, car8, car9, car10];
+const cars = [car1, car2, car3, car4, car5, car6, car7, car8, car9, car10, car11, car12, car13, car14, car15];
 
 // Function to handle car selection
 function selectCar(brand, model, year, price, extraInfo) {
@@ -241,12 +801,8 @@ function selectCar(brand, model, year, price, extraInfo) {
   
   // Build the HTML content with additional information if available
   let detailsHTML = `
-    <p><strong>Year:</strong> ${year}</p>
-    <p><strong>Price:</strong> ${formattedPrice}€</p>`;
-    
-  // Only display extra details if extraInfo is provided and has engine property
-  if (extraInfo && extraInfo.engine) {
-    detailsHTML += `
+    <img src="${extraInfo.image}" alt="${brand} ${model}" style="max-width:100%; height:auto;">
+    <div style="text-align: left;">
       <p><strong>Engine:</strong> ${extraInfo.engine}</p>
       <p><strong>Horsepower:</strong> ${extraInfo.horsepower} hp</p>
       <p><strong>Torque:</strong> ${extraInfo.torque} Nm</p>
@@ -261,8 +817,8 @@ function selectCar(brand, model, year, price, extraInfo) {
       <p><strong>Interior:</strong> ${extraInfo.interior.seats}, ${extraInfo.interior.steeringWheel}, Gear Knob: ${extraInfo.interior.gearKnob}</p>
       <p><strong>Production Notes:</strong> ${extraInfo.productionNotes}</p>
       <p><strong>Additional Info:</strong> ${extraInfo.additionalInfo}</p>
-      <p><strong>Reviews:</strong> ${extraInfo.reviews.join('; ')}</p>`;
-  }
+      <p><strong>Reviews:</strong> ${extraInfo.reviews.join('; ')}</p>
+    </div>`;
   
   // Display the car details in a SweetAlert modal
   Swal.fire({
