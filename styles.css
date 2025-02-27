@@ -5,6 +5,18 @@ body {
   background-color: #f4f4f4;
 }
 
+.top-bar {
+  z-index: 2;
+  position: fixed;
+  display: flex;
+  background-color: #333 !important;
+  justify-content: center;
+  align-items: center;
+  padding: 5px;
+  margin-left: 0px;
+  margin-top: -20px
+}
+
 .market-container {
   max-width: 1200px;
   margin: 20px auto;
