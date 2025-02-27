@@ -6,6 +6,7 @@ function createWindow() {
     width: 800,
     height: 600,
     autoHideMenuBar: true,
+    fullscreen: true,
     icon: path.join(__dirname, 'images/icons/app_icon.png'),
     webPreferences: { // Development
       // Production settings (nodeIntegration and contextIsolation values during development)
