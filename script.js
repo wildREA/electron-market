@@ -899,3 +899,10 @@ function renderCars() {
 
 // Render cars when the page loads
 window.onload = renderCars;
+
+console.log("window.electronAPI:", window.electronAPI);
+
+document.getElementById("myButton").addEventListener("click", async () => {
+  const response = await window.electronAPI.ye();
+  console.log(response); // Should log "Response from main process!"
+});
