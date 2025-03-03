@@ -119,7 +119,9 @@ Do not worry about an Unknown Publisher warning. It usually stems from an unsign
 <!-- USAGE EXAMPLES -->
 ## Usage
 
-The native way to use the software is simply visually. Any other features are not a part of the fundamentals for it to work to match the aforementioned purpose of the software.
+The purpose of the software is to see a listing of cars to purchase on an international (fictional) market. There's to be a way to register an account to then login and browse through the list of automobiles. There are two statuses for accounts: customer and seller. It'll then be determined whether a seller is a private or commercial seller (to be displayed with the account's seller status).
+
+Sellers will also be able to create posts to list new cars they have available, whether it's a private, one-time seller or a commercial, frequent seller. A way of communicating between a buyer and seller will be through private chats.
 
 <!-- PROJECT LOGO -->
 <br />
