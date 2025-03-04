@@ -2,7 +2,6 @@ const { app, BrowserWindow, ipcMain  } = require('electron');
 const path = require('path');
 
 
-
 let win;
 function createWindow() {
     win = new BrowserWindow({
@@ -37,9 +36,10 @@ app.on('activate', () => {
 });
 
 
-ipcMain.handle("ye", async () => {
-    console.log("ye() was called from renderer");
+ipcMain.handle("profile", async () => {
     win.loadFile("profile.html");
-    return "Response from main process!";
-    
 });
+
+ipcMain.handle("market", async () => {
+    win.loadFile("index.html");
+});//re

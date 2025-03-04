@@ -1,7 +1,10 @@
-document.getElementById('option1').addEventListener('click', function() {
-    window.location.href = 'index.html';
+document.getElementById("market").addEventListener("click", async () => {
+    const response = await window.electronAPI.market();
+    console.log(response); // Should log "Response from main process!"
 });
 
-document.getElementById('option2').addEventListener('click', function() {
-    window.location.href = 'profile.html';
+document.getElementById("profile").addEventListener("click", async () => {
+    const response = await window.electronAPI.profile();
+    console.log(response); // Should log "Response from main process!"
 });
+
