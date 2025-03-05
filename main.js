@@ -42,4 +42,4 @@ ipcMain.handle("profile", async () => {
 
 ipcMain.handle("market", async () => {
     win.loadFile("index.html");
-});//re
+});
