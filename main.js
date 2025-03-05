@@ -1,29 +1,26 @@
-const { app, BrowserWindow } = require('electron');
+const { app, BrowserWindow, ipcMain  } = require('electron');
 const path = require('path');
 
-function createWindow() {
-  const win = new BrowserWindow({
-    width: 800,
-    height: 600,
-    autoHideMenuBar: true,
-    fullscreen: true,
-    icon: path.join(__dirname, 'images/icons/app_icon.png'),
-    webPreferences: { // Development
-      // Production settings (nodeIntegration and contextIsolation values during development)
-      nodeIntegration: true, // Enable Node.js integration in the renderer process
-      contextIsolation: false, // Isolate the context to protect against prototype pollution
-      preload: path.join(__dirname, 'preload.js'), // Use a preload script to expose only safe APIs
 
-      // Additional settings
-      enableRemoteModule: false, // Disable the remote module unless explicitly needing it
-      sandbox: true, // Enable sandbox mode for extra security
-      webSecurity: true, // Enforce the same-origin policy
-      allowRunningInsecureContent: false, // Ensure that insecure content isn't loaded
-    },
-  });
-  
-  win.loadFile('index.html');
+let win;
+function createWindow() {
+    win = new BrowserWindow({
+        width: 800,
+        height: 600,
+        autoHideMenuBar: true,
+        fullscreen: true,
+        icon: path.join(__dirname, "images/icons/app_icon.png"),
+        webPreferences: {
+            preload: path.join(__dirname, "preload.js"), // ✅ Preload is used correctly
+            contextIsolation: true,  // ✅ Must be `true` for `contextBridge`
+            nodeIntegration: false,   // ✅ Keep disabled for security (preload exposes necessary APIs)
+            sandbox: false,           // ✅ Disable sandbox to allow `ipcRenderer`
+        },
+    });
+
+    win.loadFile("index.html");
 }
+
 
 // Called when Electron has finished initialization
 app.whenReady().then(createWindow);
@@ -36,4 +33,13 @@ app.on('window-all-closed', () => {
 // On macOS, recreate a window when the dock icon is clicked
 app.on('activate', () => {
   if (BrowserWindow.getAllWindows().length === 0) createWindow();
+});
+
+
+ipcMain.handle("profile", async () => {
+    win.loadFile("profile.html");
+});
+
+ipcMain.handle("market", async () => {
+    win.loadFile("index.html");
 });

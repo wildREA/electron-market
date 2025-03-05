@@ -1,21 +1,8 @@
-// preload.js
-const { contextBridge, ipcRenderer } = require('electron');
+const { contextBridge, ipcRenderer } = require("electron");
 
-// Expose a safe API to the renderer process
-contextBridge.exposeInMainWorld('electronAPI', {
-  // Send a message to the main process on allowed channels only
-  send: (channel, data) => {
-    const validChannels = ['toMain']; // whitelist channels
-    if (validChannels.includes(channel)) {
-      ipcRenderer.send(channel, data);
-    }
-  },
-  // Receive messages from the main process on allowed channels only
-  receive: (channel, callback) => {
-    const validChannels = ['fromMain']; // whitelist channels
-    if (validChannels.includes(channel)) {
-      // Forward the event's data to the provided callback function
-      ipcRenderer.on(channel, (event, ...args) => callback(...args));
-    }
-  },
+contextBridge.exposeInMainWorld("electronAPI", {
+  send: (channel, data) => ipcRenderer.send(channel, data),
+  receive: (channel, callback) => ipcRenderer.on(channel, (_, ...args) => callback(...args)),
+  profile: () => ipcRenderer.invoke("profile"),
+  market: () => ipcRenderer.invoke("market"),
 });
