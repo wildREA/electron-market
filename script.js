@@ -1,6 +1,5 @@
 // Define your car objects
-import { car1, car2, car3, car4, car5, car6, car7, car8, car9, car10, car11, car12, car13, car14, car15} from './tempData.js';
-
+import { car1, car2, car3, car4, car5, car6, car7, car8, car9, car10, car11, car12, car13, car14, car15} from './carList.js';
 
 // Array of car objects
 const cars = [car1, car2, car3, car4, car5, car6, car7, car8, car9, car10, car11, car12, car13, car14, car15];
@@ -100,10 +99,8 @@ function createCarCard(car) {
   return card;
 }
 
-
 // Render cars when the page loads
 window.onload = renderCars;
-
 
 document.addEventListener('DOMContentLoaded', () => {
   const profilePic = document.getElementById('profilePic');
