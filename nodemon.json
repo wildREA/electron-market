@@ -1,5 +1,0 @@
-{
-  "watch": ["."],
-  "exec": "electron .",
-  "ext": "*"
-}
