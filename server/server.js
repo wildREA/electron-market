@@ -35,34 +35,35 @@ const pool = mysql.createPool({
 
 
 
-function handleRegisterRequest(username, email, password) {
+async function handleRegisterRequest(username, email, password) {
     if (!username || !password) return [false, 'Username and password are required'];
-    if (checkIfUnique(1, username) === false) return [false, 'Username must be unique'];
-    if (checkIfUnique(2, email) === false) return [false, 'Email must be unique'];
-    return [true, 'User registered successfully'];
+
+    // Check username uniqueness
+    const isUsernameUnique = await checkIfUnique(1, username);
+    if (!isUsernameUnique) return [false, 'Username must be unique'];
+
+    // Check email uniqueness
+    const isEmailUnique = await checkIfUnique(2, email);
+    if (!isEmailUnique) return [false, 'Email must be unique'];
+
+    // Register the user if both checks pass
+    const registered = await registerUser(username, email, password);
+    if (registered) return [true, 'User registered very successfully'];
+    return [false, 'Registration failed'];
 }
 
 async function checkIfUnique(type, value) {
     try {
         let query = '';
-        let field = '';
-
         if (type === 1) {
             query = 'SELECT COUNT(*) AS count FROM users WHERE username = ?';
-            field = 'Username';
         } else if (type === 2) {
             query = 'SELECT COUNT(*) AS count FROM users WHERE email = ?';
-            field = 'Email';
         } else {
             throw new Error('Invalid type');
         }
-
-        const [rows] = await pool.execute(query, [value]);
-        if (rows[0].count > 0) {
-            return false;
-        }
-
-        return await registerUser(username, email, password);
+        const [rows] = await pool.execute(query, value);
+        return rows[0].count === 0;
     } catch (error) {
         console.error(error);
         return false;
@@ -74,8 +75,7 @@ async function registerUser(username, email, password) {
         const query = 'INSERT INTO users (username, email, password) VALUES (?, ?, ?)';
         await pool.execute(query, [username, email, password]);
         return true;
-        }
-    catch  (error) {
+    } catch (error) {
         console.error(error);
         return false;
     }
