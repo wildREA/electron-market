@@ -39,6 +39,7 @@ function handleRegisterRequest(username, email, password) {
     if (!username || !password) return [false, 'Username and password are required'];
     if (checkIfUnique(1, username) === false) return [false, 'Username must be unique'];
     if (checkIfUnique(2, email) === false) return [false, 'Email must be unique'];
+    return [true, 'User registered successfully'];
 }
 
 async function checkIfUnique(type, value) {
@@ -58,13 +59,25 @@ async function checkIfUnique(type, value) {
 
         const [rows] = await pool.execute(query, [value]);
         if (rows[0].count > 0) {
-            return { unique: false, message: `${field} is already taken` };
+            return false;
         }
 
-        return { unique: true, message: `${field} is available` };
+        return await registerUser(username, email, password);
     } catch (error) {
         console.error(error);
-        return { unique: false, message: 'An error occurred while checking uniqueness' };
+        return false;
+    }
+}
+
+async function registerUser(username, email, password) {
+    try {
+        const query = 'INSERT INTO users (username, email, password) VALUES (?, ?, ?)';
+        await pool.execute(query, [username, email, password]);
+        return true;
+        }
+    catch  (error) {
+        console.error(error);
+        return false;
     }
 }
 
