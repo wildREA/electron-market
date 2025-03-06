@@ -28,7 +28,7 @@ app.post('/register', async (req, res) => {
 const pool = mysql.createPool({
     host: 'localhost',
     user: 'root',
-    password: 'password',
+    password: '',
     database: 'eam_db',
     port: 3306 // Default MySQL port
 });
