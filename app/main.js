@@ -1,8 +1,8 @@
 const { app, BrowserWindow, ipcMain  } = require('electron');
 const path = require('path');
 
-
 let win;
+
 function createWindow() {
     win = new BrowserWindow({
         width: 800,
@@ -11,16 +11,15 @@ function createWindow() {
         fullscreen: true,
         icon: path.join(__dirname, "images/icons/app_icon.png"),
         webPreferences: {
-            preload: path.join(__dirname, "preload.js"), // ✅ Preload is used correctly
-            contextIsolation: true,  // ✅ Must be `true` for `contextBridge`
-            nodeIntegration: false,   // ✅ Keep disabled for security (preload exposes necessary APIs)
-            sandbox: false,           // ✅ Disable sandbox to allow `ipcRenderer`
+            preload: path.join(__dirname, "preload.js"), // Preload path is referenced correctly
+            contextIsolation: true,  // Must be `true` for `contextBridge`
+            nodeIntegration: true,   // Keep disabled for security (preload exposes necessary APIs unless setup for valid channels)
+            sandbox: false,          // Disable sandbox to allow `ipcRenderer`
         },
     });
 
     win.loadFile("index.html");
 }
-
 
 // Called when Electron has finished initialization
 app.whenReady().then(createWindow);
@@ -34,7 +33,6 @@ app.on('window-all-closed', () => {
 app.on('activate', () => {
   if (BrowserWindow.getAllWindows().length === 0) createWindow();
 });
-
 
 ipcMain.handle("profile", async () => {
     win.loadFile("profile.html");

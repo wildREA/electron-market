@@ -53,6 +53,7 @@ export const car1 = {
     ],
     additionalInfo: 'Built on the DC2 platform, the Integra Type R DC2 features a hand-built B18C5 engine with enhanced porting, lightweight components, and a tuned suspension setup for an exhilarating driving experience.'
 };
+
 export const car2 = {
     brand: 'Toyota',
     model: 'Corolla',
@@ -105,6 +106,7 @@ export const car2 = {
         'A dependable, economical option that still delivers a refined driving experience.'
     ]
 };
+
 export const car3 = {
     brand: 'Ford',
     model: 'Mustang Dark Horse',
@@ -157,6 +159,7 @@ export const car3 = {
         'A modern reinterpretation of the American muscle icon that thrills on every drive.'
     ]
 };
+
 export const car4 = {
     brand: 'BMW',
     model: 'M3 E46',
@@ -209,6 +212,7 @@ export const car4 = {
         'A perfect blend of luxury and sportiness.'
     ]
 };
+
 export const car5 = {
     brand: 'Aston Martin',
     model: 'Valkyrie',
@@ -262,6 +266,7 @@ export const car5 = {
         'A rare blend of track-level performance and cutting-edge technology.'
     ]
 };
+
 export const car6 = {
     brand: 'Alpina',
     model: 'B3 GT3',
@@ -314,6 +319,7 @@ export const car6 = {
         'A true performance machine that retains everyday usability.'
     ]
 };
+
 export const car7 = {
     brand: 'Nissan',
     model: 'Skyline R34 GTR V-spec',
@@ -367,6 +373,7 @@ export const car7 = {
         'An icon of Japanese performance tuning that continues to captivate fans worldwide.'
     ]
 };
+
 export const car8 = {
     brand: 'Mercedes Benz',
     model: 'AMG C63',
@@ -419,6 +426,7 @@ export const car8 = {
         'A benchmark in performance sedans that balances power with comfort.'
     ]
 };
+
 export const car9 = {
     brand: 'Ferrari',
     model: '488 GTB DCT',
@@ -472,6 +480,7 @@ export const car9 = {
         'Praised for its precision engineering and breathtaking speed.'
     ]
 };
+
 export const car10 = {
     brand: 'BMW',
     model: 'M3',
@@ -525,6 +534,7 @@ export const car10 = {
         'A pioneer that established the legacy of BMW performance cars.'
     ]
 };
+
 export const car11 = {
     brand: 'Opel',
     model: 'Vectra C Z02',
@@ -577,6 +587,7 @@ export const car11 = {
         'An affordable and dependable sedan with refined handling.'
     ]
 };
+
 export const car12 = {
     brand: 'Opel',
     model: 'Vectra C OPC',
@@ -629,6 +640,7 @@ export const car12 = {
         'A perfect blend of practicality and enhanced sporty performance.'
     ]
 };
+
 export const car13 = {
     brand: 'Ford',
     model: 'Mustang GT Coupé',
@@ -682,6 +694,7 @@ export const car13 = {
         'A perfect blend of performance and heritage in a modern package.'
     ]
 };
+
 export const car14 = {
     brand: 'Ferrari',
     model: 'F40',
@@ -735,6 +748,7 @@ export const car14 = {
         'Its iconic design and exhilarating driving experience make it a timeless classic.'
     ]
 };
+
 export const car15 = {
     brand: 'Rolls Royce',
     model: 'Phantom',

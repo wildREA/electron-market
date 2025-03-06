@@ -8,29 +8,28 @@
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous" defer></script>
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
   <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11" defer></script>
-  <script type="module" src="script.js" defer></script>
-  <script src="tempData.js"></script>
-
+  <script type="module" src="renderCars.js"></script>
+  <script src="navigation.js" defer></script>
+  <script src="carList.js" defer></script>
+  <script src="profile.js" defer></script>
   <title>Market - Slav Dev</title>
 </head>
 <body>
   <div class="top-bar">
     <input type="radio" class="btn-check" name="options" id="market" autocomplete="off" >
     <label for="market" class="btn btn-secondary">Market</label>
-
   </div>
   <div class="profile-container">
-    <img src="https://th.bing.com/th/id/OIP.yQQfPxRKgHhquAWlnbYciQHaHx?rs=1&pid=ImgDetMain" alt="Profile" class="profile-pic" id="profilePic">
+    <img src="https://th.bing.com/th/id/OIP.yQQfPxRKgHhquAWlnbYciQHaHx?rs=1&pid=ImgDetMain" alt="Profile" draggable="false" class="profile-pic" id="profilePic">
     <div class="dropdown" id="dropdownMenu">
       <a id="profile">Profile</a>
       <a>Settings</a>
       <a>Logout</a>
     </div>
   </div>
-  <div class="market-container">
+  <div class="market-container" style="user-select: none;">
     <h1>Available Cars</h1>
     <div class="car-list" id="carList"></div>
   </div>
-  <script src="navigation.js"></script>
 </body>
 </html>
