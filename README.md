@@ -127,10 +127,10 @@ Sellers will also be able to create posts to list new cars they have available, 
 <br />
 <div align="center">
   <a href="https://github.com/wildREA/computerComponentsTracker">
-    <img src="images/screenshot_light_showcase.jpg" alt="Logo" width="auto" height="auto">
+    <img src="app/images/screenshot_light_showcase.jpg" alt="Logo" width="auto" height="auto">
   </a>
   <a href="https://github.com/wildREA/computerComponentsTracker">
-    <img src="images/screenshot_dark_showcase.jpg" alt="Logo" width="auto" height="auto">
+    <img src="app/images/screenshot_dark_showcase.jpg" alt="Logo" width="auto" height="auto">
   </a>
 </div>
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
