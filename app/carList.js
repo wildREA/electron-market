@@ -801,7 +801,3 @@ export const car15 = {
         'A masterpiece that seamlessly blends advanced engineering with timeless elegance.'
     ]
 };
-<<<<<<< HEAD
-//hey
-=======
->>>>>>> dev_mech

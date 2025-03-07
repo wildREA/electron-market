@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 // Function to display the profile modal using SweetAlert2
 function viewProfile(username, country, sellerStatus, sellerType) {
   // Build the HTML content with additional information
@@ -45,11 +44,10 @@ document.getElementById('profile').addEventListener('click', function(e) {
   const country = "Arabistan";
   const sellerStatus = "Seller";
   const sellerType = "Private";
-  const color = "Gotham Night";
   
   viewProfile(username, country, sellerStatus, sellerType);
 });
-=======
+
 // Function to create the window for the user profile model
 function createProfile() {
     // Populate after a successful login - temporary variable
@@ -86,4 +84,3 @@ const profileHTML = `
 
 // Expose the function so it can be called from other scripts
 window.createProfile = createProfile;
->>>>>>> dev_mech
