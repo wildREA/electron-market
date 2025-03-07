@@ -15,11 +15,6 @@ function createWindow() {
             contextIsolation: true,  // Must be `true` for `contextBridge`
             nodeIntegration: false,   // Keep disabled for security (preload exposes necessary APIs unless setup for valid channels)
             sandbox: false,           // Disable sandbox to allow `ipcRenderer`
-
-            preload: path.join(__dirname, "preload.js"), // Preload path is referenced correctly
-            contextIsolation: true,  // Must be `true` for `contextBridge`
-            nodeIntegration: true,   // Keep disabled for security (preload exposes necessary APIs unless setup for valid channels)
-            sandbox: false,          // Disable sandbox to allow `ipcRenderer`
         },
     });
 
