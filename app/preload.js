@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 const { contextBridge, ipcRenderer } = require('electron');
 
 // Define channels you trust for sending and receiving messages.
@@ -21,9 +20,9 @@ contextBridge.exposeInMainWorld('api', {
     }
   }
 });
-=======
+
 const { contextBridge, ipcRenderer } = require("electron");
->>>>>>> dev_mech
+
 
 contextBridge.exposeInMainWorld("electronAPI", {
   send: (channel, data) => ipcRenderer.send(channel, data),
