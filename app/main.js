@@ -11,10 +11,16 @@ function createWindow() {
         fullscreen: true,
         icon: path.join(__dirname, "images/icons/app_icon.png"),
         webPreferences: {
-            preload: path.join(__dirname, "preload.js"), // Preload is used correctly
-            contextIsolation: true,  // Must be `true` for `contextBridge`
-            nodeIntegration: false,   // Keep disabled for security (preload exposes necessary APIs unless setup for valid channels)
-            sandbox: false,           // Disable sandbox to allow `ipcRenderer`
+          // Fundamental settings
+            preload: path.join(__dirname, "preload.js"),  // Preload is used correctly
+            contextIsolation: true,                       // Must be `true` for `contextBridge`
+            nodeIntegration: true,                        // Keep disabled for security (preload exposes necessary APIs unless setup for valid channels)
+            sandbox: false,                               // Disable sandbox to allow `ipcRenderer`
+            
+            // Additional settings
+            devTools: true,                               // Disables devTools (assumingly only for published releases)
+            webSecurity: false,                           // Sets 'allowRunningInsecureContent' (testing; turn off in production) to true
+
         },
     });
 
