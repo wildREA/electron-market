@@ -20,7 +20,6 @@ function createWindow() {
             // Additional settings
             devTools: true,                               // Disables devTools (assumingly only for published releases)
             webSecurity: false,                           // Sets 'allowRunningInsecureContent' (testing; turn off in production) to true
-
         },
     });
 
