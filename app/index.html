@@ -9,24 +9,17 @@
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
   <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11" defer></script>
   <scipt type="module" src="renderer.js"></scipt>
-  <script type="module" src="script.js"></script>
-  <script src="carList.js"></script>
-  <script src="navigation.js" defer></script>
   <script type="module" src="renderCars.js"></script>
-  <script src="navigation.js" defer></script>
-  <script src="carList.js" defer></script>
+  <script type="module" src="carList.js" defer></script>
   <script src="profile.js" defer></script>
+  <script src="navigation.js" defer></script>
   <title>Market - Slav Dev</title>
 </head>
 <body>
-  <div class="top-bar">
-    <input type="radio" class="btn-check" name="options" id="market" autocomplete="off" >
-    <label for="market" class="btn btn-secondary">Market</label>
-  </div>
   <div class="profile-container">
     <img src="https://th.bing.com/th/id/OIP.yQQfPxRKgHhquAWlnbYciQHaHx?rs=1&pid=ImgDetMain" alt="Profile" draggable="false" class="profile-pic" id="profilePic">
     <div class="dropdown" id="dropdownMenu">
-      <a onclick="viewProfile()" id="profile">Profile</a>
+      <a id="profile">Profile</a>
       <a>Settings</a>
       <a>Logout</a>
     </div>

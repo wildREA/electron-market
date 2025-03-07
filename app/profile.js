@@ -1,5 +1,7 @@
 // Function to create the window for the user profile model
 function createProfile() {
+  console.log("Creating profile card...");
+
     // Populate after a successful login - temporary variable
     const user = {
     username: 'ahmetHmoudT0pG_benz',    // Registered username.
@@ -30,6 +32,8 @@ const profileHTML = `
     showConfirmButton: true,
     confirmButtonText: 'Close'
     });
+
+    console.log("Created profile card!");
 }
 
 // Expose the function so it can be called from other scripts

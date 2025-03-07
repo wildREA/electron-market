@@ -104,3 +104,23 @@ function createCarCard(car) {
 
 // Render cars when the page loads
 window.onload = renderCars;
+
+document.addEventListener('DOMContentLoaded', () => {
+  const profilePic = document.getElementById('profilePic');
+  const dropdownMenu = document.getElementById('dropdownMenu');
+
+  // Toggle dropdown when clicking the profile picture
+  profilePic.addEventListener('click', (e) => {
+    e.stopPropagation();
+    dropdownMenu.classList.toggle('active');
+    console.log("Visibility: " + dropdownMenu.checkVisibility());
+  });
+
+  // Close dropdown when clicking outside the profile container
+  document.addEventListener('click', (e) => {
+    if (!e.target.closest('.profile-container')) {
+      dropdownMenu.classList.remove('active');
+      console.log("Visibility: false");
+    }
+  });
+});
