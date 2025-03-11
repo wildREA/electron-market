@@ -7,7 +7,7 @@ const PORT = process.env.PORT || 3000;
 
 //server_functions
 const { handleRegisterRequest, handleLoginRequest, verifyPassword } = require('./server_functions');
-
+const {pass} = require('./pass');
 
 // Enable CORS for all routes
 app.use(cors());
@@ -18,9 +18,9 @@ app.use(express.json());
 
 // Create a connection pool
 global.pool = mysql.createPool({
-    host: 'localhost',
-    user: 'root',
-    password: '',
+    host: '172.16.3.63',
+    user: 'admin',
+    password: pass,
     database: 'eam_db',
     port: 3306 // Default MySQL port
 });
