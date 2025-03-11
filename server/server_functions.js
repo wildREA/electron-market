@@ -1,4 +1,5 @@
-const { checkIfUnique, registerUser, getUserByIdentifier } = require('./database_functions');
+const { checkIfUnique, registerUser, getUserByIdentifier, getUser } = require('./database_functions');
+
 async function handleRegisterRequest(username, email, password) {
     if (!username || !password) return [false, 'Username and password are required'];
 
@@ -40,8 +41,21 @@ function verifyPassword(storedPassword, providedPassword) {
     return Promise.resolve(storedPassword === providedPassword);
 }
 
+function profileSelection(username) {
+    const query = `
+        SELECT username, countryCode, profileImage, sellerStatus, sellerType
+        FROM profiles
+        WHERE username = ?
+    `;
+    // Call helper function getUser, passing a callback that handles the result
+    return getUser(query, username, (result) => {
+        return result;
+    });
+}
+
 module.exports = {
     handleRegisterRequest,
     handleLoginRequest,
-    verifyPassword
+    verifyPassword,
+    profileSelection
 };

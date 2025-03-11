@@ -1,4 +1,3 @@
-
 async function checkIfUnique(type, value) {
     try {
         let query = '';
@@ -38,8 +37,26 @@ async function getUserByIdentifier(identifier) {
         return null;
     }
 }
+
+function getUser(query, username, callback) {
+    pool.query(query, [username], (err, results) => {
+        let result = {};
+        if (err) {
+            result = { success: false, error: err.message };
+            return callback(result);
+        }
+        if (results.length === 0) {
+            result = { success: false, message: "No results found" };
+            return callback(result);
+        }
+        result = { success: true, data: results };
+        callback(result);
+    });
+}
+
 module.exports = {
     checkIfUnique,
     registerUser,
-    getUserByIdentifier
+    getUserByIdentifier,
+    getUser
 }
