@@ -1,5 +1,20 @@
+<<<<<<< HEAD
 async function createProfile() {
   console.log("Creating profile card...");
+=======
+// Function to create the window for the user profile model
+function createProfile() {
+  console.log("Creating profile card...");
+
+    // Populate after a successful login - temporary variable
+    const user = {
+    username: 'ahmetHmoudT0pG_benz',    // Registered username.
+    countryCode: "uk.jpg",              // Reference the flag image (e.g., "us", "gb", etc.) - Make a new file filled with references to ./images/flags
+    profileImage: 'ahmetHmoudT0pG_benz.jpg',    // profileImage asset name derived from username
+    sellerStatus: 'Top G',              // "Seller" / "Customer"
+    businessType: 'Multi-binaire'       // "Commercial" / "Private"
+};
+>>>>>>> 0e93f633f4a9b6cbe02c30a027f151dec6621595
 
   try {
     // Retrieve user data from your database through the API endpoint
@@ -33,9 +48,12 @@ async function createProfile() {
     });
 
     console.log("Created profile card!");
+<<<<<<< HEAD
   } catch (error) {
     console.error("Error retrieving user profile:", error);
   }
+=======
+>>>>>>> 0e93f633f4a9b6cbe02c30a027f151dec6621595
 }
 
 // Expose the function so it can be called from other scripts

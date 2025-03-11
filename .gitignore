@@ -1,3 +1,6 @@
 node_modules
 .idea
+<<<<<<< HEAD
 server/pass.js
+=======
+>>>>>>> 0e93f633f4a9b6cbe02c30a027f151dec6621595
