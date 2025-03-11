@@ -33,12 +33,9 @@ async function createProfile() {
     });
 
     console.log("Created profile card!");
-<<<<<<< HEAD
   } catch (error) {
     console.error("Error retrieving user profile:", error);
   }
-=======
->>>>>>> 0e93f633f4a9b6cbe02c30a027f151dec6621595
 }
 
 // Expose the function so it can be called from other scripts
