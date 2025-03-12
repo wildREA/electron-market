@@ -1,13 +1,13 @@
 const express = require('express');
 const cors = require('cors');
 const mysql = require('mysql2/promise');
+require('dotenv').config();
 
 const app = express();
 const PORT = process.env.PORT || 3000;
 
 //server_functions
 const { handleRegisterRequest, handleLoginRequest, verifyPassword, profileSelection } = require('../server/server_functions');
-const { pass } = require('../server/pass');
 
 // Enable CORS for all routes
 app.use(cors());
@@ -19,7 +19,7 @@ app.use(express.json());
 global.pool = mysql.createPool({
     host: '172.16.3.63',
     user: 'admin',
-    password: pass,
+    password: process.env.PASSWORD,
     database: 'eam_db',
     port: 3306 // Default MySQL port
 });
