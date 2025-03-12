@@ -118,7 +118,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // Close dropdown when clicking outside the profile container
   document.addEventListener('click', (e) => {
-    if (!e.target.closest('.profile-container')) {
+    if (!e.target.closest('.profile-container') && !e.target.closest('.card')) {  // Fix logic for debugging for card lists, include and exclude for only profile container
       dropdownMenu.classList.remove('active');
       console.log("Visibility: false");
     }
