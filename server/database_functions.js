@@ -38,9 +38,9 @@ async function getUserByIdentifier(identifier) {
     }
 }
 
-async function getUser(query, username) {
+async function getUser(query, identifier) {
     try {
-        const [results] = await pool.execute(query, [username]);
+        const [results] = await pool.execute(query, [identifier, identifier])
         if (!results || results.length === 0) {
             return { success: false, message: "No user found" };
         }

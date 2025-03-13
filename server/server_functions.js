@@ -53,8 +53,10 @@ async function profileSelection(username) {
     const query = `
         SELECT *
         FROM profiles
-        WHERE username = ?
+        WHERE username = ? OR username = ?
     `;
+   // temporary fix its supposed to be  username or email.
+
 
     const result = await getUser(query, username);
     if (result.success) {
