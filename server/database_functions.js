@@ -32,23 +32,37 @@ async function getUserByIdentifier(identifier) {
         const query = 'SELECT * FROM users WHERE username = ? OR email = ? LIMIT 1';
         const [rows] = await pool.execute(query, [identifier, identifier]);
         return rows[0] || null;
-    } catch (error) {
-        console.error(error);
+    } catch (err) {
+        console.error(err);
         return null;
     }
 }
 
-async function getUser(query, username) {
+async function getUser(username) {
     try {
+        const query = `SELECT * FROM profiles WHERE username = ?`;
         const [results] = await pool.execute(query, [username]);
-        if (!results || results.length === 0) {
+        if (!results || results.length === 0) {  // Security against invalid user
             return { success: false, message: "No user found" };
         }
         const user = { ...results[0] };
         delete user.user_id;
         return { success: true, message: user };
-    } catch (error) {
-        return { success: false, message: "Query error", error };
+    } catch (err) {
+        return { success: false, message: "Query error", err };
+    }
+}
+
+async function getCarList() {
+    try {
+        const list = {};
+        const query = `SELECT * FROM profiles WHERE username = ?`;
+        await pool.execute(query);
+        // Add line to sort database values from columns into variables inside list
+        return list;
+    } catch (err) {
+        console.error(err);
+        return null;
     }
 }
 
@@ -56,5 +70,6 @@ module.exports = {
     checkIfUnique,
     registerUser,
     getUserByIdentifier,
-    getUser
+    getUser,
+    getCarList
 }

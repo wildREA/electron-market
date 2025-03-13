@@ -1,4 +1,4 @@
-const { checkIfUnique, registerUser, getUserByIdentifier, getUser } = require('./database_functions');
+const { checkIfUnique, registerUser, getUserByIdentifier, getUser, getCarList } = require('./database_functions');
 
 async function handleRegisterRequest(username, email, password) {
     if (!username || !password) return [false, 'Username and password are required'];
@@ -30,8 +30,8 @@ async function handleLoginRequest(identifier, password) {
         if (!passwordMatch) return [false, 'Invalid password'];
 
         return [true, 'Login successful'];
-    } catch (error) {
-        console.error(error);
+    } catch (err) {
+        console.error(err);
         return [false, 'Login failed'];
     }
 }
@@ -46,17 +46,19 @@ async function profileSelection(username) {
         if (!username) {
             return [false, 'Username is required'];
         }
-    } catch (error) {
+    } catch (err) {
         return [false, 'Internal server error'];
     }
+    const result = await getUser(username);
+    if (result.success) {
+        return [true, result.message];
+    } else {
+        return [false, result.message];
+    }
+}
 
-    const query = `
-        SELECT *
-        FROM profiles
-        WHERE username = ?
-    `;
-
-    const result = await getUser(query, username);
+async function carListSelection() {
+    const result = await getCarList();
     if (result.success) {
         return [true, result.message];
     } else {
@@ -68,5 +70,6 @@ module.exports = {
     handleRegisterRequest,
     handleLoginRequest,
     verifyPassword,
-    profileSelection
+    profileSelection,
+    carListSelection
 };
