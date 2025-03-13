@@ -38,20 +38,18 @@ async function getUserByIdentifier(identifier) {
     }
 }
 
-function getUser(query, username, callback) {
-    pool.query(query, [username], (err, results) => {
-        let result = {};
-        if (err) {
-            result = { success: false, error: err.message };
-            return callback(result);
+async function getUser(query, identifier) {
+    try {
+        const [results] = await pool.execute(query, [identifier, identifier])
+        if (!results || results.length === 0) {
+            return { success: false, message: "No user found" };
         }
-        if (results.length === 0) {
-            result = { success: false, message: "No results found" };
-            return callback(result);
-        }
-        result = { success: true, data: results };
-        callback(result);
-    });
+        const user = { ...results[0] };
+        delete user.user_id;
+        return { success: true, message: user };
+    } catch (error) {
+        return { success: false, message: "Query error", error };
+    }
 }
 
 module.exports = {
