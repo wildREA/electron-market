@@ -41,16 +41,27 @@ function verifyPassword(storedPassword, providedPassword) {
     return Promise.resolve(storedPassword === providedPassword);
 }
 
-function profileSelection(username) {
+async function profileSelection(username) {
+    try {
+        if (!username) {
+            return [false, 'Username is required'];
+        }
+    } catch (error) {
+        return [false, 'Internal server error'];
+    }
+
     const query = `
-        SELECT username, countryCode, profileImage, sellerStatus, sellerType
+        SELECT *
         FROM profiles
         WHERE username = ?
     `;
-    // Call helper function getUser, passing a callback that handles the result
-    return getUser(query, username, (result) => {
-        return result;
-    });
+
+    const result = await getUser(query, username);
+    if (result.success) {
+        return [true, result.message];
+    } else {
+        return [false, result.message];
+    }
 }
 
 module.exports = {
