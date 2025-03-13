@@ -2,7 +2,7 @@ async function createProfile() {
   console.log("Creating profile card...");
 
   try {
-    // Retrieve user data from your database through the API endpoint
+    // Retrieve user data from your da\aawa ww\\ a                                                                                                                                                                                         \atabase through the API endpoint
     const response = await fetch('/profile');
     if (!response.ok) {
       throw new Error(`HTTP error! Status: ${response.status}`);
