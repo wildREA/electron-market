@@ -27,14 +27,12 @@ global.pool = mysql.createPool({
 console.log(process.env.PASSWORD)
 
 app.post('/register', async (req, res) => {
-    const { username, email, password } = req.body;
-    const [result, message] = await handleRegisterRequest(username, email, password);
+    const [result, message] = await handleRegisterRequest(req.body.username, req.body.email, req.body.password);
     return res.json({ success: result, message: message });
 });
 
 app.post('/login', async (req, res) => {
-    const { identifier, password } = req.body;
-    const [result, message] = await handleLoginRequest(identifier, password);
+    const [result, message] = await handleLoginRequest(req.body.identifier, req.body.password);
     return res.json({ success: result, message: message });
 });
 
