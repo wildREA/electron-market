@@ -160,7 +160,7 @@ async function getUserInformations(username) {
         if (data.success) {
             console.log("duhh");
             window.userinformations = data.message;
-            console.log(window.userinformations);
+            console.log("us is: " + window.userinformations.username);
         }
     } catch (error) {
         console.error('Error:', error);

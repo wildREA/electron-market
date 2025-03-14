@@ -41,6 +41,7 @@ function verifyPassword(storedPassword, providedPassword) {
     return Promise.resolve(storedPassword === providedPassword);
 }
 
+
 async function profileSelection(username) {
     try {
         if (!username) {
@@ -65,6 +66,7 @@ async function profileSelection(username) {
         return [false, result.message];
     }
 }
+
 
 module.exports = {
     handleRegisterRequest,
