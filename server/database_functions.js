@@ -43,26 +43,24 @@ async function getUser(username) {
         const query = `SELECT * FROM profiles WHERE username = ?`;
         const [results] = await pool.execute(query, [username]);
         if (!results || results.length === 0) {  // Security against invalid user
-            return { success: false, message: "No user found" };
+            return { success: false, message: 'No user found' };
         }
         const user = { ...results[0] };
         delete user.user_id;
         return { success: true, message: user };
     } catch (err) {
-        return { success: false, message: "Query error", err };
+        return { success: false, message: 'Query error', err };
     }
 }
 
 async function getCarList() {
     try {
-        const list = {};
-        const query = `SELECT * FROM profiles WHERE username = ?`;
-        await pool.execute(query);
-        // Add line to sort database values from columns into variables inside list
-        return list;
+        const query = `SELECT * FROM cars`;
+        const [results] = await pool.execute(query);
+        return { success: true, data: results };
     } catch (err) {
         console.error(err);
-        return null;
+        return { success: false, error: err };
     }
 }
 

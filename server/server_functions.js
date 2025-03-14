@@ -1,3 +1,4 @@
+const bcrypt = require('bcrypt');
 const { checkIfUnique, registerUser, getUserByIdentifier, getUser, getCarList } = require('./database_functions');
 
 async function handleRegisterRequest(username, email, password) {
@@ -11,8 +12,12 @@ async function handleRegisterRequest(username, email, password) {
     const isEmailUnique = await checkIfUnique(2, email);
     if (!isEmailUnique) return [false, 'Email must be unique'];
 
+    // Hasing password with bcrypt using salt rounds
+    const saltRounds = 16;
+    const hashedPassword = await bcrypt.hash(password, saltRounds);
+
     // Register the user if both checks pass
-    const registered = await registerUser(username, email, password);
+    const registered = await registerUser({ username, email, password: hashedPassword });
     if (registered) return [true, 'User registered successfully'];
     return [false, 'Registration failed'];
 }
@@ -60,9 +65,9 @@ async function profileSelection(username) {
 async function carListSelection() {
     const result = await getCarList();
     if (result.success) {
-        return [true, result.message];
+        return [true, result];
     } else {
-        return [false, result.message];
+        return [false, result];
     }
 }
 
