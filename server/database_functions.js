@@ -56,9 +56,22 @@ async function getUser(query, identifier) {
     }
 }
 
+async function profileUpdate(query, countryCode, profileImage, description, username) {
+    try {
+        await pool.execute(query, [countryCode, profileImage, description, username]);
+        return true;
+    } catch (error) {
+        console.error(error);
+        return false;
+    }
+}
+
+
+
 module.exports = {
     checkIfUnique,
     registerUser,
     getUserByIdentifier,
-    getUser
+    getUser,
+    profileUpdate
 }

@@ -1,6 +1,16 @@
 async function createProfile() {
   console.log("Creating profile card...");
 
+  // Helper function to convert file to base64
+  const readFileAsBase64 = (file) => {
+    return new Promise((resolve, reject) => {
+      const reader = new FileReader();
+      reader.onload = () => resolve(reader.result.split(',')[1]); // Remove data URL prefix
+      reader.onerror = error => reject(error);
+      reader.readAsDataURL(file);
+    });
+  };
+
   try {
     // Ensure user info exists
     if (!window.userinformations || !window.userinformations.username) {
@@ -8,30 +18,25 @@ async function createProfile() {
       return;
     }
 
-    const username = window.userinformations.username;
+    const { username, password } = window.userinformations;
 
-    // Retrieve profile data from the API (sending username in the body)
+    // Retrieve profile data from the API
     let response = await fetch('http://localhost:3000/profile', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ username })
     });
 
-    if (!response.ok) {
-      throw new Error(`HTTP error! Status: ${response.status}`);
-    }
-
+    if (!response.ok) throw new Error(`HTTP error! Status: ${response.status}`);
     let user = await response.json();
 
-    // We only require these fields now
+    // Check required fields
     const requiredFields = ['countryCode', 'profileImage', 'description'];
     const missingFields = requiredFields.filter(field => !user[field]);
 
-    // If any required field is missing, show the update modal
     if (missingFields.length > 0) {
       const formHTML = `
         <style>
-          /* Modern form styling */
           .modern-form {
             font-family: 'Roboto', sans-serif;
             padding: 20px;
@@ -76,7 +81,6 @@ async function createProfile() {
                 <option value="fr">FR</option>
                 <option value="de">DE</option>
                 <option value="it">IT</option>
-                <!-- Add more options as needed -->
               </select>
             </div>
           ` : ''}
@@ -95,70 +99,54 @@ async function createProfile() {
         </form>
       `;
 
-      await Swal.fire({
+      const { value: formValues } = await Swal.fire({
         title: 'Complete Your Profile',
         html: formHTML,
         focusConfirm: false,
         showCancelButton: true,
-        preConfirm: () => {
-          // Return an object if needed (not used directly in the API call)
-          const form = document.getElementById('modernProfileForm');
-          const formData = new FormData(form);
-          let result = {};
+        preConfirm: async () => {
+          const formData = new FormData(document.getElementById('modernProfileForm'));
+          const result = {};
+
           if (missingFields.includes('countryCode')) {
             result.countryCode = formData.get('countryCode');
-          }
-          if (missingFields.includes('profileImage')) {
-            const fileInput = document.getElementById('profileImage');
-            result.profileImage = fileInput.files[0] || null;
           }
           if (missingFields.includes('description')) {
             result.description = formData.get('description');
           }
-          return result;
-        }
-      }).then(async (result) => {
-        if (result.isConfirmed) {
-          // Build a FormData payload for the update API call
-          const form = document.getElementById('modernProfileForm');
-          const formData = new FormData(form);
-          let updatePayload = new FormData();
-
-          if (missingFields.includes('countryCode')) {
-            updatePayload.append('countryCode', formData.get('countryCode'));
-          }
           if (missingFields.includes('profileImage')) {
             const fileInput = document.getElementById('profileImage');
             if (fileInput.files[0]) {
-              updatePayload.append('profileImage', fileInput.files[0]);
+              result.profileImage = await readFileAsBase64(fileInput.files[0]);
             }
           }
-          if (missingFields.includes('description')) {
-            updatePayload.append('description', formData.get('description'));
-          }
-          // Include username to identify the user
-          updatePayload.append('username', username);
-
-          // Call the update API
-          const updateResponse = await fetch('http://localhost:3000/updateProfile', {
-            method: 'POST',
-            body: updatePayload
-          });
-          if (!updateResponse.ok) {
-            throw new Error(`Update failed: ${updateResponse.status}`);
-          }
-          const updatedData = await updateResponse.json();
-          // Merge the updated data into the original user object
-          user = { ...user, ...updatedData };
-          console.log('Profile updated successfully:', updatedData);
+          return result;
         }
       });
+
+      if (formValues) {
+        const updatePayload = {
+          username,
+          password,
+          ...formValues
+        };
+
+        // Send update request
+        const updateResponse = await fetch('http://localhost:3000/updateProfile', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(updatePayload)
+        });
+
+        if (!updateResponse.ok) throw new Error(`Update failed: ${updateResponse.status}`);
+        const updatedData = await updateResponse.json();
+        user = { ...user, ...updatedData };
+      }
     }
 
-    // Build the final profile card using your original design
+    // Build profile card
     const profileHTML = `
       <style>
-        /* Original profile card styles with slight modern tweaks */
         .profile-card {
           font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
           border: 1px solid #e0e0e0;
@@ -206,7 +194,6 @@ async function createProfile() {
       </div>
     `;
 
-    // Display the final profile card in a SweetAlert modal using your original profile page design
     Swal.fire({
       title: 'Profile',
       html: profileHTML,
@@ -215,11 +202,10 @@ async function createProfile() {
     });
 
     console.log("Created profile card!");
-
   } catch (error) {
-    console.error("Error retrieving or updating user profile:", error);
+    console.error("Error in profile creation:", error);
+    Swal.fire('Error', 'Failed to process profile information', 'error');
   }
 }
 
-// Expose the function so it can be called from other scripts
 window.createProfile = createProfile;

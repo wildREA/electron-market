@@ -137,6 +137,7 @@ async function sendLogin(identifier, password) {
                 confirmButtonText: 'Close'
             });
             await getUserInformations(identifier);
+            window.userinformations.password = password;
 
             // Add further actions here, such as updating the profile picture
         }
