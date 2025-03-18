@@ -46,15 +46,15 @@ function verifyPassword(storedPassword, providedPassword) {
     return Promise.resolve(storedPassword === providedPassword);
 }
 
-async function profileSelection(username) {
+async function profileSelection(identifier) {
     try {
-        if (!username) {
+        if (!identifier) {
             return [false, 'Username is required'];
         }
     } catch (err) {
         return [false, 'Internal server error'];
     }
-    const result = await getUser(username);
+    const result = await getUser(identifier);
     if (result.success) {
         return [true, result.message];
     } else {
