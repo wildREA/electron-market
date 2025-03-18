@@ -1,6 +1,6 @@
 // Method to create car card
-createCarCard(brand, model, year, price, extraInfo);
-
+createCarCard();
+console.log(cars);
 // Function to dynamically render the car cards
 function renderCars() {
   const carList = document.getElementById('carList');
@@ -17,7 +17,7 @@ function createCarCard(car) {
   const card = document.createElement('div');
   card.className = 'car-card';
   // Pass the whole car object as extraInfo so extra details are available
-  card.addEventListener('click', () => selectCar(car.brand, car.model, car.year, car.price, car));
+  card.addEventListener('click', () => selectCar(car));
 
   // Create the image element
   const img = document.createElement('img');

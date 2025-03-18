@@ -1,40 +1,54 @@
-// Function to handle car selection
-async function createCarCard(brand, model, year, price, extraInfo) {
-    console.log("Creating car card(s)...");
-  
+// Method to fetch car data from the API endpoint
+async function fetchCarData() {
+    console.log("Fetching car data...");
     try {
-      // Retrieve user data from the database                                                                                                                                                                                    \atabase through the API endpoint
-      const response = await fetch('/cars');
+      // Retrieve car data from the database through the API endpoint
+      const response = await fetch('http://localhost:3000/cars');
       if (!response.ok) {
         throw new Error(`HTTP error! Status: ${response.status}`);
       }
       const cars = await response.json();
+      console.log("Car data:", cars);
+      
+      for (const car of cars) {
+        createCarCard(car);
+      }
+    } catch (err) {
+      console.error("Error retrieving car data:", err);
+    }
+  }
+
+// Function to handle car selection
+async function createCarCard() {
+    console.log("Creating car card(s)...");
+    try {
         // Format the price using toLocaleString
         const formattedPrice = price.toLocaleString('de-DE');
         
         // Log all selected car details for debugging
-        console.log("Selected Car:", brand, model, year, formattedPrice, extraInfo);
+        console.log("Selected Car:", brand, model, year, formattedPrice);
         
         // Build the HTML content with additional information if available
         let detailsHTML = `
         <div style="user-select: none;">
-            <img src="${extraInfo.image}" alt="${brand} ${model}" style="max-width:100%; height:auto;" draggable="false">
+            <img src="${cars.image}" alt="${cars.brand} ${cars.model}" style="max-width:100%; height:auto;" draggable="false">
             <div style="text-align: left; margin-top: 20px;">
-            <p><strong>Engine:</strong> ${extraInfo.engine}</p>
-            <p><strong>Horsepower:</strong> ${extraInfo.horsepower} hp</p>
-            <p><strong>Torque:</strong> ${extraInfo.torque} Nm</p>
-            <p><strong>Transmission:</strong> ${extraInfo.transmission}</p>
-            <p><strong>Drivetrain:</strong> ${extraInfo.drivetrain}</p>
-            <p><strong>Redline:</strong> ${extraInfo.redline}</p>
-            <p><strong>Acceleration:</strong> ${extraInfo.acceleration}</p>
-            <p><strong>Top Speed:</strong> ${extraInfo.topSpeed}</p>
-            <p><strong>Platform:</strong> ${extraInfo.platform}</p>
-            <p><strong>Suspension:</strong> ${extraInfo.suspension}</p>
-            <p><strong>Brakes:</strong> Front - ${extraInfo.brakes.front}, Rear - ${extraInfo.brakes.rear}</p>
-            <p><strong>Interior:</strong> ${extraInfo.interior.seats}, ${extraInfo.interior.steeringWheel}, Gear Knob: ${extraInfo.interior.gearKnob}</p>
-            <p><strong>Production Notes:</strong> ${extraInfo.productionNotes}</p>
-            <p><strong>Additional Info:</strong> ${extraInfo.additionalInfo}</p>
-            <p><strong>Reviews:</strong> ${extraInfo.reviews.join('; ')}</p>
+            <p><strong>Color:</strong> ${cars.color}</p>
+            <p><strong>Fuel:</strong> ${cars.fuel}</p>
+            <p><strong>Engine:</strong> ${cars.engine}</p>
+            <p><strong>Horsepower:</strong> ${cars.horsepower} hp</p>
+            <p><strong>Torque:</strong> ${cars.torque} Nm</p>
+            <p><strong>Transmission:</strong> ${cars.transmission}</p>
+            <p><strong>Drivetrain:</strong> ${cars.drivetrain}</p>
+            <p><strong>Redline:</strong> ${cars.redline} rpm</p>
+            <p><strong>Acceleration:</strong> ${cars.acceleration}</p>
+            <p><strong>Top Speed:</strong> ${cars.topSpeed}</p>
+            <p><strong>Platform:</strong> ${cars.platform}</p>
+            <p><strong>Suspension:</strong> ${cars.suspension}</p>
+            <p><strong>Brakes:</strong> Front - ${cars.brakes.front}, Rear - ${cars.brakes.rear}</p>
+            <p><strong>Interior:</strong> ${cars.interior.seats}, ${cars.interior.steeringWheel}, Gear Knob: ${cars.interior.gearKnob}</p>
+            <p><strong>Production Notes:</strong> ${cars.productionNotes}</p>
+            <p><strong>Additional Info:</strong> ${cars.additionalInfo}</p>
             </div>
         </div>`;
         
@@ -44,17 +58,13 @@ async function createCarCard(brand, model, year, price, extraInfo) {
         html: detailsHTML,
         confirmButtonText: 'Close'
         });
-    } catch (error) {
-        console.error("Error retrieving user profile:", error);
+    } catch (err) {
+        console.error("Error retrieving user profile:", err);
     }
   }
-
+  
   // Expose the function so it can be called from other scripts
   window.createCarCard = createCarCard;
-  
-  module.exports = {
-    createCarCard
-};
 
 
 export const car1 = {

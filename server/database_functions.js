@@ -18,12 +18,13 @@ async function checkIfUnique(type, value) {
 
 async function registerUser(username, email, password) {
     try {
+        // Insert user into users table
         let query = 'INSERT INTO users (username, email, password) VALUES (?, ?, ?)';
         await pool.execute(query, [username, email, password]);
-
+        // Insert user into profiles table
         query = 'INSERT INTO profiles (username) VALUES (?)';
         await pool.execute(query, [username]);
-
+        // Return true if the above steps are successful
         return true;
     } catch (error) {
         console.error(error);
@@ -77,12 +78,11 @@ async function profileUpdate(query, countryCode, profileImage, description, user
     }
 }
 
-
-
 module.exports = {
     checkIfUnique,
     registerUser,
     getUserByIdentifier,
     getUser,
+    getCarList,
     profileUpdate
 }

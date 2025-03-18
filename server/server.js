@@ -7,7 +7,7 @@ const app = express();
 const PORT = process.env.PORT || 3000;
 
 //server_functions
-const { handleRegisterRequest, handleLoginRequest, profileSelection, updateProfile } = require('../server/server_functions');
+const { handleRegisterRequest, handleLoginRequest, profileSelection, carListSelection, updateProfile } = require('../server/server_functions');
 
 // Enable CORS for all routes
 app.use(cors());
@@ -45,14 +45,14 @@ async function startServer() {
         });
 
         app.post('/updateProfile', async (req, res) => {
-            console.log(req.body.username, req.body.password,  req.body.countryCode, req.body.profileImage, req.body.description)
-            const [result, message] = await updateProfile(req.username, req.password,  req.body.countryCode, req.body.profileImage, req.body.description);
+            console.log(req.body.username, req.body.password, req.body.countryCode, req.body.profileImage, req.body.description)
+            const [result, message] = await updateProfile(req.username, req.password, req.body.countryCode, req.body.profileImage, req.body.description);
             return res.json({ success: result, message: message });
         });
 
         app.get('/cars', async (req, res) => {
-            const data = await carListSelection(req.body);
-            res.json({ success: true, data: data });
+            const [result, message] = await carListSelection(req.body);
+            res.json({ success: result, message: message });
         });
 
         //Always make put this at bottom

@@ -6,7 +6,6 @@
     "start": "electron .",
     "dev": "nodemon"
   },
-
   "repository": {
     "type": "git",
     "url": "git+https://github.com/wildREA/electron-market.git"
@@ -21,7 +20,7 @@
   "devDependencies": {
     "electron": "^34.2.0",
     "nodemon": "^3.1.9",
-    "snowpack": "^3.8.8"
+    "snowpack": "^1.7.1"
   },
   "dependencies": {
     "boolean": "^3.2.0",
