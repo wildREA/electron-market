@@ -32,31 +32,42 @@ async function getUserByIdentifier(identifier) {
         const query = 'SELECT * FROM users WHERE username = ? OR email = ? LIMIT 1';
         const [rows] = await pool.execute(query, [identifier, identifier]);
         return rows[0] || null;
-    } catch (error) {
-        console.error(error);
+    } catch (err) {
+        console.error(err);
         return null;
     }
 }
 
-function getUser(query, username, callback) {
-    pool.query(query, [username], (err, results) => {
-        let result = {};
-        if (err) {
-            result = { success: false, error: err.message };
-            return callback(result);
+async function getUser(username) {
+    try {
+        const query = `SELECT * FROM profiles WHERE username = ?`;
+        const [results] = await pool.execute(query, [username]);
+        if (!results || results.length === 0) {  // Security against invalid user
+            return { success: false, message: 'No user found' };
         }
-        if (results.length === 0) {
-            result = { success: false, message: "No results found" };
-            return callback(result);
-        }
-        result = { success: true, data: results };
-        callback(result);
-    });
+        const user = { ...results[0] };
+        delete user.user_id;
+        return { success: true, message: user };
+    } catch (err) {
+        return { success: false, message: 'Query error', err };
+    }
+}
+
+async function getCarList() {
+    try {
+        const query = `SELECT * FROM cars`;
+        const [results] = await pool.execute(query);
+        return { success: true, data: results };
+    } catch (err) {
+        console.error(err);
+        return { success: false, error: err };
+    }
 }
 
 module.exports = {
     checkIfUnique,
     registerUser,
     getUserByIdentifier,
-    getUser
+    getUser,
+    getCarList
 }
