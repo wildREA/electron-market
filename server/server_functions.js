@@ -1,4 +1,8 @@
-const { checkIfUnique, registerUser, getUserByIdentifier, getUser } = require('./database_functions');
+const fs = require('fs');
+const path = require('path');
+
+
+const { checkIfUnique, registerUser, getUserByIdentifier, getUser, profileUpdate } = require('./database_functions');
 
 async function handleRegisterRequest(username, email, password) {
     if (!username || !password) return [false, 'Username and password are required'];
@@ -41,6 +45,7 @@ function verifyPassword(storedPassword, providedPassword) {
     return Promise.resolve(storedPassword === providedPassword);
 }
 
+
 async function profileSelection(username) {
     try {
         if (!username) {
@@ -66,9 +71,58 @@ async function profileSelection(username) {
     }
 }
 
+async function updateProfile(username, password, countryCode, profileImage, description) {
+    if (!verifyUser(username, password)) {
+        return [false, 'User not found'];
+    }
+    try {
+
+        let imagePath = null;
+
+        if (profileImage) {
+            const base64Data = profileImage.replace(/^data:image\/\w+;base64,/, "");
+            const buffer = Buffer.from(base64Data, 'base64');
+            imagePath = `uploads/${username}.png`; // Save as username.png
+
+            fs.writeFileSync(path.join(__dirname, imagePath), buffer);
+        }
+
+        const query = `
+            UPDATE profiles
+            SET countryCode = ?, profileImage = ?, description = ?
+            WHERE username = ?
+        `;
+
+        if (await profileUpdate(query, countryCode, profileImage, description, username)) {
+            return [true, 'Profile updated successfully'];
+        }
+        else {
+            return [false, 'Profile update failed']
+        }
+    } catch (error) {
+        console.error(error);
+        return [false, 'Profile update failed'];
+    }
+}
+
+async function verifyUser(username, password) {
+    try {
+        const user = await getUserByIdentifier(username);
+        if (!user) return [false, 'User not found'];
+
+        const passwordMatch = await verifyPassword(user.password, password);
+        if (!passwordMatch) return [false, 'Invalid password'];
+
+        return [true, 'Login successful'];
+    } catch (error) {
+        console.error(error);
+        return [false, 'Login failed'];
+    }
+}
+
 module.exports = {
     handleRegisterRequest,
     handleLoginRequest,
-    verifyPassword,
-    profileSelection
+    profileSelection,
+    updateProfile
 };

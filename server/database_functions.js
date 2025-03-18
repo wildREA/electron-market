@@ -18,8 +18,12 @@ async function checkIfUnique(type, value) {
 
 async function registerUser(username, email, password) {
     try {
-        const query = 'INSERT INTO users (username, email, password) VALUES (?, ?, ?)';
+        let query = 'INSERT INTO users (username, email, password) VALUES (?, ?, ?)';
         await pool.execute(query, [username, email, password]);
+
+        query = 'INSERT INTO profiles (username) VALUES (?)';
+        await pool.execute(query, [username]);
+
         return true;
     } catch (error) {
         console.error(error);
@@ -52,9 +56,22 @@ async function getUser(query, identifier) {
     }
 }
 
+async function profileUpdate(query, countryCode, profileImage, description, username) {
+    try {
+        await pool.execute(query, [countryCode, profileImage, description, username]);
+        return true;
+    } catch (error) {
+        console.error(error);
+        return false;
+    }
+}
+
+
+
 module.exports = {
     checkIfUnique,
     registerUser,
     getUserByIdentifier,
-    getUser
+    getUser,
+    profileUpdate
 }
