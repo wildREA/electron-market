@@ -36,8 +36,8 @@ async function getUserByIdentifier(identifier) {
         const query = 'SELECT * FROM users WHERE username = ? OR email = ? LIMIT 1';
         const [rows] = await pool.execute(query, [identifier, identifier]);
         return rows[0] || null;
-    } catch (error) {
-        console.error(error);
+    } catch (err) {
+        console.error(err);
         return null;
     }
 }
@@ -51,8 +51,19 @@ async function getUser(query, identifier) {
         const user = { ...results[0] };
         delete user.user_id;
         return { success: true, message: user };
-    } catch (error) {
-        return { success: false, message: "Query error", error };
+    } catch (err) {
+        return { success: false, message: 'Query error', err };
+    }
+}
+
+async function getCarList() {
+    try {
+        const query = `SELECT * FROM cars`;
+        const [results] = await pool.execute(query);
+        return { success: true, data: results };
+    } catch (err) {
+        console.error(err);
+        return { success: false, error: err };
     }
 }
 
