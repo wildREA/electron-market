@@ -1,46 +1,60 @@
-async function createCars() {
+// Function to handle car selection
+async function createCarCard(brand, model, year, price, extraInfo) {
     console.log("Creating car card(s)...");
   
     try {
       // Retrieve user data from the database                                                                                                                                                                                    \atabase through the API endpoint
-      const response = await fetch('/profile');
+      const response = await fetch('/cars');
       if (!response.ok) {
         throw new Error(`HTTP error! Status: ${response.status}`);
       }
-      const user = await response.json();
-  
-      // Build the list HTML using the database values
-      const profileHTML = `
-        <div class="profile-card">
-          <div class="profile-username">
-            ${user.username}
-            <img src="images/flags/${user.countryCode}" alt="${user.countryCode}" draggable="false">
-          </div>
-          <img class="profile-image" src="images/profiles/${user.profileImage}" alt="Profile Image" draggable="false">
-          <div class="seller-info">
-            <div>Status: ${user.sellerStatus}</div>
-            <div>Type: ${user.businessType}</div>
-          </div>
-        </div>
-      `;
-  
-      // Use SweetAlert2 to display the profile modal
-      Swal.fire({
-        title: 'Profile',
-        html: profileHTML,
-        showConfirmButton: true,
+      const cars = await response.json();
+        // Format the price using toLocaleString
+        const formattedPrice = price.toLocaleString('de-DE');
+        
+        // Log all selected car details for debugging
+        console.log("Selected Car:", brand, model, year, formattedPrice, extraInfo);
+        
+        // Build the HTML content with additional information if available
+        let detailsHTML = `
+        <div style="user-select: none;">
+            <img src="${extraInfo.image}" alt="${brand} ${model}" style="max-width:100%; height:auto;" draggable="false">
+            <div style="text-align: left; margin-top: 20px;">
+            <p><strong>Engine:</strong> ${extraInfo.engine}</p>
+            <p><strong>Horsepower:</strong> ${extraInfo.horsepower} hp</p>
+            <p><strong>Torque:</strong> ${extraInfo.torque} Nm</p>
+            <p><strong>Transmission:</strong> ${extraInfo.transmission}</p>
+            <p><strong>Drivetrain:</strong> ${extraInfo.drivetrain}</p>
+            <p><strong>Redline:</strong> ${extraInfo.redline}</p>
+            <p><strong>Acceleration:</strong> ${extraInfo.acceleration}</p>
+            <p><strong>Top Speed:</strong> ${extraInfo.topSpeed}</p>
+            <p><strong>Platform:</strong> ${extraInfo.platform}</p>
+            <p><strong>Suspension:</strong> ${extraInfo.suspension}</p>
+            <p><strong>Brakes:</strong> Front - ${extraInfo.brakes.front}, Rear - ${extraInfo.brakes.rear}</p>
+            <p><strong>Interior:</strong> ${extraInfo.interior.seats}, ${extraInfo.interior.steeringWheel}, Gear Knob: ${extraInfo.interior.gearKnob}</p>
+            <p><strong>Production Notes:</strong> ${extraInfo.productionNotes}</p>
+            <p><strong>Additional Info:</strong> ${extraInfo.additionalInfo}</p>
+            <p><strong>Reviews:</strong> ${extraInfo.reviews.join('; ')}</p>
+            </div>
+        </div>`;
+        
+        // Display the car details in a SweetAlert modal
+        Swal.fire({
+        title: `${year} ${brand} ${model}`,
+        html: detailsHTML,
         confirmButtonText: 'Close'
-      });
-  
-      console.log("Created profile card!");
+        });
     } catch (error) {
-      console.error("Error retrieving user profile:", error);
+        console.error("Error retrieving user profile:", error);
     }
   }
-  
+
   // Expose the function so it can be called from other scripts
-  window.createProfile = createProfile;
+  window.createCarCard = createCarCard;
   
+  module.exports = {
+    createCarCard
+};
 
 
 export const car1 = {
