@@ -46,7 +46,7 @@ async function startServer() {
 
         app.post('/updateProfile', async (req, res) => {
             console.log(req.body.username, req.body.password,  req.body.countryCode, req.body.profileImage, req.body.description)
-            const [result, message] = await updateProfile(req.username, req.password,  req.body.countryCode, req.body.profileImage, req.body.description);
+            const [result, message] = await updateProfile(req.body.username, req.body.password,  req.body.countryCode, req.body.profileImage, req.body.description);
             return res.json({ success: result, message: message });
         });
 

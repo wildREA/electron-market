@@ -34,42 +34,9 @@ async function createProfile() {
     const requiredFields = ['countryCode', 'profileImage', 'description'];
     const missingFields = requiredFields.filter(field => !user[field]);
 
+
     if (missingFields.length > 0) {
       const formHTML = `
-        <style>
-          .modern-form {
-            font-family: 'Roboto', sans-serif;
-            padding: 20px;
-            color: #444;
-          }
-          .modern-form label {
-            display: block;
-            margin-bottom: 8px;
-            font-weight: 500;
-            font-size: 14px;
-          }
-          .modern-form input,
-          .modern-form select,
-          .modern-form textarea {
-            width: 100%;
-            padding: 12px;
-            border: 1px solid #ddd;
-            border-radius: 6px;
-            margin-bottom: 15px;
-            font-size: 14px;
-            transition: border-color 0.3s ease;
-          }
-          .modern-form input:focus,
-          .modern-form select:focus,
-          .modern-form textarea:focus {
-            border-color: #007BFF;
-            outline: none;
-          }
-          .modern-form textarea {
-            resize: vertical;
-            min-height: 80px;
-          }
-        </style>
         <form id="modernProfileForm" class="modern-form">
           ${missingFields.includes('countryCode') ? `
             <div>

@@ -234,3 +234,36 @@ body {
   align-items: center;
   height: 50vh;
 }
+
+.modern-form {
+  font-family: 'Roboto', sans-serif;
+  padding: 20px;
+  color: #444;
+}
+.modern-form label {
+  display: block;
+  margin-bottom: 8px;
+  font-weight: 500;
+  font-size: 14px;
+}
+.modern-form input,
+.modern-form select,
+.modern-form textarea {
+  width: 100%;
+  padding: 12px;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  margin-bottom: 15px;
+  font-size: 14px;
+  transition: border-color 0.3s ease;
+}
+.modern-form input:focus,
+.modern-form select:focus,
+.modern-form textarea:focus {
+  border-color: #007BFF;
+  outline: none;
+}
+.modern-form textarea {
+  resize: vertical;
+  min-height: 80px;
+}

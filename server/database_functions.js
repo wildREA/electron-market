@@ -42,10 +42,10 @@ async function getUserByIdentifier(identifier) {
     }
 }
 
-async function getUser(identifier) {
+async function getUserProfile(identifier) {
     try {
         //select from profile
-        query = 'SELECT * FROM profiles WHERE username = ?';
+        query = 'SELECT * FROM profiles WHERE username = ? ';
         const [results] = await pool.execute(query, [identifier])
         if (!results || results.length === 0) {
             return { success: false, message: "No user found" };
@@ -70,6 +70,14 @@ async function getCarList() {
 }
 
 async function profileUpdate(query, countryCode, profileImage, description, username) {
+    console.log(`Sql part now:
+    query: ${query}
+    countryCode: ${countryCode}
+    profileImage: ${profileImage}
+    description: ${description}
+    username: ${username}`);
+
+    console.log("image: " + profileImage)
     try {
         await pool.execute(query, [countryCode, profileImage, description, username]);
         return true;
@@ -85,6 +93,6 @@ module.exports = {
     checkIfUnique,
     registerUser,
     getUserByIdentifier,
-    getUser,
+    getUserProfile,
     profileUpdate
 }

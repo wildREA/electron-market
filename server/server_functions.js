@@ -2,7 +2,7 @@ const fs = require('fs');
 const path = require('path');
 const bcrypt = require('bcrypt');
 
-const { checkIfUnique, registerUser, getUserByIdentifier, getUser, profileUpdate, getCarList } = require('./database_functions');
+const { checkIfUnique, registerUser, getUserByIdentifier, getUserProfile, profileUpdate, getCarList } = require('./database_functions');
 
 async function handleRegisterRequest(username, email, password) {
     if (!username || !password) return [false, 'Username and password are required'];
@@ -57,7 +57,7 @@ async function profileSelection(username) {
     } catch (err) {
         return [false, 'Internal server error'];
     }
-    const result = await getUser(username);
+    const result = await getUserProfile(username);
     if (result.success) {
         return [true, result.message];
     } else {
@@ -83,11 +83,11 @@ async function updateProfile(username, password, countryCode, profileImage, desc
 
         const query = `
             UPDATE profiles
-            SET countryCode = ?, profileImage = ?, description = ?
+            SET countryCode = ?, profileImage = ?, biography = ?
             WHERE username = ?
         `;
 
-        if (await profileUpdate(query, countryCode, profileImage, description, username)) {
+        if (await profileUpdate(query, countryCode, imagePath, description, username)) {
             return [true, 'Profile updated successfully'];
         }
         else {
