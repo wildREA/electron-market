@@ -42,9 +42,11 @@ async function getUserByIdentifier(identifier) {
     }
 }
 
-async function getUser(query, identifier) {
+async function getUser(identifier) {
     try {
-        const [results] = await pool.execute(query, [identifier, identifier])
+        //select from profile
+        query = 'SELECT * FROM profiles WHERE username = ?';
+        const [results] = await pool.execute(query, [identifier])
         if (!results || results.length === 0) {
             return { success: false, message: "No user found" };
         }

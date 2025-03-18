@@ -51,10 +51,6 @@ async function createCarCard(brand, model, year, price, extraInfo) {
 
   // Expose the function so it can be called from other scripts
   window.createCarCard = createCarCard;
-  
-  module.exports = {
-    createCarCard
-};
 
 
 export const car1 = {
