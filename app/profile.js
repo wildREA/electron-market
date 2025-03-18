@@ -40,3 +40,23 @@ async function createProfile() {
 
 // Expose the function so it can be called from other scripts
 window.createProfile = createProfile;
+
+document.addEventListener('DOMContentLoaded', () => {
+  const profilePic = document.getElementById('profilePic');
+  const dropdownMenu = document.getElementById('dropdownMenu');
+
+  // Toggle dropdown when clicking the profile picture
+  profilePic.addEventListener('click', (e) => {
+    e.stopPropagation();
+    dropdownMenu.classList.toggle('active');
+    console.log("Visibility: " + dropdownMenu.checkVisibility());
+  });
+
+  // Close dropdown when clicking outside the profile container
+  document.addEventListener('click', (e) => {
+    if (!e.target.closest('.profile-container') && !e.target.closest('.card')) {  // Fix logic for debugging for card lists, include and exclude for only profile container
+      dropdownMenu.classList.remove('active');
+      console.log("Visibility: false");
+    }
+  });
+});

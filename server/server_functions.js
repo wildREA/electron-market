@@ -1,5 +1,5 @@
-const bcrypt = require('bcrypt');
 const { checkIfUnique, registerUser, getUserByIdentifier, getUser, getCarList } = require('./database_functions');
+const bcrypt = require('bcrypt');
 
 async function handleRegisterRequest(username, email, password) {
     if (!username || !password) return [false, 'Username and password are required'];
@@ -13,7 +13,7 @@ async function handleRegisterRequest(username, email, password) {
     if (!isEmailUnique) return [false, 'Email must be unique'];
 
     // Hasing password with bcrypt using salt rounds
-    const saltRounds = 16;
+    const saltRounds = 16;  // Extra security 
     const hashedPassword = await bcrypt.hash(password, saltRounds);
 
     // Register the user if both checks pass

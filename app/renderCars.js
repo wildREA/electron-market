@@ -1,47 +1,5 @@
-// Define your car objects
-import { car1, car2, car3, car4, car5, car6, car7, car8, car9, car10, car11, car12, car13, car14, car15} from './carList.js';
-
-// Array of car objects
-const cars = [car1, car2, car3, car4, car5, car6, car7, car8, car9, car10, car11, car12, car13, car14, car15];
-
-// Function to handle car selection
-function selectCar(brand, model, year, price, extraInfo) {
-  // Format the price using toLocaleString
-  const formattedPrice = price.toLocaleString('de-DE');
-  
-  // Log all selected car details for debugging
-  console.log("Selected Car:", brand, model, year, formattedPrice, extraInfo);
-  
-  // Build the HTML content with additional information if available
-  let detailsHTML = `
-    <div style="user-select: none;">
-      <img src="${extraInfo.image}" alt="${brand} ${model}" style="max-width:100%; height:auto;" draggable="false">
-      <div style="text-align: left; margin-top: 20px;">
-        <p><strong>Engine:</strong> ${extraInfo.engine}</p>
-        <p><strong>Horsepower:</strong> ${extraInfo.horsepower} hp</p>
-        <p><strong>Torque:</strong> ${extraInfo.torque} Nm</p>
-        <p><strong>Transmission:</strong> ${extraInfo.transmission}</p>
-        <p><strong>Drivetrain:</strong> ${extraInfo.drivetrain}</p>
-        <p><strong>Redline:</strong> ${extraInfo.redline}</p>
-        <p><strong>Acceleration:</strong> ${extraInfo.acceleration}</p>
-        <p><strong>Top Speed:</strong> ${extraInfo.topSpeed}</p>
-        <p><strong>Platform:</strong> ${extraInfo.platform}</p>
-        <p><strong>Suspension:</strong> ${extraInfo.suspension}</p>
-        <p><strong>Brakes:</strong> Front - ${extraInfo.brakes.front}, Rear - ${extraInfo.brakes.rear}</p>
-        <p><strong>Interior:</strong> ${extraInfo.interior.seats}, ${extraInfo.interior.steeringWheel}, Gear Knob: ${extraInfo.interior.gearKnob}</p>
-        <p><strong>Production Notes:</strong> ${extraInfo.productionNotes}</p>
-        <p><strong>Additional Info:</strong> ${extraInfo.additionalInfo}</p>
-        <p><strong>Reviews:</strong> ${extraInfo.reviews.join('; ')}</p>
-      </div>
-    </div>`;
-  
-  // Display the car details in a SweetAlert modal
-  Swal.fire({
-    title: `${year} ${brand} ${model}`,
-    html: detailsHTML,
-    confirmButtonText: 'Close'
-  });
-}
+// Method to create car card
+createCarCard(brand, model, year, price, extraInfo);
 
 // Function to dynamically render the car cards
 function renderCars() {
@@ -104,23 +62,3 @@ function createCarCard(car) {
 
 // Render cars when the page loads
 window.onload = renderCars;
-
-document.addEventListener('DOMContentLoaded', () => {
-  const profilePic = document.getElementById('profilePic');
-  const dropdownMenu = document.getElementById('dropdownMenu');
-
-  // Toggle dropdown when clicking the profile picture
-  profilePic.addEventListener('click', (e) => {
-    e.stopPropagation();
-    dropdownMenu.classList.toggle('active');
-    console.log("Visibility: " + dropdownMenu.checkVisibility());
-  });
-
-  // Close dropdown when clicking outside the profile container
-  document.addEventListener('click', (e) => {
-    if (!e.target.closest('.profile-container') && !e.target.closest('.card')) {  // Fix logic for debugging for card lists, include and exclude for only profile container
-      dropdownMenu.classList.remove('active');
-      console.log("Visibility: false");
-    }
-  });
-});
