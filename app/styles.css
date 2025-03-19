@@ -267,3 +267,40 @@ body {
   resize: vertical;
   min-height: 80px;
 }
+
+.profile-container {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  padding: 20px;
+  max-width: 300px;
+  margin: 0 auto;
+}
+.profile-username {
+  font-size: 20px;
+  font-weight: bold;
+  margin-bottom: 10px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.profile-username img {
+  width: 24px;
+  height: 18px;
+}
+.profile-image-placeholder {
+  width: 90%;
+  height: 70%;
+  min-height: 150px;
+  background-color: #e0e0e0;
+  border-radius: 6px;
+  margin: 10px auto;
+}
+.profile-description {
+  font-size: 16px;
+  color: #555;
+  margin-top: 10px;
+}
+.seller-info {
+  margin-top: 15px;
+  font-size: 14px;
+  color: #666;
+}
