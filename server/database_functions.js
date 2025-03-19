@@ -57,17 +57,6 @@ async function getUser(query, identifier) {
     }
 }
 
-async function getCarList() {
-    try {
-        const query = `SELECT * FROM cars`;
-        const [results] = await pool.execute(query);
-        return { success: true, data: results };
-    } catch (err) {
-        console.error(err);
-        return { success: false, error: err };
-    }
-}
-
 async function profileUpdate(query, countryCode, profileImage, description, username) {
     try {
         await pool.execute(query, [countryCode, profileImage, description, username]);
@@ -78,11 +67,22 @@ async function profileUpdate(query, countryCode, profileImage, description, user
     }
 }
 
+async function getCarList() {
+    try {
+        const query = `SELECT * FROM cars`;
+        const [rows] = await pool.execute(query);
+        return { success: true, data: rows };
+    } catch (err) {
+        console.error(err);
+        res.json({ success: false, error: err });
+    }
+}
+
 module.exports = {
     checkIfUnique,
     registerUser,
     getUserByIdentifier,
     getUser,
-    getCarList,
-    profileUpdate
+    profileUpdate,
+    getCarList
 }

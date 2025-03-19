@@ -101,8 +101,13 @@ async function verifyUser(username, password) {
 }
 
 async function carListSelection() {
-    const result = await getCarList();
-    return result.success ? [true, result] : [false, result];
+    try {
+        const result = await getCarList();
+        return result.success ? [true, result.data] : [false, 'Error fetching car list'];
+    } catch (err) {
+        console.error(err);
+        return [false, 'Error fetching car list'];
+    }
 }
 
 module.exports = {

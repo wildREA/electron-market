@@ -1,80 +1,9 @@
-// Method to fetch car data from the API endpoint
-async function fetchCarData() {
-    console.log("Fetching car data...");
-    try {
-      // Retrieve car data from the database through the API endpoint
-      const response = await fetch('http://localhost:3000/cars');
-      if (!response.ok) {
-        throw new Error(`HTTP error! Status: ${response.status}`);
-      }
-      const cars = await response.json();
-      console.log("Car data:", cars);
-      
-      for (const car of cars) {
-        createCarCard(car);
-      }
-    } catch (err) {
-      console.error("Error retrieving car data:", err);
-    }
-  }
-
-// Function to handle car selection
-async function createCarCard() {
-    console.log("Creating car card(s)...");
-    try {
-        // Format the price using toLocaleString
-        const formattedPrice = price.toLocaleString('de-DE');
-        
-        // Log all selected car details for debugging
-        console.log("Selected Car:", brand, model, year, formattedPrice);
-        
-        // Build the HTML content with additional information if available
-        let detailsHTML = `
-        <div style="user-select: none;">
-            <img src="${cars.image}" alt="${cars.brand} ${cars.model}" style="max-width:100%; height:auto;" draggable="false">
-            <div style="text-align: left; margin-top: 20px;">
-            <p><strong>Color:</strong> ${cars.color}</p>
-            <p><strong>Fuel:</strong> ${cars.fuel}</p>
-            <p><strong>Engine:</strong> ${cars.engine}</p>
-            <p><strong>Horsepower:</strong> ${cars.horsepower} hp</p>
-            <p><strong>Torque:</strong> ${cars.torque} Nm</p>
-            <p><strong>Transmission:</strong> ${cars.transmission}</p>
-            <p><strong>Drivetrain:</strong> ${cars.drivetrain}</p>
-            <p><strong>Redline:</strong> ${cars.redline} rpm</p>
-            <p><strong>Acceleration:</strong> ${cars.acceleration}</p>
-            <p><strong>Top Speed:</strong> ${cars.topSpeed}</p>
-            <p><strong>Platform:</strong> ${cars.platform}</p>
-            <p><strong>Suspension:</strong> ${cars.suspension}</p>
-            <p><strong>Brakes:</strong> Front - ${cars.brakes.front}, Rear - ${cars.brakes.rear}</p>
-            <p><strong>Interior:</strong> ${cars.interior.seats}, ${cars.interior.steeringWheel}, Gear Knob: ${cars.interior.gearKnob}</p>
-            <p><strong>Production Notes:</strong> ${cars.productionNotes}</p>
-            <p><strong>Additional Info:</strong> ${cars.additionalInfo}</p>
-            </div>
-        </div>`;
-        
-        // Display the car details in a SweetAlert modal
-        Swal.fire({
-        title: `${year} ${brand} ${model}`,
-        html: detailsHTML,
-        confirmButtonText: 'Close'
-        });
-    } catch (err) {
-        console.error("Error retrieving user profile:", err);
-    }
-  }
-  
-  // Expose the function so it can be called from other scripts
-  window.createCarCard = createCarCard;
-
-
 export const car1 = {
     brand: 'Honda',
     model: 'Integra Type R DC2',
     year: 1996,
     price: 7000,
     image: 'images/cars/honda_integra_type_r_dc2_1996.jpg',
-    flag: 'images/flags/japan.jpg',
-    country: 'Japan',
 
     // Engine & Performance
     engine: '1.8L DOHC VTEC inline-4 (B18C5)',
@@ -84,43 +13,41 @@ export const car1 = {
     drivetrain: 'FWD',
     redline: '8400 rpm',        // Redline for the 96 spec (US version often slightly different)
     acceleration: '0-100 km/h in 6.7s',
-    topSpeed: '234 km/h (145 mph)',
+    top_speed: '234 km/h (145 mph)',
     weight: '≈1100–1200 kg',    // Lightweight for enhanced agility
-    powerToWeight: '≈5.9 kg/hp',
+    power_to_weight: '≈5.9 kg/hp',
 
     // Chassis & Suspension
     platform: 'DC2',
     suspension: 'Double wishbone (front & rear) with sport-tuned settings',
-    brakes: {
-        front: 'Ventilated discs (≈282mm)',
-        rear: 'Solid discs (≈260mm)'
-    },
-    limitedSlipDiff: true,
+    brakes_front: 'Ventilated discs (≈282mm)',
+    brakes_rear: 'Solid discs (≈260mm)',
+    limited_slip_off: true,
 
     // Exterior & Aerodynamics
-    bodyStyle: '3-door coupe',
+    body_style: '3-door coupe',
     aerodynamics: {
         kit: 'Aggressive front and rear spoilers',
-        liftReduction: '≈30% reduction'
+        lift_reduction: '≈30% reduction'
     },
 
     // Interior & Features
     interior: {
         seats: 'Recaro sport seats (often in red)',
-        steeringWheel: 'Momo three-spoke, leather-wrapped',
-        gearKnob: 'Titanium shift knob',
+        steering_wheel: 'Momo three-spoke, leather-wrapped',
+        gear_knob: 'Titanium shift knob',
         instrumentation: 'High-rev tachometer (up to 10,000 rpm) and digital clock'
     },
 
     // Additional Info
     VTEC: true,
-    productionNotes: "The 1996 Honda Integra Type R DC2 epitomizes Honda’s commitment to performance and precision engineering, featuring the celebrated B18C5 engine that delivers 197 hp and 181 Nm of torque. Developed with a focus on lightweight construction, advanced aerodynamics, and meticulous tuning for enhanced handling, this limited-production model became a cult classic among enthusiasts, embodying the pure “driver’s car” ethos that set new benchmarks for spirited performance in the realm of Japanese sports sedans.",
+    production_notes: "The 1996 Honda Integra Type R DC2 epitomizes Honda’s commitment to performance and precision engineering, featuring the celebrated B18C5 engine that delivers 197 hp and 181 Nm of torque. Developed with a focus on lightweight construction, advanced aerodynamics, and meticulous tuning for enhanced handling, this limited-production model became a cult classic among enthusiasts, embodying the pure “driver’s car” ethos that set new benchmarks for spirited performance in the realm of Japanese sports sedans.",
     //additionalInfo: 'Originally a JDM special; US models were limited (≈4000 units)',  Not and error but webstorm annoyed me so yeah
     reviews: [
         'Praised as one of the best front-wheel-drive performance cars',
         'Acclaimed for its engaging, high-revving character and race-inspired handling'
     ],
-    additionalInfo: 'Built on the DC2 platform, the Integra Type R DC2 features a hand-built B18C5 engine with enhanced porting, lightweight components, and a tuned suspension setup for an exhilarating driving experience.'
+    additional_info: 'Built on the DC2 platform, the Integra Type R DC2 features a hand-built B18C5 engine with enhanced porting, lightweight components, and a tuned suspension setup for an exhilarating driving experience.'
 };
 
 export const car2 = {
@@ -147,14 +74,12 @@ export const car2 = {
     // Chassis & Suspension
     platform: 'E110',
     suspension: 'MacPherson strut (front) and torsion beam (rear)',
-    brakes: {
-        front: 'Ventilated discs',
-        rear: 'Solid discs'
-    },
-    limitedSlipDiff: false,
+    brakes_front: 'Ventilated discs',
+    brakes_rear: 'Solid discs',
+    limited_slip_off: false,
 
     // Exterior & Aerodynamics
-    bodyStyle: '4-door sedan',
+    body_style: '4-door sedan',
     aerodynamics: {
         design: 'Streamlined design with subtle aerodynamic features'
     },
@@ -162,14 +87,14 @@ export const car2 = {
     // Interior & Features
     interior: {
         seats: 'Comfort fabric seats',
-        steeringWheel: 'Tilt-adjustable',
-        gearKnob: 'Standard shift knob',
+        steering_wheel: 'Tilt-adjustable',
+        gear_knob: 'Standard shift knob',
         instrumentation: 'Analog gauges with a digital clock'
     },
 
     // Additional Info
-    productionNotes: 'The 2001 Toyota Corolla, part of the long‑running E110 series, was designed to deliver exceptional reliability and fuel efficiency with its 1.8L 1ZZ‑FE engine producing 125 hp and 125 Nm torque, manufactured across various international facilities to meet diverse market demands and solidify its reputation as one of the world’s most dependable and economical vehicles.',
-    additionalInfo: 'The 2001 Toyota Corolla is renowned for its reliability and fuel efficiency, making it an economical and practical choice for daily commuting.',
+    production_notes: 'The 2001 Toyota Corolla, part of the long‑running E110 series, was designed to deliver exceptional reliability and fuel efficiency with its 1.8L 1ZZ‑FE engine producing 125 hp and 125 Nm torque, manufactured across various international facilities to meet diverse market demands and solidify its reputation as one of the world’s most dependable and economical vehicles.',
+    additional_info: 'The 2001 Toyota Corolla is renowned for its reliability and fuel efficiency, making it an economical and practical choice for daily commuting.',
     reviews: [
         'Praised for its low maintenance costs and enduring reliability.',
         'A dependable, economical option that still delivers a refined driving experience.'
@@ -193,21 +118,19 @@ export const car3 = {
     drivetrain: 'RWD',
     redline: '7250 rpm',
     acceleration: '0-100 km/h in 4.3s',
-    topSpeed: '250 km/h (155 mph)',
+    top_speed: '250 km/h (155 mph)',
     weight: '≈1600 kg',
-    powerToWeight: '≈3.2 kg/hp',
+    power_to_weight: '≈3.2 kg/hp',
 
     // Chassis & Suspension
     platform: 'S550',
     suspension: 'Fully independent, performance-tuned',
-    brakes: {
-        front: 'Ventilated discs (≈350mm)',
-        rear: 'Ventilated discs (≈350mm)'
-    },
-    limitedSlipDiff: true,
+    brakes_front: 'Ventilated discs (≈350mm)',
+    brakes_rear: 'Ventilated discs (≈350mm)',
+    limited_slip_off: true,
 
     // Exterior & Aerodynamics
-    bodyStyle: '2-door coupe',
+    body_style: '2-door coupe',
     aerodynamics: {
         kit: 'Aggressive front splitter and rear diffuser for enhanced downforce'
     },
@@ -215,8 +138,8 @@ export const car3 = {
     // Interior & Features
     interior: {
         seats: 'Leather sport seats with contrast stitching',
-        steeringWheel: 'Performance-inspired, leather-wrapped',
-        gearKnob: 'Titanium shift knob',
+        steering_wheel: 'Performance-inspired, leather-wrapped',
+        gear_knob: 'Titanium shift knob',
         instrumentation: 'Digital display with performance metrics and a 13.2" touchscreen'
     },
 
