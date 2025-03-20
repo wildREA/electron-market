@@ -112,6 +112,7 @@ function sendRegister(username, email, password) {
                     confirmButtonText: 'Close'
                 });
                 // Add any further actions, such as triggering a profile picture change
+                document.getElementById('login').innerText = "Logout";
             }
         })
         .catch((error) => {
@@ -138,8 +139,8 @@ async function sendLogin(identifier, password) {
             });
             await getUserInformations(identifier);
             window.userinformations.password = password;
-
             // Add further actions here, such as updating the profile picture
+            document.getElementById('login').innerText = "Logout";
         }
     } catch (error) {
         console.error('Error:', error);
