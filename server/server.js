@@ -7,7 +7,7 @@ const app = express();
 const PORT = process.env.PORT || 3000;
 
 //server_functions
-const { handleRegisterRequest, handleLoginRequest, profileSelection, updateProfile, getProfileImage } = require('../server/server_functions');
+const { handleRegisterRequest, handleLoginRequest, profileSelection, carListSelection, updateProfile, getProfileImage } = require('../server/server_functions');
 
 // Enable CORS for all routes
 app.use(cors());
@@ -26,7 +26,6 @@ async function startServer() {
             database: 'eam_db',
             port: 3306 // Default MySQL port
         });
-
         console.log(process.env.PASSWORD)
 
         app.post('/register', async (req, res) => {
@@ -51,8 +50,8 @@ async function startServer() {
         });
 
         app.get('/cars', async (req, res) => {
-            const data = await carListSelection(req.body);
-            res.json({ success: true, data: data });
+            const [result, message] = await carListSelection();
+            return res.json({ success: result, message: message });
         });
 
         app.post('/getProfileImage', async (req, res) => {

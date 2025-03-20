@@ -18,12 +18,13 @@ async function checkIfUnique(type, value) {
 
 async function registerUser(username, email, password) {
     try {
+        // Insert user into users table
         let query = 'INSERT INTO users (username, email, password) VALUES (?, ?, ?)';
         await pool.execute(query, [username, email, password]);
-
+        // Insert user into profiles table
         query = 'INSERT INTO profiles (username) VALUES (?)';
         await pool.execute(query, [username]);
-
+        // Return true if the above steps are successful
         return true;
     } catch (error) {
         console.error(error);
@@ -58,17 +59,6 @@ async function getUserProfile(identifier) {
     }
 }
 
-async function getCarList() {
-    try {
-        const query = `SELECT * FROM cars`;
-        const [results] = await pool.execute(query);
-        return { success: true, data: results };
-    } catch (err) {
-        console.error(err);
-        return { success: false, error: err };
-    }
-}
-
 async function profileUpdate(query, countryCode, profileImage, description, username) {
     console.log(`Sql part now:
     query: ${query}
@@ -87,12 +77,22 @@ async function profileUpdate(query, countryCode, profileImage, description, user
     }
 }
 
-
+async function getCarList() {
+    try {
+        const query = `SELECT * FROM cars`;
+        const [rows] = await pool.execute(query);
+        return { success: true, data: rows };
+    } catch (err) {
+        console.error(err);
+        res.json({ success: false, error: err });
+    }
+}
 
 module.exports = {
     checkIfUnique,
     registerUser,
     getUserByIdentifier,
     getUserProfile,
-    profileUpdate
+    profileUpdate,
+    getCarList
 }
