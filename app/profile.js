@@ -3,11 +3,11 @@ async function createProfile() {
 
   try {
     // Ensure user info exists
-    if (!window.userinformations || !window.userinformations.username) {
+    if (!window.userinformation || !window.userinformation.username) {
       console.warn("User information not available.");
       return;
     }
-    const { username, password } = window.userinformations;
+    const { username, password } = window.userinformation;
     // Retrieve profile data from the API
     let response = await fetch('http://localhost:3000/profile', {
       method: 'POST',
@@ -80,7 +80,7 @@ async function createProfile() {
           ` : ''}
         </form>
       `;
-      const rpesult = await Swal.fire({
+      const result = await Swal.fire({
         title: 'Complete Your Profile',
         html: formHTML,
         focusConfirm: false,
@@ -135,7 +135,7 @@ async function createProfile() {
   }
 }
 
-async function getProfileImage(path = window.userinformations.profileImage) {
+async function getProfileImage(path = window.userinformation.profileImage) {
   const imageResponse = await fetch(`http://localhost:3000/getProfileImage`, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },

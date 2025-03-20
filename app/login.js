@@ -129,7 +129,7 @@ async function sendLogin(identifier, password) {
                 confirmButtonText: 'Close'
             });
             await getUserInformations(identifier);
-            window.userinformations.password = password;
+            window.userinformation.password = password;
             // Add further actions here, such as updating the profile picture
             document.getElementById('login').innerText = "Logout";
         }
@@ -151,7 +151,7 @@ async function getUserInformations(username) {
         console.log(data);
         console.log('Success:', data.success);
         if (data.success) {
-            window.userinformations = data.message;
+            window.userinformation = data.message;
         }
     } catch (error) {
         console.error('Error:', error);
