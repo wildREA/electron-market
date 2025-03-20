@@ -80,7 +80,7 @@ async function createProfile() {
           ` : ''}
         </form>
       `;
-      const result = await Swal.fire({
+      const rpesult = await Swal.fire({
         title: 'Complete Your Profile',
         html: formHTML,
         focusConfirm: false,
@@ -117,60 +117,71 @@ async function createProfile() {
           body: JSON.stringify(updatePayload)
         });
         if (!updateResponse.ok) throw new Error(`Update failed: ${updateResponse.status}`);
-        const updatedData = await updateResponse.json();
-        user = { ...user, ...updatedData.message };
+        //const updatedData = await updateResponse.json();
+        //No real data it only returns error message use if needed.
 
-        // If profile image was updated, use it directly
-        if (result.value.profileImage) {
-          profileImageBase64 = result.value.profileImage;
-        } else if (updatedData.message.profileImage && updatedData.message.profileImage !== user.profileImage) {
-          // Fetch the new profile image
-          const imageResponse = await fetch(`http://localhost:3000/getProfileImage`, {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ imagePath: updatedData.message.profileImage })
-          });
-
-          if (imageResponse.ok) {
-            const imageData = await imageResponse.json();
-            profileImageBase64 = imageData.imageBase64;
-          }
-        }
       } else {
         // User canceled the form submission
         return;
       }
     }
-
     // Close any existing SweetAlert (if present)
     Swal.close();
-
     // Build simple profile display
     finalProfile(user)
-
-
-    console.log("Created profile display!");
   } catch (error) {
     console.error("Error in profile creation:", error);
     Swal.fire('Error', 'Failed to process profile information', 'error');
   }
 }
 
-window.createProfile = createProfile;
+async function getProfileImage(path = window.userinformations.profileImage) {
+  const imageResponse = await fetch(`http://localhost:3000/getProfileImage`, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ imagePath: path })
+  });
 
+  if (imageResponse.ok) {
+    const imageData = await imageResponse.json();
+    profileImageBase64 = imageData.imageBase64;
+    return profileImageBase64;
+  }
+}
+
+window.createProfile = createProfile;
+window.getProfileImage = getProfileImage;
 
 // Call the function to create the profile card
-function finalProfile(user) {
+async function finalProfile(user) {
+  let img;
+  try {
+    img = await getProfileImage();
+    console.log("Retrieved profile image base64:", img ? "Base64 data available" : "No image data found");
+
+    if (!img) {
+      console.warn("No profile image data returned from getProfileImage()");
+    }
+  } catch (error) {
+    console.error("Error fetching profile image:", error);
+    img = null;
+  }
+
   const profileHTML = `
     <body>
       <div class="custom-profile-card">
-        <div class="custom-profile-img">${user.username.charAt(0)}</div>
+        ${img ?
+      `<img class="custom-profile-img" src="data:image/jpeg;base64,${img}" alt="${user.username}'s profile" onerror="console.error('Image failed to load'); this.onerror=null; this.innerHTML='${user.username.charAt(0)}'" />` :
+      `<div class="custom-profile-img">${user.username.charAt(0)}</div>`
+  }
         <div class="custom-username">${user.username} <img src="https://flagcdn.com/w40/${user.countryCode.toLowerCase()}.png" class="custom-flag" /></div>
         <div class="custom-biography">${user.biography}</div>
         <div class="custom-badge">${user.sellerStatus} - ${user.businessType}</div>
       </div>
     </body>
   `;
+
+  console.log("Creating profile card with image status:", img ? "Using image" : "Using fallback");
 
   Swal.fire({
     html: profileHTML,

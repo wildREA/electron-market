@@ -7,7 +7,7 @@ const app = express();
 const PORT = process.env.PORT || 3000;
 
 //server_functions
-const { handleRegisterRequest, handleLoginRequest, profileSelection, updateProfile } = require('../server/server_functions');
+const { handleRegisterRequest, handleLoginRequest, profileSelection, updateProfile, getProfileImage } = require('../server/server_functions');
 
 // Enable CORS for all routes
 app.use(cors());
@@ -52,6 +52,11 @@ async function startServer() {
 
         app.get('/cars', async (req, res) => {
             const data = await carListSelection(req.body);
+            res.json({ success: true, data: data });
+        });
+
+        app.post('/getProfileImage', async (req, res) => {
+            const data = await getProfileImage(req.body.imagePath);
             res.json({ success: true, data: data });
         });
 

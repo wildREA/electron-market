@@ -123,6 +123,10 @@ async function carListSelection() {
     }
 }
 
+async function getProfileImage(path){
+
+}
+
 
 module.exports = {
     handleRegisterRequest,
@@ -130,5 +134,6 @@ module.exports = {
     verifyPassword,
     profileSelection,
     updateProfile,
-    carListSelection
+    carListSelection,
+    getProfileImage
 };
