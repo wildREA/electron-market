@@ -46,7 +46,7 @@ async function handleLoginRequest(identifier, password) {
 
 function verifyPassword(storedPassword, providedPassword) {
     // In real applications, use bcrypt.compare for hashed passwords
-    return Promise.resolve(storedPassword === providedPassword);
+    return bcrypt.compare(providedPassword, storedPassword);
 }
 
 async function profileSelection(username) {

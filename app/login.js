@@ -2,15 +2,6 @@
 function createLogin() {
     console.log("Creating login card...");
 
-    // Temporary user variable (if needed later)
-    const user = {
-        username: 'ahmetHmoudT0pG_benz',    // Registered username.
-        countryCode: "uk.jpg",              // Flag image reference.
-        profileImage: 'ahmetHmoudT0pG_benz.jpg', // Profile image derived from username.
-        sellerStatus: 'Top G',              // "Seller" / "Customer"
-        businessType: 'Multi-binaire'       // "Commercial" / "Private"
-    };
-
     const loginHTML = `
         <div id="login-body">
             <div class="login-container">
@@ -136,8 +127,8 @@ async function sendLogin(identifier, password) {
                 icon: 'success',
                 confirmButtonText: 'Close'
             });
-            await getUserInformations(identifier);
-            window.userinformations.password = password;
+            await getUserInformation(identifier);
+            window.userinformation.password = password;
 
             // Add further actions here, such as updating the profile picture
         }
@@ -146,7 +137,7 @@ async function sendLogin(identifier, password) {
     }
 }
 
-async function getUserInformations(username) {
+async function getUserInformation(username) {
     try {
         const response = await fetch('http://localhost:3000/profile', {
             method: 'POST',
@@ -159,9 +150,9 @@ async function getUserInformations(username) {
         console.log(data);
         console.log('Success:', data.success);
         if (data.success) {
-            console.log("duhh");
-            window.userinformations = data.message;
-            console.log("us is: " + window.userinformations.username);
+            console.log("Setting userinformation as data.message");
+            window.userinformation = data.message;
+            console.log("us is: " + window.userinformation.username);
         }
     } catch (error) {
         console.error('Error:', error);
