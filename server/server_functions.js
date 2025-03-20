@@ -1,4 +1,5 @@
 const fs = require('fs');
+const fsP = require('fs').promises;
 const path = require('path');
 const bcrypt = require('bcrypt');
 const saltRounds = 10;
@@ -110,9 +111,20 @@ async function carListSelection() {
     }
 }
 
-async function getProfileImage(path){
 
+async function getProfileImage(imagePath) {
+    try {
+        const filePath = path.join(__dirname, imagePath);
+        console.log('Reading image file:', filePath);
+        const imageBuffer = await fsP.readFile(filePath);
+        const base64Image = imageBuffer.toString('base64');
+        return { success: true, imageBase64: base64Image };
+    } catch (error) {
+        console.error('Error reading image file:', error);
+        return { success: false, message: 'Failed to read image file' };
+    }
 }
+
 
 
 module.exports = {

@@ -84,32 +84,36 @@ function handleRegister(event) {
     sendRegister(username, email, password);
 }
 
-function sendRegister(username, email, password) {
-    fetch('http://localhost:3000/register', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ username, email, password }),
-    })
-        .then(response => response.json())
-        .then(data => {
-            console.log('Success:', data.success);
-            if (data.success) {
-                Swal.fire({
-                    title: 'Success',
-                    text: 'Successful registration',
-                    icon: 'success',
-                    confirmButtonText: 'Close'
-                });
-                // Add any further actions, such as triggering a profile picture change
-                document.getElementById('login').innerText = "Logout";
-            }
-        })
-        .catch((error) => {
-            console.error('Error:', error);
+async function sendRegister(username, email, password) {
+    try {
+        const response = await fetch('http://localhost:3000/register', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ username, email, password }),
         });
+
+        const data = await response.json();
+        console.log('Success:', data.success);
+
+        if (data.success) {
+            Swal.fire({
+                title: 'Success',
+                text: 'Successful registration',
+                icon: 'success',
+                confirmButtonText: 'Close'
+            });
+            await getUserInformations(username);
+            window.userinformation.password = password;
+            document.getElementById('login').innerText = "Logout";
+
+        }
+    } catch (error) {
+        console.error('Error:', error);
+    }
 }
+
 
 async function sendLogin(identifier, password) {
     try {
@@ -152,6 +156,9 @@ async function getUserInformations(username) {
         console.log('Success:', data.success);
         if (data.success) {
             window.userinformation = data.message;
+        }
+        else {
+            console.log('Error:', data.message);
         }
     } catch (error) {
         console.error('Error:', error);

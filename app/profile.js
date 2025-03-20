@@ -111,6 +111,7 @@ async function createProfile() {
           ...result.value
         };
         // Send update request
+        console.log("Sending update request with payload:", updatePayload);
         const updateResponse = await fetch('http://localhost:3000/updateProfile', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
@@ -136,17 +137,24 @@ async function createProfile() {
 }
 
 async function getProfileImage(path = window.userinformation.profileImage) {
+  //path += ".png";
+  console.log("Fetching profile image:", path);
   const imageResponse = await fetch(`http://localhost:3000/getProfileImage`, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({ imagePath: path })
   });
 
+
+
   if (imageResponse.ok) {
     const imageData = await imageResponse.json();
-    profileImageBase64 = imageData.imageBase64;
+    console.log("Look here: " + imageData.data.imageBase64 );
+    profileImageBase64 = imageData.data.imageBase64;
+    console.log(profileImageBase64);
     return profileImageBase64;
   }
+  else (console.log("Error fetching profile image"));
 }
 
 window.createProfile = createProfile;
@@ -156,7 +164,7 @@ window.getProfileImage = getProfileImage;
 async function finalProfile(user) {
   let img;
   try {
-    img = await getProfileImage();
+    img = await getProfileImage(user.profileImage);
     console.log("Retrieved profile image base64:", img ? "Base64 data available" : "No image data found");
 
     if (!img) {
