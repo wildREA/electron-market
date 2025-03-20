@@ -49,7 +49,7 @@ async function startServer() {
             return res.json({ success: result, message: message });
         });
 
-        app.get('/cars', async (req, res) => {
+        app.get('/cars', async (res) => {
             const [result, message] = await carListSelection();
             return res.json({ success: result, message: message });
         });
