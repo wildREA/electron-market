@@ -60,14 +60,6 @@ async function getUserProfile(identifier) {
 }
 
 async function profileUpdate(query, countryCode, profileImage, description, username) {
-    console.log(`Sql part now:
-    query: ${query}
-    countryCode: ${countryCode}
-    profileImage: ${profileImage}
-    description: ${description}
-    username: ${username}`);
-
-    console.log("image: " + profileImage)
     try {
         await pool.execute(query, [countryCode, profileImage, description, username]);
         return true;
@@ -84,7 +76,7 @@ async function getCarList() {
         return { success: true, data: rows };
     } catch (err) {
         console.error(err);
-        res.json({ success: false, error: err });
+        return { success: false, error: err };
     }
 }
 
