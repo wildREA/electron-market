@@ -1,3 +1,13 @@
+
+
+// Please read for your own sake
+// I am the creator of this code. Mech654. This code, is without a doubt a piece of SHIT. It works on hopes and dreams.
+// If you want to work on this or fix you need to know that:
+// The user.profileImage is base64 string(3j2k423k4g2o35ig23 smt) on first run after the user fills the form. and an image path(uploads/{username}.png returned by server on second run. It "works" trust me.
+// when I realized how f'ed this was I had two options. Change the frontend and backend to something more...human. Or change one function only to toggle in between them...here we are.
+
+
+
 async function createProfile() {
   console.log("Creating profile card...");
 
@@ -110,7 +120,7 @@ async function createProfile() {
           password,
           ...result.value
         };
-        // Send update request
+        // Send server sided update request
         console.log("Sending update request with payload:", updatePayload);
         const updateResponse = await fetch('http://localhost:3000/updateProfile', {
           method: 'POST',
@@ -118,9 +128,9 @@ async function createProfile() {
           body: JSON.stringify(updatePayload)
         });
         if (!updateResponse.ok) throw new Error(`Update failed: ${updateResponse.status}`);
-        //const updatedData = await updateResponse.json();
-        //No real data it only returns error message use if needed.
 
+        // Update user object with new data
+        user = { ...user, ...result.value };
       } else {
         // User canceled the form submission
         return;
@@ -144,14 +154,9 @@ async function getProfileImage(path = window.userinformation.profileImage) {
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({ imagePath: path })
   });
-
-
-
   if (imageResponse.ok) {
     const imageData = await imageResponse.json();
-    console.log("Look here: " + imageData.data.imageBase64 );
     profileImageBase64 = imageData.data.imageBase64;
-    console.log(profileImageBase64);
     return profileImageBase64;
   }
   else (console.log("Error fetching profile image"));
@@ -164,14 +169,18 @@ window.getProfileImage = getProfileImage;
 async function finalProfile(user) {
   let img;
   try {
-    img = await getProfileImage(user.profileImage);
-    console.log("Retrieved profile image base64:", img ? "Base64 data available" : "No image data found");
-
+    // Check if the profileImage already appears to be base64 data.
+    if (user.profileImage && (user.profileImage.startsWith('data:image') || user.profileImage.length > 100)) {
+      img = user.profileImage;
+    } else {
+      // Otherwise, assume it's a file path and fetch the base64 image from the server.
+      img = await getProfileImage(user.profileImage);
+    }
     if (!img) {
-      console.warn("No profile image data returned from getProfileImage()");
+      console.warn("No profile image data available.");
     }
   } catch (error) {
-    console.error("Error fetching profile image:", error);
+    console.error("Error processing profile image:", error);
     img = null;
   }
 
@@ -179,7 +188,8 @@ async function finalProfile(user) {
     <body>
       <div class="custom-profile-card">
         ${img ?
-      `<img class="custom-profile-img" src="data:image/jpeg;base64,${img}" alt="${user.username}'s profile" onerror="console.error('Image failed to load'); this.onerror=null; this.innerHTML='${user.username.charAt(0)}'" />` :
+      `<img class="custom-profile-img" src="data:image/jpeg;base64,${img}" alt="${user.username}'s profile" onerror="console.error('Image failed to load'); this.onerror=null; this.innerHTML='${user.username.charAt(0)}'" />`
+      :
       `<div class="custom-profile-img">${user.username.charAt(0)}</div>`
   }
         <div class="custom-username">${user.username} <img src="https://flagcdn.com/w40/${user.countryCode.toLowerCase()}.png" class="custom-flag" /></div>
@@ -189,8 +199,6 @@ async function finalProfile(user) {
     </body>
   `;
 
-  console.log("Creating profile card with image status:", img ? "Using image" : "Using fallback");
-
   Swal.fire({
     html: profileHTML,
     width: '350px',
@@ -198,3 +206,4 @@ async function finalProfile(user) {
     confirmButtonText: 'Close'
   });
 }
+
