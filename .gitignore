@@ -4,3 +4,4 @@ server/pass.js
 server/.env
 server/uploads
 uploads
+app/dist
