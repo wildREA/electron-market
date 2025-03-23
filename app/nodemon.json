@@ -1,5 +1,6 @@
 {
   "watch": ["."],
-  "exec": "electron .",
-  "ext": "*"
+  "ext": "ts,tsx,js,json",
+  "ignore": ["node_modules", "dist"],
+  "exec": "tsc && electron ."
 }
