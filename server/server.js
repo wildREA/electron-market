@@ -1,7 +1,4 @@
-<<<<<<< HEAD
 const { Pool } = require('pg');
-=======
->>>>>>> 9a7d5ec (Updating files)
 const express = require('express');
 const cors = require('cors');
 require('dotenv').config({ path: './.env' });
