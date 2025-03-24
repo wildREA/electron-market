@@ -1,8 +1,26 @@
-const socket = require('ws');
 const express = require('express');
 const cors = require('cors');
 const mysql = require('mysql2/promise');
 require('dotenv').config({ path: './.env' });
+
+const WebSocket = require('ws');
+
+const wss = new WebSocket.Server({ port: 3001 });
+
+wss.on('connection', (ws) => {
+    console.log('Client connected');
+
+    ws.on('message', (message) => {
+        console.log(`Received: ${message}`);
+        ws.send(`Echo: ${message}`); // Send response back
+    });
+
+    ws.on('close', () => {
+        console.log('Client disconnected');
+    });
+});
+
+console.log("WebSocket server running on ws://localhost:3001");
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -15,23 +33,6 @@ app.use(cors());
 
 // Parse JSON request bodies
 app.use(express.json());
-
-const wss = new socket.Server({ port: 3000 });
-
-wss.on('connection', (ws) => {
-    console.log('New client connected');
-
-    ws.on('message', (message) => {
-        console.log(`Received: ${message}`);
-        ws.send(`Server received: ${message}`);
-    });
-
-    ws.on('close', () => {
-        console.log('Client disconnected');
-    });
-});
-
-console.log('WebSocket server is running on ws://localhost:3000');
 
 // Initialize server with async DB connection
 async function startServer() {
@@ -56,7 +57,7 @@ async function startServer() {
             return res.json({ success: result, message: message });
         });
 
-        app.post('logout', async (req, res) => {
+        app.post('/logout', async (req, res) => {
             const [result, message] = await logout();
             return res.json({ success: result, message: message });
         });
@@ -73,14 +74,14 @@ async function startServer() {
             return res.json({ success: result, message: message });
         });
 
-        app.get('/cars', async (res) => {
+        app.get('/cars', async (req, res) => {
             const [result, message] = await carListSelection();
             return res.json({ success: result, message: message });
         });
 
         app.post('/getProfileImage', async (req, res) => {
             const data = await getProfileImage(req.body.imagePath);
-            res.json({ success: true, data: data });
+            return res.json({ success: true, data: data });
         });
 
         //Always make put this at bottom
