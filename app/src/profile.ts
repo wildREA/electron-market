@@ -1,27 +1,19 @@
-import Swal from 'sweetalert2';
+declare var Swal: any;
+console.log("THIS IS A TEST");
 
 // Define interfaces for user and user information
 interface User {
   username: string;
   countryCode?: string;
   biography?: string;
-  sellerStatus?: string;
-  businessType?: string;
+  sellerStatus?: number;
+  sellerType?: number;
   profileImage?: string;
 }
 
 interface UserInformation {
   username: string;
   password: string;
-}
-
-// Extend the global Window interface to include our custom properties
-declare global {
-  interface Window {
-    userinformation: UserInformation;
-    buildProfileCard: () => Promise<void>;
-    fetchProfileImage: (imageIdentifier: string) => Promise<string | null>;
-  }
 }
 
 // Helper to convert a file to a Base64 string
@@ -65,7 +57,7 @@ const fetchProfileImage = async (imageIdentifier: string): Promise<string | null
   // Otherwise, assume it is a file path and fetch the Base64 image from the server.
   try {
     const data = await fetchJSON('http://localhost:3000/getProfileImage', { imagePath: imageIdentifier });
-    return data.imageBase64;
+    return data.data.imageBase64;
   } catch (error) {
     console.warn("Unable to fetch profile image.");
     return null;
@@ -74,6 +66,8 @@ const fetchProfileImage = async (imageIdentifier: string): Promise<string | null
 
 // Displays the final profile using SweetAlert2
 const displayProfileCard = (user: User, imageData: string | null): void => {
+  const sellerStatusDisplay = (user.sellerStatus !== undefined && user.sellerStatus !== null) ? user.sellerStatus : '';
+  const sellerTypeDisplay = (user.sellerType !== undefined && user.sellerType !== null) ? user.sellerType : '';
   const profileCardHTML = `
     <div class="custom-profile-card">
       ${imageData ? `
@@ -87,7 +81,7 @@ const displayProfileCard = (user: User, imageData: string | null): void => {
         <img src="https://flagcdn.com/w40/${user.countryCode?.toLowerCase()}.png" class="custom-flag" />
       </div>
       <div class="custom-biography">${user.biography || ''}</div>
-      <div class="custom-badge">${user.sellerStatus || ''} - ${user.businessType || ''}</div>
+      <div class="custom-badge">${sellerStatusDisplay} - ${sellerTypeDisplay}</div>
     </div>
   `;
   Swal.fire({
@@ -173,12 +167,13 @@ async function buildProfileCard(): Promise<void> {
     // Fetch profile data
     const profileResponse = await fetchJSON('http://localhost:3000/profile', { username });
     let user: User = profileResponse.message;
+    console.log(user);
 
     // Pre-fetch profile image if provided as a file path
     let fetchedProfileImage: string | null = null;
     if (user.profileImage) {
       try {
-        fetchedProfileImage = await fetchProfileImage(user.profileImage);
+        fetchedProfileImage = await fetchProfileImage(user.username);
       } catch (error) {
         console.warn("Error while retrieving profile image:", error);
       }
@@ -196,10 +191,9 @@ async function buildProfileCard(): Promise<void> {
           password,
           ...result.value
         };
-        console.log("Sending profile update payload:", updatePayload);
         await fetchJSON('http://localhost:3000/updateProfile', updatePayload);
         // Merge new data into the user object
-        user = { ...user, ...result.value };    // Note that its not an response from the server its user's own input directly
+        user = { ...user, ...result.value };    // Note that it's not a response from the server; it's user's own input directly
 
         // If a new profile image was provided, update our local copy
         if (result.value.profileImage) {

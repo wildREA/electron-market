@@ -55,11 +55,19 @@ async function profileSelection(username) {
         if (!username) {
             return [false, 'Username is required'];
         }
+        const result = await getUserProfile(username);
+        if (result.success) {
+            // Ensure sellerType and sellerStatus are included in the response
+            const userProfile = result.message;
+            userProfile.sellerType = result.message.sellerType;
+            userProfile.sellerStatus = result.message.sellerStatus;
+            return [true, userProfile];
+        } else {
+            return [false, result.message];
+        }
     } catch (err) {
         return [false, 'Internal server error'];
     }
-    const result = await getUserProfile(username);
-    return result.success ? [true, result.message] : [false, result.message];
 }
 
 async function updateProfile(username, password, countryCode, profileImage, description) {
@@ -112,10 +120,10 @@ async function carListSelection() {
 }
 
 
-async function getProfileImage(imagePath) {
+async function getProfileImage(username) {
     try {
-        const filePath = path.join(__dirname, imagePath);
-        console.log('Reading image file:', filePath);
+        let RelativePath = `uploads/${username}.png`;
+        let filePath = path.join(__dirname, RelativePath);
         const imageBuffer = await fsP.readFile(filePath);
         const base64Image = imageBuffer.toString('base64');
         return { success: true, imageBase64: base64Image };

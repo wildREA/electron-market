@@ -1,5 +1,6 @@
+
 document.getElementById("profile").addEventListener("click", () => {
-    createProfile();
+    buildProfileCard();
 });
 
 document.getElementById("login").addEventListener("click", () => {

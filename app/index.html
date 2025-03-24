@@ -11,13 +11,13 @@
   <scipt type="module" src="src/renderer.js"></scipt>
   <script type="module" src="src/renderCars.js"></script>
   <script type="module" src="src/carList.js" defer></script>
-  <script type="module" src="dist/profile.js" defer></script>
+  <script src="dist/profile.js" ></script>
   <script src="src/navigation.js" defer></script>
   <script src="src/login.js" defer></script>
   <script src="src/navDrop.js" defer></script>
   <title>Market - Slav Dev</title>
 </head>
-<body>
+<body>rs
   <div class="profile-container">
     <img src="images/icons/app_icon.png" alt="Profile" draggable="false" class="profile-pic" id="profilePic">
     <div class="dropdown" id="dropdownMenu">
@@ -31,5 +31,10 @@
     <div class="car-list" id="carList"></div>
   </div>
 </body>
+<script>
+  document.getElementById("profile").addEventListener("click", () => {
+    buildProfileCard();
+  });
+</script>
 </html>
 
