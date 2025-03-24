@@ -1,3 +1,4 @@
+const socket = require('ws');
 const express = require('express');
 const cors = require('cors');
 const mysql = require('mysql2/promise');
@@ -14,6 +15,23 @@ app.use(cors());
 
 // Parse JSON request bodies
 app.use(express.json());
+
+const wss = new socket.Server({ port: 3000 });
+
+wss.on('connection', (ws) => {
+    console.log('New client connected');
+
+    ws.on('message', (message) => {
+        console.log(`Received: ${message}`);
+        ws.send(`Server received: ${message}`);
+    });
+
+    ws.on('close', () => {
+        console.log('Client disconnected');
+    });
+});
+
+console.log('WebSocket server is running on ws://localhost:3000');
 
 // Initialize server with async DB connection
 async function startServer() {
@@ -38,6 +56,11 @@ async function startServer() {
             return res.json({ success: result, message: message });
         });
 
+        app.post('logout', async (req, res) => {
+            const [result, message] = await logout();
+            return res.json({ success: result, message: message });
+        });
+
         app.post('/profile', async (req, res) => {
             const [result, message] = await profileSelection(req.body.username);
             return res.json({ success: result, message: message });
@@ -50,7 +73,7 @@ async function startServer() {
             return res.json({ success: result, message: message });
         });
 
-        app.get('/cars', async (req, res) => {
+        app.get('/cars', async (res) => {
             const [result, message] = await carListSelection();
             return res.json({ success: result, message: message });
         });

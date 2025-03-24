@@ -14,7 +14,7 @@ function createWindow() {
           // Fundamental settings
             preload: path.join(__dirname, "preload.js"),  // Preload is used correctly
             contextIsolation: true,                       // Must be `true` for `contextBridge`
-            nodeIntegration: true,                        // Keep disabled for security (preload exposes necessary APIs unless setup for valid channels)
+            nodeIntegration: true,                        // Keep disabled for security (preload exposes necessary APIs unless setup for valid channels) - Required for 'require'
             sandbox: false,                               // Disable sandbox to allow `ipcRenderer`
             
             // Additional settings

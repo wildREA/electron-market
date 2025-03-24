@@ -1,7 +1,6 @@
 // Function to create the window for the login modal
 function createLogin() {
     console.log("Creating login card...");
-
     const loginHTML = `
         <div id="login-body">
             <div class="login-container">
@@ -40,7 +39,7 @@ function register() {
             <a onclick="login()" class="forgot-password">Login</a>
         </div>
     `;
-    document.getElementById("login-body").innerHTML = registerHTML;
+    document.getElementById("account-body").innerHTML = registerHTML;
 }
 
 // Extra login so the user can seamlessly switch between login and register
@@ -56,34 +55,47 @@ function login() {
             <a onclick="register()" class="forgot-password">Register</a>
         </div>
     `;
-    document.getElementById("login-body").innerHTML = loginHTML;
+    document.getElementById("account-body").innerHTML = loginHTML;
+}
+
+function handleLogout(event) { 
+    event.preventDefault(); // Prevent default form submission
+    // Use SweetAlert2 to display a success message
+    Swal.fire({
+        title: 'Success',
+        text: 'Successful logout',
+        icon: 'success',
+        confirmButtonText: 'Close'
+    });
+    // Clear user information
+    delete window.userinformation;
+    // Set the dropdown button for account manage to "Login"
+    document.getElementById('account').innerText = "Log in";
+    document.getElementById('account').addEventListener('click', createLogin);
 }
 
 function handleLogin(event) {
     event.preventDefault(); // Prevent default form submission
-
     // Extract values from the form
     const formData = new FormData(event.target);
     const username = formData.get('username');
     const password = formData.get('password');
-
     // Call sendLogin with the form values
     sendLogin(username, password);
 }
 
 function handleRegister(event) {
     event.preventDefault(); // Prevent default form submission
-
     // Extract values from the form
     const formData = new FormData(event.target);
     const username = formData.get('username');
     const email = formData.get('email');
     const password = formData.get('password');
-
     // Call sendRegister with the form values
     sendRegister(username, email, password);
 }
 
+<<<<<<<< HEAD:app/src/login.js
 async function sendRegister(username, email, password) {
     try {
         const response = await fetch('http://localhost:3000/register', {
@@ -97,6 +109,19 @@ async function sendRegister(username, email, password) {
         const data = await response.json();
         console.log('Success:', data.success);
 
+========
+function sendRegister(username, email, password) {
+    fetch('http://localhost:3000/register', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ username, email, password }),
+    })
+    .then(response => response.json())
+    .then(data => {
+        console.log('Success:', data.success);
+>>>>>>>> dev_wild:app/account_functions.js
         if (data.success) {
             Swal.fire({
                 title: 'Success',
@@ -104,6 +129,7 @@ async function sendRegister(username, email, password) {
                 icon: 'success',
                 confirmButtonText: 'Close'
             });
+<<<<<<<< HEAD:app/src/login.js
             await getUserInformations(username);
             window.userinformation.password = password;
             document.getElementById('login').innerText = "Logout";
@@ -112,6 +138,16 @@ async function sendRegister(username, email, password) {
     } catch (error) {
         console.error('Error:', error);
     }
+========
+            // Add any further actions, such as triggering a profile picture change
+            document.getElementById('account').innerText = "Log out";
+            document.getElementById('account').addEventListener('click', handleLogout);
+        }
+    })
+    .catch((error) => {
+        console.error('Error:', error);
+    });
+>>>>>>>> dev_wild:app/account_functions.js
 }
 
 
@@ -135,7 +171,8 @@ async function sendLogin(identifier, password) {
             await getUserInformations(identifier);
             window.userinformation.password = password;
             // Add further actions here, such as updating the profile picture
-            document.getElementById('login').innerText = "Logout";
+            document.getElementById('account').innerText = "Log out";
+            document.getElementById('account').addEventListener('click', handleLogout);
         }
     } catch (error) {
         console.error('Error:', error);
