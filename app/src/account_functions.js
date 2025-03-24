@@ -58,7 +58,7 @@ function login() {
     document.getElementById("account-body").innerHTML = loginHTML;
 }
 
-function handleLogout(event) { 
+function handleLogout(event) {
     event.preventDefault(); // Prevent default form submission
     // Use SweetAlert2 to display a success message
     Swal.fire({
@@ -95,21 +95,6 @@ function handleRegister(event) {
     sendRegister(username, email, password);
 }
 
-<<<<<<<< HEAD:app/src/login.js
-async function sendRegister(username, email, password) {
-    try {
-        const response = await fetch('http://localhost:3000/register', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({ username, email, password }),
-        });
-
-        const data = await response.json();
-        console.log('Success:', data.success);
-
-========
 function sendRegister(username, email, password) {
     fetch('http://localhost:3000/register', {
         method: 'POST',
@@ -118,38 +103,25 @@ function sendRegister(username, email, password) {
         },
         body: JSON.stringify({ username, email, password }),
     })
-    .then(response => response.json())
-    .then(data => {
-        console.log('Success:', data.success);
->>>>>>>> dev_wild:app/account_functions.js
-        if (data.success) {
-            Swal.fire({
-                title: 'Success',
-                text: 'Successful registration',
-                icon: 'success',
-                confirmButtonText: 'Close'
-            });
-<<<<<<<< HEAD:app/src/login.js
-            await getUserInformations(username);
-            window.userinformation.password = password;
-            document.getElementById('login').innerText = "Logout";
-
-        }
-    } catch (error) {
-        console.error('Error:', error);
-    }
-========
-            // Add any further actions, such as triggering a profile picture change
-            document.getElementById('account').innerText = "Log out";
-            document.getElementById('account').addEventListener('click', handleLogout);
-        }
-    })
-    .catch((error) => {
-        console.error('Error:', error);
-    });
->>>>>>>> dev_wild:app/account_functions.js
+        .then(response => response.json())
+        .then(data => {
+            console.log('Success:', data.success);
+            if (data.success) {
+                Swal.fire({
+                    title: 'Success',
+                    text: 'Successful registration',
+                    icon: 'success',
+                    confirmButtonText: 'Close'
+                });
+                // Add any further actions, such as triggering a profile picture change
+                document.getElementById('account').innerText = "Log out";
+                document.getElementById('account').addEventListener('click', handleLogout);
+            }
+        })
+        .catch((error) => {
+            console.error('Error:', error);
+        });
 }
-
 
 async function sendLogin(identifier, password) {
     try {
@@ -193,9 +165,6 @@ async function getUserInformations(username) {
         console.log('Success:', data.success);
         if (data.success) {
             window.userinformation = data.message;
-        }
-        else {
-            console.log('Error:', data.message);
         }
     } catch (error) {
         console.error('Error:', error);
