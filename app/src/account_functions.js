@@ -39,7 +39,7 @@ function register() {
             <a onclick="login()" class="forgot-password">Login</a>
         </div>
     `;
-    document.getElementById("account-body").innerHTML = registerHTML;
+    document.getElementById("login-body").innerHTML = registerHTML;
 }
 
 // Extra login so the user can seamlessly switch between login and register
@@ -55,7 +55,7 @@ function login() {
             <a onclick="register()" class="forgot-password">Register</a>
         </div>
     `;
-    document.getElementById("account-body").innerHTML = loginHTML;
+    document.getElementById("login-body").innerHTML = loginHTML;
 }
 
 function handleLogout(event) {
