@@ -2,16 +2,16 @@ async function checkIfUnique(type, value) {
     try {
         let query = '';
         if (type === 1) {
-            query = 'SELECT COUNT(*) AS count FROM users WHERE username = ?';
+            query = 'SELECT COUNT(*) AS count FROM users WHERE username = $1';
         } else if (type === 2) {
-            query = 'SELECT COUNT(*) AS count FROM users WHERE email = ?';
+            query = 'SELECT COUNT(*) AS count FROM users WHERE email = $2';
         } else {
             throw new Error('Invalid type');
         }
-        const [rows] = await pool.execute(query, [value]);
-        return rows[0].count === 0;
-    } catch (error) {
-        console.error(error);
+        const [rows] = await pool.query(query, [value]);
+        return parseInt(rows[0].count, 10) === 0;
+    } catch (err) {
+        console.error(err);
         return false;
     }
 }
@@ -19,23 +19,23 @@ async function checkIfUnique(type, value) {
 async function registerUser(username, email, password) {
     try {
         // Insert user into users table
-        let query = 'INSERT INTO users (username, email, password) VALUES (?, ?, ?)';
-        await pool.execute(query, [username, email, password]);
+        let query = 'INSERT INTO users (username, email, password) VALUES ($1, $2, $3)';
+        await pool.query(query, [username, email, password]);
         // Insert user into profiles table
-        query = 'INSERT INTO profiles (username) VALUES (?)';
-        await pool.execute(query, [username]);
+        query = 'INSERT INTO profiles (username) VALUES ($1)';
+        await pool.query(query, [username]);
         // Return true if the above steps are successful
         return true;
-    } catch (error) {
-        console.error(error);
+    } catch (err) {
+        console.error(err);
         return false;
     }
 }
 
 async function getUserByIdentifier(identifier) {
     try {
-        const query = 'SELECT * FROM users WHERE username = ? OR email = ? LIMIT 1';
-        const [rows] = await pool.execute(query, [identifier, identifier]);
+        const query = 'SELECT * FROM users WHERE username = $1 OR email = $2 LIMIT 1';
+        const [rows] = await pool.query(query, [identifier, identifier]);
         return rows[0] || null;
     } catch (err) {
         console.error(err);
@@ -46,8 +46,8 @@ async function getUserByIdentifier(identifier) {
 async function getUserProfile(identifier) {
     try {
         //select from profile
-        query = 'SELECT * FROM profiles WHERE username = ? ';
-        const [results] = await pool.execute(query, [identifier])
+        query = 'SELECT * FROM profiles WHERE username = $1 ';
+        const [results] = await pool.query(query, [identifier])
         if (!results || results.length === 0) {
             return { success: false, message: "No user found" };
         }
@@ -61,10 +61,10 @@ async function getUserProfile(identifier) {
 
 async function profileUpdate(query, countryCode, profileImage, description, username) {
     try {
-        await pool.execute(query, [countryCode, profileImage, description, username]);
+        await pool.query(query, [countryCode, profileImage, description, username]);
         return true;
-    } catch (error) {
-        console.error(error);
+    } catch (err) {
+        console.error(err);
         return false;
     }
 }
@@ -72,7 +72,7 @@ async function profileUpdate(query, countryCode, profileImage, description, user
 async function getCarList() {
     try {
         const query = `SELECT * FROM cars`;
-        const [rows] = await pool.execute(query);
+        const [rows] = await pool.query(query);
         return { success: true, data: rows };
     } catch (err) {
         console.error(err);

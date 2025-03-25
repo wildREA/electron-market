@@ -1,6 +1,6 @@
+const { Pool } = require('pg');
 const express = require('express');
 const cors = require('cors');
-const mysql = require('mysql2/promise');
 require('dotenv').config({ path: './.env' });
 
 const WebSocket = require('ws');
@@ -38,12 +38,12 @@ app.use(express.json());
 async function startServer() {
     try {
         // Create a connection pool
-        global.pool = mysql.createPool({
+        global.pool = new Pool({
             host: '172.16.3.63',
-            user: 'admin',
+            user: 'postgres',
             password: process.env.PASSWORD,
             database: 'eam_db',
-            port: 3306 // Default MySQL port
+            port: 3307 // Default PG port
         });
         console.log(process.env.PASSWORD)
 
@@ -68,9 +68,7 @@ async function startServer() {
         });
 
         app.post('/updateProfile', async (req, res) => {
-            console.log(req.body.username, req.body.password,  req.body.countryCode, req.body.profileImage, req.body.biography)
             const [result, message] = await updateProfile(req.body.username, req.body.password,  req.body.countryCode, req.body.profileImage, req.body.biography);
-            console.log("DONE WITH PROFILE UPDATE");
             return res.json({ success: result, message: message });
         });
 
