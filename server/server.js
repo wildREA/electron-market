@@ -43,7 +43,7 @@ async function startServer() {
             user: 'postgres',
             password: process.env.PASSWORD,
             database: 'eam_db',
-            port: 3307 // Default PG port
+            port: 5432 // Default PG port
         });
         console.log(process.env.PASSWORD)
 
