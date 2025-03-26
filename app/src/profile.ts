@@ -1,6 +1,4 @@
 declare var Swal: any;
-console.log("THIS IS A TEST");
-
 // Define interfaces for user and user information
 interface User {
   username: string;
