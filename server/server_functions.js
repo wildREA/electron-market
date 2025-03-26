@@ -4,7 +4,36 @@ const path = require('path');
 const bcrypt = require('bcrypt');
 const saltRounds = 10;
 
-const { checkIfUnique, registerUser, getUserByIdentifier, getUserProfile, profileUpdate, getCarList } = require('./database_functions');
+const { checkIfUnique, registerUser, getUserByIdentifier, getUserProfile, profileUpdate, getCarList, getChannel, createChannel, getMessages, getUsernameById } = require('./database_functions');
+
+// AES-256-CBC encryption setup
+const ALGORITHM = 'aes-256-cbc';
+const IV_LENGTH = 16;
+const key = process.env.KEY;
+
+const ENCRYPTION_KEY = crypto.createHash('sha256')
+    .update(key)
+    .digest('base64').substr(0, 32); // Hash the key to ensure it's 32 bytes long
+
+// Function to encrypt data
+function encrypt(text) {
+    const iv = crypto.randomBytes(IV_LENGTH);
+    const cipher = crypto.createCipheriv(ALGORITHM, Buffer.from(ENCRYPTION_KEY), iv);
+    let encrypted = cipher.update(text, 'utf8', 'hex');
+    encrypted += cipher.final('hex');
+    return iv.toString('hex') + ':' + encrypted;
+}
+
+// Function to decrypt data
+function decrypt(text) {
+    const parts = text.split(':');
+    const iv = Buffer.from(parts.shift(), 'hex');
+    const encryptedText = parts.join(':');
+    const decipher = crypto.createDecipheriv(ALGORITHM, Buffer.from(ENCRYPTION_KEY), iv);
+    let decrypted = decipher.update(encryptedText, 'hex', 'utf8');
+    decrypted += decipher.final('utf8');
+    return decrypted;
+}
 
 async function handleRegisterRequest(username, email, password) {
     if (!username || !password) return [false, 'Username and password are required'];
@@ -133,14 +162,85 @@ async function getProfileImage(username) {
     }
 }
 
+async function pingUser(username) {
+    try {
+        const user = await getUserByIdentifier(username);
+        return user ? [true] : [false];
+    } catch (error) {
+        console.error(error);
+        return [false];
+    }
+}
 
+function generateRoomName(user1, user2) {
+    // Sort usernames alphabetically
+    const [firstUser, secondUser] = sortUsers();
+
+    // Concatenate usernames with a separator
+    return `${firstUser}***${secondUser}`;
+}
+
+function sortUsers(user1, user2) {
+    return [user1, user2].sort();
+}
+
+async function checkForChannel(targetUser, username) {
+    const channelName = generateRoomName(targetUser, username);
+
+    try {
+        // Attempt to retrieve the channel
+        const channel = await getChannel(channelName);
+
+        // Return an array with existence and channel name
+        if (channel && channel.name) {
+            return [channel.name];
+        } else {
+            return [null];
+        }
+    } catch (err) {
+        // Handle error and return the error with the result
+        return [channel.name];
+    }
+}
+
+async function saveChannel(channelName, targetUser, username) {
+    await createChannel(channelName, targetUser, username);
+}
+
+async function retrieveMessages(channelName) {
+    try {
+        const messages = await getMessages(channelName);
+        return messages;
+    } catch (error) {
+        console.error('Error fetching messages:', error);
+        return [];
+    }
+}
+
+async function findUserById(user_id) {
+    try {
+        const user = await getUserById(user_id);
+        return user;
+    } catch (error) {
+        console.error('Error fetching user:', error);
+        return null;
+    }
+}
 
 module.exports = {
+    encrypt,
+    decrypt,
     handleRegisterRequest,
     handleLoginRequest,
-    verifyPassword,
     profileSelection,
     updateProfile,
     carListSelection,
-    getProfileImage
+    getProfileImage,
+    verifyUser,
+    pingUser,
+    generateRoomName,
+    checkForChannel,
+    saveChannel,
+    retrieveMessages,
+    findUserById
 };
