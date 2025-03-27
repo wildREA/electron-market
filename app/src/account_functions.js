@@ -95,7 +95,7 @@ function handleRegister(event) {
     sendRegister(username, email, password);
 }
 
-function sendRegister(username, email, password) {
+async function sendRegister(username, email, password) {
     fetch('http://localhost:3000/register', {
         method: 'POST',
         headers: {
@@ -113,6 +113,8 @@ function sendRegister(username, email, password) {
                     icon: 'success',
                     confirmButtonText: 'Close'
                 });
+                await getUserInformations(identifier);
+                window.userinformation.password = password;
                 // Add any further actions, such as triggering a profile picture change
                 document.getElementById('account').innerText = "Log out";
                 document.getElementById('account').addEventListener('click', handleLogout);

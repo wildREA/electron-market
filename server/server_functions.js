@@ -2,6 +2,7 @@ const fs = require('fs');
 const fsP = require('fs').promises;
 const path = require('path');
 const bcrypt = require('bcrypt');
+const crypto = require('crypto');
 const saltRounds = 10;
 
 const { checkIfUnique, registerUser, getUserByIdentifier, getUserProfile, profileUpdate, getCarList, getChannel, createChannel, getMessages, getUsernameById } = require('./database_functions');

@@ -50,9 +50,10 @@ async function getUserProfile(identifier) {
             return { success: false, message: 'No user found' };
         }
         const user = { ...result.rows[0] };
-        delete user.user_id;
+        delete user.user_id; // Remove user_id if not needed
         return { success: true, message: user };
     } catch (err) {
+        console.error(err);
         return { success: false, message: 'Query error', err };
     }
 }
@@ -92,9 +93,9 @@ async function getChannel(channelName) {
 async function createChannel(channelName, targetUser, username) {
     try {
         const query = `
-                INSERT INTO channels (name, user1, user2)
-                VALUES (?, ?, ?)
-            `;
+            INSERT INTO channels (name, user1, user2)
+            VALUES ($1, $2, $3)
+        `;
         await pool.query(query, [channelName, targetUser, username]);
         return true;
     } catch (err) {
@@ -103,47 +104,31 @@ async function createChannel(channelName, targetUser, username) {
     }
 }
 
-async function getMessages(channelName) {
-    return new Promise((resolve, reject) => {
-        const query = `
-        SELECT * FROM Posts WHERE channel_id = ?;
-    `;
-        db.all(query, [channelName], (err, rows) => {
-            if (err) {
-                console.error(`Error:`, err.message);
-                reject(err);
-            } else {
-                if (rows) {
-                    resolve(rows);
-                } else {
-                    resolve([]);
-                }
-            }
-        });
-    });
+async function getMessages(channelId) {
+    try {
+        const query = 'SELECT * FROM posts WHERE channel_id = $1';
+        const result = await pool.query(query, [channelId]);
+        return result.rows || [];
+    } catch (err) {
+        console.error('Error fetching messages:', err);
+        throw err;
+    }
 }
 
 async function getUsernameById(user_id) {
-    return new Promise((resolve, reject) => {
-        const query = `
-
-        SELECT username FROM Users WHERE id = ?;
-    `;
-        db.get(query, [user_id], (err, row) => {
-            if (err) {
-                console.error(`Error:`, err.message);
-                reject(err);
-            } else {
-                if (row) {
-                    resolve(row.username);
-                } else {
-                    resolve(null);
-                }
-            }
-        });
-    });
+    try {
+        const query = 'SELECT username FROM users WHERE id = $1';
+        const result = await pool.query(query, [user_id]);
+        return result.rows[0] ? result.rows[0].username : null;
+    } catch (err) {
+        console.error('Error fetching username by id:', err);
+        throw err;
+    }
 }
 
+async function saveMessage(channelId, userId, message) {
+
+}
 
 module.exports = {
     checkIfUnique,

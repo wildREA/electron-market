@@ -1,13 +1,16 @@
 const express = require('express');
 const cors = require('cors');
 require('dotenv').config({ path: './.env' });
-const WebSocket = require('ws');
 const { Pool } = require('pg');
+const http = require('http');
+const socketIo = require('socket.io');
 
-// WebSocket Handlers
+// Socket.IO Handlers (from your websocketHandlers module)
 const {
     joinConversation,
-    handleDisconnect
+    handleDisconnect,
+    handleMessage,
+    addConnection
 } = require('./websocketHandlers');
 
 // API Handlers
@@ -20,20 +23,39 @@ const {
     getProfileImage
 } = require('./server_functions');
 
-// Initialize WebSocket Service
+// Initialize Socket.IO Service
 function webSocketService() {
-    const wss = new WebSocket.Server({ port: 3001 });
+    // Create a bare HTTP server
+    const server = http.createServer();
+    // Initialize Socket.IO on the server with CORS enabled
+    const io = socketIo(server, {
+        cors: {
+            origin: '*',
+            methods: ['GET', 'POST']
+        }
+    });
 
-    wss.on('connection', (ws) => {
-        // Set up WebSocket events
-        ws.on('joinConversation', async (data, callback) => {
-            await joinConversation(ws, data, callback);
+    io.on('connection', (socket) => {
+        // Socket.IO automatically assigns a unique id (socket.id)
+        addConnection(socket);
+
+        // Set up Socket.IO events
+        socket.on('joinConversation', async (data, callback) => {
+            await joinConversation(socket, data, callback);
         });
 
-        ws.on('close', () => {
-            handleDisconnect(ws);
-            console.log(`Client ${ws.id} disconnected.`);
+        socket.on('message', async (data, callback) => {
+            await handleMessage(socket, data, callback);
         });
+
+        socket.on('disconnect', () => {
+            handleDisconnect(socket);
+            console.log(`Client ${socket.id} disconnected.`);
+        });
+    });
+
+    server.listen(3001, () => {
+        console.log('Socket.IO server running on port 3001');
     });
 }
 
