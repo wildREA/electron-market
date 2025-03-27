@@ -47,6 +47,8 @@
     color: #fff;
     display: none;
     padding: 20px;
+    height: 100%;
+    position: relative;
 }
 
 .chat-header {
@@ -62,22 +64,21 @@
 .chat-messages {
     display: flex;
     flex-direction: column;
+    flex: 1;
     gap: 5px;
     padding-top: 15px;
     padding-bottom: 5px;
+    overflow-y: auto;
 }
 
 .chat-form-field {
     display: flex;
-    height: 4vh;
     justify-content: center;
     align-items: center;
     border-style: groove;
     border-color: #7b7b7b;
-    margin-bottom: 1em;
     bottom: 0;
-    position: absolute;
-    width: 102em;
+    position: fixed;
 }
 
 .chat-form {
@@ -85,9 +86,27 @@
     width: 100%;
 }
 
+.chat-form input {
+    flex: 1;
+    height: 100%;
+    width: 100%;
+    border: none;
+    background-color: #2f3136;
+    color: #fff;
+    outline: none;
+    box-shadow: none;
+    caret-color: #fff;
+}
+
+.chat-form input:focus {
+    background-color: #2f3136;
+    color: #fff;
+    outline: none;
+    box-shadow: none;
+}
+
 .form-control {
     background-color: #36393f;
     color: #fff;
     border-style: none;
-    border-color: none;
 }
