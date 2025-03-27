@@ -21,6 +21,8 @@
     text-align: center;
     font-size: 24px;
     margin-bottom: 10px;
+    user-select: none;
+    pointer-events: none;
 }
 
 .user-list-container {
@@ -41,14 +43,20 @@
     margin-right: 10px;
 }
 
+#chatIcon {
+    width: 15%;
+    height: auto;
+    pointer-events: auto;
+}
+
 .chat-box {
     flex: 1;
     background-color: #36393f;
     color: #fff;
-    display: none;
     padding: 20px;
-    height: 100%;
     position: relative;
+    overflow: hidden;
+    padding-right: 0;
 }
 
 .chat-header {
@@ -64,11 +72,26 @@
 .chat-messages {
     display: flex;
     flex-direction: column;
-    flex: 1;
     gap: 5px;
     padding-top: 15px;
-    padding-bottom: 5px;
-    overflow-y: auto;
+    height: 100%;
+    overflow: auto;
+
+    /* Scrollbar */
+    scrollbar-width: thin;
+    scrollbar-color: #4f545c #2f3136;
+    scrollbar-width: thin;
+}
+
+/* Hide scrollbar when there's no overflow */
+.chat-messages::-webkit-scrollbar {
+    width: 8px;
+    display: none;
+}
+
+/* Show scrollbar only when scrolling is needed */
+.chat-messages:has(:nth-last-child(n+2))::-webkit-scrollbar {
+    display: block;
 }
 
 .chat-form-field {
@@ -77,8 +100,10 @@
     align-items: center;
     border-style: groove;
     border-color: #7b7b7b;
+    margin-bottom: 15px;
     bottom: 0;
     position: fixed;
+    width: 84.5%;
 }
 
 .chat-form {

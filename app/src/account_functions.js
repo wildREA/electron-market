@@ -103,24 +103,24 @@ function sendRegister(username, email, password) {
         },
         body: JSON.stringify({ username, email, password }),
     })
-        .then(response => response.json())
-        .then(data => {
-            console.log('Success:', data.success);
-            if (data.success) {
-                Swal.fire({
-                    title: 'Success',
-                    text: 'Successful registration',
-                    icon: 'success',
-                    confirmButtonText: 'Close'
-                });
-                // Add any further actions, such as triggering a profile picture change
-                document.getElementById('account').innerText = "Log out";
-                document.getElementById('account').addEventListener('click', handleLogout);
-            }
-        })
-        .catch((error) => {
-            console.error('Error:', error);
-        });
+    .then(response => response.json())
+    .then(data => {
+        console.log('Success:', data.success);
+        if (data.success) {
+            Swal.fire({
+                title: 'Success',
+                text: 'Successful registration',
+                icon: 'success',
+                confirmButtonText: 'Close'
+            });
+            // Add any further actions, such as triggering a profile picture change
+            document.getElementById('account').innerText = "Log out";
+            document.getElementById('account').addEventListener('click', handleLogout);
+        }
+    })
+    .catch((error) => {
+        console.error('Error:', error);
+    });
 }
 
 async function sendLogin(identifier, password) {
