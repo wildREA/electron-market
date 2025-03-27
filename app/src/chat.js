@@ -143,6 +143,8 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   });
 
+  // TMRRW ADD THE STUFF WHERE FOR THE FULLY TOGGLED OFF CHAT STATE TO HAVE IT BE SO THAT THE BLANK BLACK PAGE IS GONE AND ONLY THE ICON IS VISIBLE, RENABLES WHEN USER LIST IS TOGGLED, OBVIOUSLY KEPT WITH CHAT_USER LIST
+
   // Initially hide the chat box
   chatBox.style.display = "none";
 });
