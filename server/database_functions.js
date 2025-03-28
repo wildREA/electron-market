@@ -119,6 +119,17 @@ async function saveMessage(channelId, userId, message) {
 
 }
 
+async function getUserByName(username) {
+    try {
+        const query = 'SELECT * FROM users WHERE username = $1';
+        const result = await pool.query(query, [username]);
+        return result.rows[0] || null;
+    } catch (err) {
+        console.error('Error fetching user by name:', err);
+        return null;
+    }
+}
+
 module.exports = {
     checkIfUnique,
     registerUser,
@@ -129,5 +140,5 @@ module.exports = {
     getChannel,
     createChannel,
     getMessages,
-    getUsernameById
+    getUserByName
 };

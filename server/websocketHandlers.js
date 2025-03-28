@@ -5,7 +5,7 @@ const {
     saveChannel,
     retrieveMessages,
     decrypt,
-    findUserById,
+    getUser,
     pingUser,
     encrypt
 } = require('./server_functions');
@@ -49,7 +49,7 @@ async function joinConversation(socket, data, callback) {
         const earlierMessages = await retrieveMessages(conversationName);
         const messages = await Promise.all(earlierMessages.map(async (msg) => {
             const decryptedMessage = decrypt(msg.message);
-            const sender = await findUserById(msg.user_id);
+            const sender = await getUser(msg.sender_name);
             return { sender, message: decryptedMessage };
         }));
 
