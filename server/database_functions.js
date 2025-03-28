@@ -106,7 +106,7 @@ async function createChannel(channelName, targetUser, username) {
 
 async function getMessages(channelId) {
     try {
-        const query = 'SELECT * FROM posts WHERE channel_id = $1';
+        const query = 'SELECT * FROM messages WHERE channel_name = $1';
         const result = await pool.query(query, [channelId]);
         return result.rows || [];
     } catch (err) {
@@ -115,19 +115,19 @@ async function getMessages(channelId) {
     }
 }
 
-async function getUsernameById(user_id) {
-    try {
-        const query = 'SELECT username FROM users WHERE id = $1';
-        const result = await pool.query(query, [user_id]);
-        return result.rows[0] ? result.rows[0].username : null;
-    } catch (err) {
-        console.error('Error fetching username by id:', err);
-        throw err;
-    }
-}
-
 async function saveMessage(channelId, userId, message) {
 
+}
+
+async function getUserByName(username) {
+    try {
+        const query = 'SELECT * FROM users WHERE username = $1';
+        const result = await pool.query(query, [username]);
+        return result.rows[0] || null;
+    } catch (err) {
+        console.error('Error fetching user by name:', err);
+        return null;
+    }
 }
 
 module.exports = {
@@ -140,5 +140,5 @@ module.exports = {
     getChannel,
     createChannel,
     getMessages,
-    getUsernameById
+    getUserByName
 };

@@ -5,7 +5,18 @@ const bcrypt = require('bcrypt');
 const crypto = require('crypto');
 const saltRounds = 10;
 
-const { checkIfUnique, registerUser, getUserByIdentifier, getUserProfile, profileUpdate, getCarList, getChannel, createChannel, getMessages, getUsernameById } = require('./database_functions');
+const {
+    checkIfUnique,
+    registerUser,
+    getUserByIdentifier,
+    getUserProfile,
+    profileUpdate,
+    getCarList,
+    getChannel,
+    createChannel,
+    getMessages,
+    getUserByName
+} = require('./database_functions');
 
 // AES-256-CBC encryption setup
 const ALGORITHM = 'aes-256-cbc';
@@ -39,6 +50,9 @@ function decrypt(text) {
 async function handleRegisterRequest(username, email, password) {
     if (!username || !password) return [false, 'Username and password are required'];
     try {
+        // Check if username is more than 32 characters
+        if (username.length > 32) return [false, 'Username must be 32 characters or less'];
+
         // Check username uniqueness
         const isUsernameUnique = await checkIfUnique(1, username);
         if (!isUsernameUnique) return [false, 'Username must be unique'];
@@ -101,7 +115,7 @@ async function profileSelection(username) {
 }
 
 async function updateProfile(username, password, countryCode, profileImage, description) {
-    if (!verifyUser(username, password)) {
+    if (!await verifyUser(username, password)) {
         return [false, 'User not found'];
     }
     try {
@@ -115,7 +129,7 @@ async function updateProfile(username, password, countryCode, profileImage, desc
 
         const query = `
             UPDATE profiles
-            SET countryCode = ?, profileImage = ?, biography = ?
+            SET country_code = ?, profile_image = ?, biography = ?
             WHERE username = ?
         `;
 
@@ -210,17 +224,16 @@ async function saveChannel(channelName, targetUser, username) {
 
 async function retrieveMessages(channelName) {
     try {
-        const messages = await getMessages(channelName);
-        return messages;
+        return await getMessages(channelName);
     } catch (error) {
         console.error('Error fetching messages:', error);
         return [];
     }
 }
 
-async function findUserById(user_id) {
+async function getUser(username) {
     try {
-        const user = await getUserById(user_id);
+        const user = await getUserByName(username);
         return user;
     } catch (error) {
         console.error('Error fetching user:', error);
@@ -243,5 +256,5 @@ module.exports = {
     checkForChannel,
     saveChannel,
     retrieveMessages,
-    findUserById
+    getUser
 };

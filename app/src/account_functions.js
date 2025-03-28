@@ -113,7 +113,7 @@ async function sendRegister(username, email, password) {
                     icon: 'success',
                     confirmButtonText: 'Close'
                 });
-                await getUserInformations(identifier);
+                getUserInformations(identifier);
                 window.userinformation.password = password;
                 // Add any further actions, such as triggering a profile picture change
                 document.getElementById('account').innerText = "Log out";
@@ -142,7 +142,7 @@ async function sendLogin(identifier, password) {
                 icon: 'success',
                 confirmButtonText: 'Close'
             });
-            await getUserInformations(identifier);
+            getUserInformations(identifier);
             window.userinformation.password = password;
             // Add further actions here, such as updating the profile picture
             document.getElementById('account').innerText = "Log out";
