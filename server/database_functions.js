@@ -42,6 +42,32 @@ async function getUserByIdentifier(identifier) {
     }
 }
 
+async function getContact(username) {
+    try {
+        return new Promise((resolve, reject) => {
+            const query = `
+                SELECT username
+                FROM users
+                WHERE users.username = $1
+            `;
+            pool.query(query, [username], (err, result) => {
+                if (err) {
+                    console.error('Error fetching user contact:', err);
+                    return reject(err);
+                }
+                if (result.rows.length > 0) {
+                    resolve([true, result.rows[0]]);
+                } else {
+                    resolve([false, 'User not found']);
+                }
+            });
+        });
+    } catch (err) {
+        console.error('Error in getContact:', err);
+        return [false, 'Internal server error'];
+    }
+}
+
 async function getUserProfile(identifier) {
     try {
         const query = 'SELECT * FROM profiles WHERE username = $1';
@@ -50,10 +76,9 @@ async function getUserProfile(identifier) {
             return { success: false, message: 'No user found' };
         }
         const user = { ...result.rows[0] };
-        delete user.user_id; // Remove user_id if not needed
+        delete user.user_id;
         return { success: true, message: user };
     } catch (err) {
-        console.error(err);
         return { success: false, message: 'Query error', err };
     }
 }
@@ -79,66 +104,13 @@ async function getCarList() {
     }
 }
 
-async function getChannel(channelName) {
-    try {
-        const query = 'SELECT * FROM channels WHERE name = $1 LIMIT 1';
-        const result = await pool.query(query, [channelName]);
-        return result.rows[0] || null;
-    } catch (err) {
-        console.error('Error fetching channel:', err);
-        return null;
-    }
-}
-
-async function createChannel(channelName, targetUser, username) {
-    try {
-        const query = `
-            INSERT INTO channels (name, user1, user2)
-            VALUES ($1, $2, $3)
-        `;
-        await pool.query(query, [channelName, targetUser, username]);
-        return true;
-    } catch (err) {
-        console.error('Error saving channel:', err);
-        return false;
-    }
-}
-
-async function getMessages(channelId) {
-    try {
-        const query = 'SELECT * FROM messages WHERE channel_name = $1';
-        const result = await pool.query(query, [channelId]);
-        return result.rows || [];
-    } catch (err) {
-        console.error('Error fetching messages:', err);
-        throw err;
-    }
-}
-
-async function saveMessage(channelId, userId, message) {
-
-}
-
-async function getUserByName(username) {
-    try {
-        const query = 'SELECT * FROM users WHERE username = $1';
-        const result = await pool.query(query, [username]);
-        return result.rows[0] || null;
-    } catch (err) {
-        console.error('Error fetching user by name:', err);
-        return null;
-    }
-}
-
 module.exports = {
     checkIfUnique,
     registerUser,
     getUserByIdentifier,
+    getContact,
     getUserProfile,
     profileUpdate,
-    getCarList,
-    getChannel,
-    createChannel,
-    getMessages,
-    getUserByName
+    getCarList
 };
+ 

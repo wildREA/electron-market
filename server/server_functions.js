@@ -9,6 +9,7 @@ const {
     checkIfUnique,
     registerUser,
     getUserByIdentifier,
+    getContact,
     getUserProfile,
     profileUpdate,
     getCarList,
@@ -17,6 +18,7 @@ const {
     getMessages,
     getUserByName
 } = require('./database_functions');
+const { get } = require('http');
 
 // AES-256-CBC encryption setup
 const ALGORITHM = 'aes-256-cbc';
@@ -92,6 +94,16 @@ async function handleLoginRequest(identifier, password) {
 function verifyPassword(storedPassword, providedPassword) {
     // In real applications, use bcrypt.compare for hashed passwords
     return bcrypt.compare(providedPassword, storedPassword);
+}
+
+async function getUserContact(username) {
+    try {
+        const user = await getContact(username);
+        return user ? [true, user] : [false, 'User not found'];
+    } catch (err) {
+        console.error(err);
+        return [false, 'Internal server error'];
+    }
 }
 
 async function profileSelection(username) {
@@ -246,6 +258,7 @@ module.exports = {
     decrypt,
     handleRegisterRequest,
     handleLoginRequest,
+    getUserContact,
     profileSelection,
     updateProfile,
     carListSelection,

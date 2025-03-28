@@ -1,3 +1,18 @@
+// Fetch user data from the API
+async function fetchUserData() {
+  try {
+    const response = await fetch('http://localhost:3000/getContact');
+    const result = await response.json();
+    if(result.success) {
+      createUserElement(result.message);
+    } else {
+      console.error('Error fetching user:', result.error);
+    }
+  } catch (err) {
+    console.error("Error retrieving user data:", err);
+  }
+}
+
 document.addEventListener("DOMContentLoaded", () => {
   // Get container elements from HTML
   const chatList = document.getElementById("chatList");
@@ -15,36 +30,27 @@ document.addEventListener("DOMContentLoaded", () => {
   userListContainer.classList.add("user-list-container");
   chatList.appendChild(userListContainer);
 
-  // Sample users array (replace profilePic with actual image URLs)
-  const users = [
-    { id: 1, name: "ahmetusHaramus", display: "ahmutus", profilePic: "./images/profiles/ahmetHmoudT0pG_benz.jpg" },
-    { id: 2, name: "doeyjohnny", display: "wallahshabibwithkebab4_d", profilePic: "./images/profiles/default.jpg" },
-    { id: 3, name: "charlesJson", display: "jsonJr", profilePic: "./images/profiles/charliecharleson.jpg" }
-  ];
-
   // Function to create a user element in the list
   function createUserElement(user) {
     const userElement = document.createElement("div");
     userElement.classList.add("user-item");
-    userElement.setAttribute("id", `user-${user.id}`);
-    userElement.setAttribute("data-user-id", user.id);
+    userElement.setAttribute("id", `user-${user.username}`);
 
     // Create an image element for the profile picture
     const img = document.createElement("img");
-    img.src = user.profilePic;
-    img.alt = user.name;
+    img.src = user.profile_image || './images/icons/default_avatar.png'; // Default avatar if no image is provided
+    img.alt = user.username;
     img.classList.add("user-avatar");
     userElement.appendChild(img);
 
-    // Checking username length to truncate for users in list
-    const truncatedUserList = user.display.length > 23
-      ? user.display.substring(0, 21) + "..."
-      : user.display;
-
-    // Checking username length to truncate for users in chat
-    const truncatedUserChat = user.display.length > 31
-      ? user.display.substring(0, 29) + "..."
-      : user.display;
+    // Truncate the display/username if it's too long
+    const clientName = user.displayname || user.username; // Fallback to username if display name is not available
+    const truncatedUserList = clientName.length > 23
+      ? clientName.substring(0, 21) + "..."
+      : clientName;
+    const truncatedUserChat = clientName.length > 31
+      ? clientName.substring(0, 29) + "..."
+      : clientName;
 
     // Add user (truncated) display name next to the avatar
     const nameSpan = document.createElement("span");
@@ -154,3 +160,6 @@ document.addEventListener("DOMContentLoaded", () => {
   chatList.style.backgroundColor = "#36393f";
   chatToggle.style.backgroundColor = "#2f3136";
 });
+
+// Fetch the data when the page loads
+window.addEventListener('DOMContentLoaded', fetchUserData);

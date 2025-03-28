@@ -1,9 +1,9 @@
 const express = require('express');
 const cors = require('cors');
-require('dotenv').config({ path: './.env' });
 const { Pool } = require('pg');
 const http = require('http');
 const socketIo = require('socket.io');
+require('dotenv').config({ path: './.env' });
 
 // Socket.IO Handlers (from your websocketHandlers module)
 const {
@@ -17,6 +17,7 @@ const {
 const {
     handleRegisterRequest,
     handleLoginRequest,
+    getUserContact,
     profileSelection,
     carListSelection,
     updateProfile,
@@ -83,6 +84,11 @@ async function startServer() {
 
     app.post('/login', async (req, res) => {
         const [result, message] = await handleLoginRequest(req.body.identifier, req.body.password);
+        res.json({ success: result, message });
+    });
+
+    app.get('/getContact', async (req, res) => {
+        const [result, message] = await getUserContact(req.body.username);
         res.json({ success: result, message });
     });
 
