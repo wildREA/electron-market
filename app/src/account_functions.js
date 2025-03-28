@@ -125,6 +125,7 @@ async function sendRegister(username, email, password) {
         });
 }
 
+// Function to send login data to the server
 async function sendLogin(identifier, password) {
     try {
         const response = await fetch('http://localhost:3000/login', {
