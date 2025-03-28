@@ -42,8 +42,8 @@ document.addEventListener("DOMContentLoaded", () => {
       : user.display;
 
     // Checking username length to truncate for users in chat
-    const truncatedUserChat = user.display.length > 23
-      ? user.display.substring(0, 21) + "..."
+    const truncatedUserChat = user.display.length > 31
+      ? user.display.substring(0, 29) + "..."
       : user.display;
 
     // Add user (truncated) display name next to the avatar
@@ -53,7 +53,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     // Add click event to open chat for the selected user
     userElement.addEventListener("click", () => {
-      openChat(user);
+      openChat(user, truncatedUserChat);
     });
 
     return userElement;
@@ -66,14 +66,14 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 
   // Function to open a chat conversation with a user
-  function openChat(user) {
+  function openChat(user, truncatedUserChat) {
     // Clear previous chat contents
     chatBox.innerHTML = "";
 
     // Create a header for the chat box
     const header = document.createElement("div");
     header.classList.add("chat-header");
-    header.textContent = `${user.display}`;
+    header.textContent = truncatedUserChat;
     chatBox.appendChild(header);
 
     // Create a container describing conversation or status
@@ -109,7 +109,7 @@ document.addEventListener("DOMContentLoaded", () => {
       if (messageText !== "") {
         // Create a new message div
         const newMessage = document.createElement("div");
-        newMessage.classList.add("my-message");
+        newMessage.classList.add("message");
         newMessage.textContent = messageText;
 
         // Append the new message to the message container
@@ -134,8 +134,10 @@ document.addEventListener("DOMContentLoaded", () => {
         // Toggle the user list container visibility
         if (userListContainer.style.display === "none" || userListContainer.style.display === "") {
           userListContainer.style.display = "block";
+          chatList.style.backgroundColor = "#2f3136";
         } else {
           userListContainer.style.display = "none";
+          chatList.style.backgroundColor = "#36393f";
         }
         // Close the chat box when toggling
         chatBox.style.display = "none";
@@ -145,6 +147,10 @@ document.addEventListener("DOMContentLoaded", () => {
 
   // TMRRW ADD THE STUFF WHERE FOR THE FULLY TOGGLED OFF CHAT STATE TO HAVE IT BE SO THAT THE BLANK BLACK PAGE IS GONE AND ONLY THE ICON IS VISIBLE, RENABLES WHEN USER LIST IS TOGGLED, OBVIOUSLY KEPT WITH CHAT_USER LIST
 
-  // Initially hide the chat box
+  // Initially hide the chat box, color the toggle icon, and hide the user list container with same color
   chatBox.style.display = "none";
+  userListContainer.style.display = "none";
+  chatList.style.padding = "0";
+  chatList.style.backgroundColor = "#36393f";
+  chatToggle.style.backgroundColor = "#2f3136";
 });
