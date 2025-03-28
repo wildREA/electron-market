@@ -118,7 +118,7 @@ async function updateProfile(username, password, countryCode, profileImage, desc
 
         const query = `
             UPDATE profiles
-            SET countryCode = ?, profileImage = ?, biography = ?
+            SET country_code = ?, profile_image = ?, biography = ?
             WHERE username = ?
         `;
 
