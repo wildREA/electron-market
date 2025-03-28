@@ -63,7 +63,7 @@ async function joinConversation(socket, data, callback) {
 // Handle incoming messages (direct messaging, no rooms)
 async function handleMessage(socket, data, callback) {
     const { recipient, message } = data;
-
+    console.log(`Message from ${socket.id} to ${recipient}: ${message}`);
     if (!recipient || !message) {
         return callback({ success: false, error: 'Recipient and message are required.' });
     }
