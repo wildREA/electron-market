@@ -1,4 +1,3 @@
-
 document.getElementById("profile").addEventListener("click", () => {
     buildProfileCard();
 });

@@ -39,6 +39,9 @@ function decrypt(text) {
 async function handleRegisterRequest(username, email, password) {
     if (!username || !password) return [false, 'Username and password are required'];
     try {
+        // Check if username is more than 32 characters
+        if (username.length > 32) return [false, 'Username must be 32 characters or less'];
+
         // Check username uniqueness
         const isUsernameUnique = await checkIfUnique(1, username);
         if (!isUsernameUnique) return [false, 'Username must be unique'];
