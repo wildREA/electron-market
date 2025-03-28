@@ -17,9 +17,11 @@
 }
 
 .chat-toggle-icon {
+    display: flex;
     cursor: pointer;
-    text-align: center;
-    font-size: 24px;
+    height: 5vh;
+    justify-content: center;
+    align-items: center;
     margin-bottom: 10px;
     user-select: none;
     pointer-events: none;
@@ -27,6 +29,7 @@
 
 .user-list-container {
     transition: max-height 0.3s ease;
+    padding-left: 10px;
 }
 
 .user-item {
@@ -76,6 +79,7 @@
     padding-bottom: 15px;
     height: 89%;
     overflow: auto;
+    background: #36393f75;
 
     /* Scrollbar */
     scrollbar-width: thin;

@@ -134,10 +134,10 @@ document.addEventListener("DOMContentLoaded", () => {
         // Toggle the user list container visibility
         if (userListContainer.style.display === "none" || userListContainer.style.display === "") {
           userListContainer.style.display = "block";
-          chatToggle.style.backgroundColor = "#2f3136";
+          chatList.style.backgroundColor = "#2f3136";
         } else {
           userListContainer.style.display = "none";
-          chatToggle.style.backgroundColor = "#36393f";
+          chatList.style.backgroundColor = "#36393f";
         }
         // Close the chat box when toggling
         chatBox.style.display = "none";
@@ -150,6 +150,7 @@ document.addEventListener("DOMContentLoaded", () => {
   // Initially hide the chat box, color the toggle icon, and hide the user list container with same color
   chatBox.style.display = "none";
   userListContainer.style.display = "none";
-  chatToggle.style.backgroundColor = "#36393f";
-
+  chatList.style.padding = "0";
+  chatList.style.backgroundColor = "#36393f";
+  chatToggle.style.backgroundColor = "#2f3136";
 });
