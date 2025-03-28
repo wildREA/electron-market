@@ -147,4 +147,5 @@ document.addEventListener("DOMContentLoaded", () => {
 
   // Initially hide the chat box
   chatBox.style.display = "none";
+  userListContainer.style.display = "none";
 });
