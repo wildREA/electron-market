@@ -67,14 +67,14 @@
 .chat-description {
     max-height: calc(100vh - 60px);
     overflow-y: auto;
+    padding-bottom: 15px;
 }
 
 .chat-messages {
-    display: flex;
     flex-direction: column;
     gap: 5px;
-    padding-top: 15px;
-    height: 100%;
+    padding-bottom: 15px;
+    height: 89%;
     overflow: auto;
 
     /* Scrollbar */
