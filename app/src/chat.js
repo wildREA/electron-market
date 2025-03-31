@@ -13,6 +13,7 @@ document.addEventListener("DOMContentLoaded", () => {
   // Create a container to hold all user profile icons
   const userListContainer = document.createElement("div");
   userListContainer.classList.add("user-list-container");
+  userListContainer.setAttribute("id", "userListContainer"); // Ensure ID is set correctly
   chatList.appendChild(userListContainer);
 
   // Sample users array (replace profilePic with actual image URLs)
@@ -38,13 +39,13 @@ document.addEventListener("DOMContentLoaded", () => {
 
     // Checking username length to truncate for users in list
     const truncatedUserList = user.display.length > 23
-      ? user.display.substring(0, 21) + "..."
-      : user.display;
+        ? user.display.substring(0, 21) + "..."
+        : user.display;
 
     // Checking username length to truncate for users in chat
     const truncatedUserChat = user.display.length > 31
-      ? user.display.substring(0, 29) + "..."
-      : user.display;
+        ? user.display.substring(0, 29) + "..."
+        : user.display;
 
     // Add user (truncated) display name next to the avatar
     const nameSpan = document.createElement("span");
@@ -144,8 +145,6 @@ document.addEventListener("DOMContentLoaded", () => {
       }
     }
   });
-
-  // TMRRW ADD THE STUFF WHERE FOR THE FULLY TOGGLED OFF CHAT STATE TO HAVE IT BE SO THAT THE BLANK BLACK PAGE IS GONE AND ONLY THE ICON IS VISIBLE, RENABLES WHEN USER LIST IS TOGGLED, OBVIOUSLY KEPT WITH CHAT_USER LIST
 
   // Initially hide the chat box, color the toggle icon, and hide the user list container with same color
   chatBox.style.display = "none";

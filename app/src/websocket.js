@@ -20,8 +20,8 @@ socket.on('disconnect', (reason) => {
 });
 
 // Join a conversation
-function joinConversation(targetUser, username, password) {
-    console.log(`Attempting to join conversation as ${username} with target user ${targetUser}`);
+function joinConversation(targetUser) {
+    console.log(`Attempting to join conversation with target user ${targetUser}`);
     socket.emit('joinConversation', { targetUser }, (response) => {
         if (response.success) {
             console.log(`Joined conversation with ${targetUser}. Messages received:`, response.messages);
@@ -62,10 +62,10 @@ function sendMessage() {
     });
 }
 
-// Add event listener to the user list
+// Add event listener to the user list container
 function addUserListEventListener() {
-    document.getElementById('userList').addEventListener('click', (event) => {
-        const recipient = event.target.dataset.username;
+    document.getElementById('userListContainer').addEventListener('click', (event) => {
+        const recipient = event.target.closest('.user-item').dataset.userId; // Corrected to use closest user-item
         setActiveRecipient(recipient);
         console.log(`User selected: ${recipient}`);
         joinConversation(recipient);
