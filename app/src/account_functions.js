@@ -1,3 +1,4 @@
+
 // Function to create the window for the login modal
 function createLogin() {
     console.log("Creating login card...");
@@ -103,26 +104,26 @@ async function sendRegister(username, email, password) {
         },
         body: JSON.stringify({ username, email, password }),
     })
-        .then(response => response.json())
-        .then(data => {
-            console.log('Success:', data.success);
-            if (data.success) {
-                Swal.fire({
-                    title: 'Success',
-                    text: 'Successful registration',
-                    icon: 'success',
-                    confirmButtonText: 'Close'
-                });
-                getUserInformations(identifier);
-                window.userinformation.password = password;
-                // Add any further actions, such as triggering a profile picture change
-                document.getElementById('account').innerText = "Log out";
-                document.getElementById('account').addEventListener('click', handleLogout);
-            }
-        })
-        .catch((error) => {
-            console.error('Error:', error);
-        });
+    .then(response => response.json())
+    .then(data => {
+        console.log('Success:', data.success);
+        if (data.success) {
+            Swal.fire({
+                title: 'Success',
+                text: 'Successful registration',
+                icon: 'success',
+                confirmButtonText: 'Close'
+            });
+            window.userinformation = { username: username, password: password };
+            enableWebsocket(username, password);
+            // Add any further actions, such as triggering a profile picture change
+            document.getElementById('account').innerText = "Log out";
+            document.getElementById('account').addEventListener('click', handleLogout);
+        }
+    })
+    .catch((error) => {
+        console.error('Error:', error);
+    });
 }
 
 // Function to send login data to the server
@@ -143,8 +144,8 @@ async function sendLogin(identifier, password) {
                 icon: 'success',
                 confirmButtonText: 'Close'
             });
-            getUserInformations(identifier);
-            window.userinformation.password = password;
+            window.userinformation = { username: identifier, password: password };
+            enableWebsocket(identifier, password);
             // Add further actions here, such as updating the profile picture
             document.getElementById('account').innerText = "Log out";
             document.getElementById('account').addEventListener('click', handleLogout);
@@ -153,25 +154,13 @@ async function sendLogin(identifier, password) {
         console.error('Error:', error);
     }
 }
-
-async function getUserInformations(username) {
-    try {
-        const response = await fetch('http://localhost:3000/profile', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({ username: username })
-        });
-        const data = await response.json();
-        console.log(data);
-        console.log('Success:', data.success);
-        if (data.success) {
-            window.userinformation = data.message;
-        }
-    } catch (error) {
-        console.error('Error:', error);
-    }
+async function enableWebsocket(username, password){
+    console.log("test: " + username);
+    window.scriptParams = {username: username, password: password};
+    const script = document.createElement("script");
+    script.src = "src/websocket.js";
+    script.type = "module";
+    document.body.appendChild(script);
 }
 
 // Expose the function so it can be called from other scripts

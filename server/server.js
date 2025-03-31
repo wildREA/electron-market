@@ -1,9 +1,10 @@
 const express = require('express');
 const cors = require('cors');
-require('dotenv').config({ path: './.env' });
+const path = require('path');
 const { Pool } = require('pg');
 const http = require('http');
 const socketIo = require('socket.io');
+require('dotenv').config({ path: './.env' });
 
 // Socket.IO Handlers (from your websocketHandlers module)
 const {
@@ -22,6 +23,7 @@ const {
     updateProfile,
     getProfileImage
 } = require('./server_functions');
+
 
 // Initialize Socket.IO Service
 function webSocketService() {
@@ -75,6 +77,7 @@ async function startServer() {
 
     app.use(cors());
     app.use(express.json());
+    app.use(express.static(path.join(__dirname, 'src')));
 
     app.post('/register', async (req, res) => {
         const [result, message] = await handleRegisterRequest(req.body.username, req.body.email, req.body.password);

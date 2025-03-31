@@ -26,9 +26,10 @@ async function addConnection(socket) {
 
 // Handle the 'joinConversation' event
 async function joinConversation(socket, data, callback) {
-    const { targetUser, username, password } = data;
+    const { targetUser } = data;
+    const username = socket.username;
 
-    if (!targetUser || !username || !password) {
+    if (!targetUser) {
         return callback({ success: false, error: 'Missing required fields.' });
     }
 
