@@ -69,6 +69,7 @@ function handleLogout(event) {
     });
     // Clear user information
     delete window.userinformation;
+    disableChatWhenLogged();
     // Set the dropdown button for account manage to "Login"
     document.getElementById('account').innerText = "Log in";
     document.getElementById('account').addEventListener('click', createLogin);
@@ -82,6 +83,7 @@ function handleLogin(event) {
     const password = formData.get('password');
     // Call sendLogin with the form values
     sendLogin(username, password);
+    enableChatWhenLogged();
 }
 
 function handleRegister(event) {
@@ -93,6 +95,7 @@ function handleRegister(event) {
     const password = formData.get('password');
     // Call sendRegister with the form values
     sendRegister(username, email, password);
+    enableChatWhenLogged();
 }
 
 async function sendRegister(username, email, password) {
@@ -125,6 +128,31 @@ async function sendRegister(username, email, password) {
         });
 }
 
+async function enableChatWhenLogged() {
+    const script = document.createElement('script');
+    script.id = 'chatScript';
+    script.src = './src/chat.js';
+    script.async = true;
+    script.defer = true;
+    script.onload = () => {
+        console.log("Chat script loaded successfully.");
+    };
+    script.onerror = () => {
+        console.error("Error loading chat script.");
+    };
+    document.body.appendChild(script);
+}
+
+async function disableChatWhenLogged() {
+    const script = document.getElementById('chatScript');
+    if (script) {
+        script.remove();
+        console.log("Chat script removed successfully.");
+    } else {
+        console.error("Chat script not found.");
+    }
+}
+
 async function sendLogin(identifier, password) {
     try {
         const response = await fetch('http://localhost:3000/login', {
@@ -143,7 +171,7 @@ async function sendLogin(identifier, password) {
                 confirmButtonText: 'Close'
             });
             getUserInformations(identifier);
-            window.userinformation.password = password;
+
             // Add further actions here, such as updating the profile picture
             document.getElementById('account').innerText = "Log out";
             document.getElementById('account').addEventListener('click', handleLogout);
