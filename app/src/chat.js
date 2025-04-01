@@ -1,4 +1,17 @@
 document.addEventListener("DOMContentLoaded", () => {
+  // Updated: fetch user data for a specific username from the API
+  async function fetchUserData(username) {
+    try {
+      // Pass the username as a query parameter
+      const response = await fetch(`http://localhost:3000/getProfileImage?username=${encodeURIComponent(username)}`);
+      const result = await response.json();
+      return result;
+    } catch (err) {
+      console.error("Error retrieving user data:", err);
+      return { success: false, message: err.message };
+    }
+  }
+
   // Get container elements from HTML
   const chatList = document.getElementById("chatList");
   const chatBox = document.getElementById("chatBox");
@@ -10,18 +23,53 @@ document.addEventListener("DOMContentLoaded", () => {
   chatToggle.innerHTML = `<img src="${chatIconImage}" alt="Chat Icon" id="chatIcon"/>`;
   chatList.appendChild(chatToggle);
 
+  function addUserToChat(user) {
+    if (!user) return;
+    const userElement = createUserElement(user);
+    userListContainer.appendChild(userElement);
+  }
+
+  // Create and delete search bar to add users to the chat
+  function createSearchBar() {
+    const searchBar = document.createElement("form");
+    searchBar.innerHTML = `
+      <input type="text" name="search" placeholder="Search for users..." class="form-control" required/>
+    `;
+    searchBar.classList.add("search-bar");
+    chatList.appendChild(searchBar);
+
+    // Add user to chat on search: check if user exists in database
+    searchBar.addEventListener("submit", async (event) => {
+      event.preventDefault();
+      const searchInput = searchBar.querySelector("input[name='search']");
+      const searchText = searchInput.value.trim().toLowerCase();
+      if (searchText !== "") {
+        // Use the updated fetchUserData that sends the username parameter
+        const userData = await fetchUserData(searchText);
+        if (userData.success) {
+          // Append the user to the list using fetched data
+          // Assuming the returned object is structured with a message property containing user info
+          addUserToChat(userData.message);
+        } else {
+          console.error("User not found:", searchText);
+        }
+        searchInput.value = "";
+      }
+    });
+  }
+
+  function deleteSearchBar() {
+    const searchBar = document.querySelector(".search-bar");
+    if (searchBar) {
+      chatList.removeChild(searchBar);
+    }
+  }
+
   // Create a container to hold all user profile icons
   const userListContainer = document.createElement("div");
   userListContainer.classList.add("user-list-container");
   userListContainer.setAttribute("id", "userListContainer"); // Ensure ID is set correctly
   chatList.appendChild(userListContainer);
-
-  // Sample users array (replace profilePic with actual image URLs)
-  const users = [
-    { id: 1, name: "ahmetusHaramus", display: "ahmutus", profilePic: "./images/profiles/ahmetHmoudT0pG_benz.jpg" },
-    { id: 2, name: "doeyjohnny", display: "wallahshabibwithkebab4_d", profilePic: "./images/profiles/default.jpg" },
-    { id: 3, name: "charlesJson", display: "jsonJr", profilePic: "./images/profiles/charliecharleson.jpg" }
-  ];
 
   // Function to create a user element in the list
   function createUserElement(user) {
@@ -32,20 +80,20 @@ document.addEventListener("DOMContentLoaded", () => {
 
     // Create an image element for the profile picture
     const img = document.createElement("img");
-    img.src = user.profilePic;
-    img.alt = user.name;
+    // If user.profile_image is provided (e.g. as a base64 string), use it. Otherwise, fallback to default
+    img.src = user.profile_image ? user.profile_image : './images/icons/default_avatar.png';
+    img.alt = user.username;
     img.classList.add("user-avatar");
     userElement.appendChild(img);
 
-    // Checking username length to truncate for users in list
-    const truncatedUserList = user.display.length > 23
-        ? user.display.substring(0, 21) + "..."
-        : user.display;
-
-    // Checking username length to truncate for users in chat
-    const truncatedUserChat = user.display.length > 31
-        ? user.display.substring(0, 29) + "..."
-        : user.display;
+    // Truncate the display/username if it's too long
+    const clientName = user.displayname || user.username;
+    const truncatedUserList = clientName.length > 23
+      ? clientName.substring(0, 21) + "..."
+      : clientName;
+    const truncatedUserChat = clientName.length > 31
+      ? clientName.substring(0, 29) + "..."
+      : clientName;
 
     // Add user (truncated) display name next to the avatar
     const nameSpan = document.createElement("span");
@@ -60,40 +108,29 @@ document.addEventListener("DOMContentLoaded", () => {
     return userElement;
   }
 
-  // Populate the user list with each user’s element
-  users.forEach(user => {
-    const userElement = createUserElement(user);
-    userListContainer.appendChild(userElement);
-  });
-
   // Function to open a chat conversation with a user
   function openChat(user, truncatedUserChat) {
     // Clear previous chat contents
     chatBox.innerHTML = "";
-
     // Create a header for the chat box
     const header = document.createElement("div");
     header.classList.add("chat-header");
     header.textContent = truncatedUserChat;
     chatBox.appendChild(header);
-
     // Create a container describing conversation or status
     const descriptionContainer = document.createElement("div");
     descriptionContainer.classList.add("chat-description");
-    descriptionContainer.textContent = `Conversation with @${user.name}.`;
+    descriptionContainer.textContent = `Conversation with @${user.username}.`;
     chatBox.appendChild(descriptionContainer);
-
     // Create a container for the messages
     const messageContainer = document.createElement("div");
     messageContainer.classList.add("chat-messages");
     messageContainer.setAttribute("id", "chatMessages");
     chatBox.appendChild(messageContainer);
-
     // Create a container for the form field
     const chatFormField = document.createElement("div");
     chatFormField.classList.add("chat-form-field");
     chatBox.appendChild(chatFormField);
-
     // Create a form for sending messages
     const form = document.createElement("form");
     form.classList.add("chat-form");
@@ -108,20 +145,16 @@ document.addEventListener("DOMContentLoaded", () => {
       const messageInput = form.querySelector("input[name='message']");
       const messageText = messageInput.value.trim();
       if (messageText !== "") {
-        // Create a new message div
-        const newMessage = document.createElement("div");
+        const newMessage = document.createElement("span");
         newMessage.classList.add("message");
         newMessage.textContent = messageText;
-
         // Append the new message to the message container
         messageContainer.appendChild(newMessage);
-
         // Clear the input
         messageInput.value = "";
       }
     });
 
-    // Display the chat box
     chatBox.style.display = "block";
   }
 
@@ -131,14 +164,15 @@ document.addEventListener("DOMContentLoaded", () => {
       // If the chat box is visible, clicking the toggle icon should close it
       if (chatBox.style.display === "block") {
         chatBox.style.display = "none";
-      } else {
-        // Toggle the user list container visibility
+      } else { // If closed, then open
         if (userListContainer.style.display === "none" || userListContainer.style.display === "") {
           userListContainer.style.display = "block";
           chatList.style.backgroundColor = "#2f3136";
-        } else {
+          createSearchBar();
+        } else { // If open, then close
           userListContainer.style.display = "none";
           chatList.style.backgroundColor = "#36393f";
+          deleteSearchBar();
         }
         // Close the chat box when toggling
         chatBox.style.display = "none";
@@ -146,10 +180,13 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   });
 
-  // Initially hide the chat box, color the toggle icon, and hide the user list container with same color
+  // Initialization & styling
   chatBox.style.display = "none";
   userListContainer.style.display = "none";
   chatList.style.padding = "0";
   chatList.style.backgroundColor = "#36393f";
   chatToggle.style.backgroundColor = "#2f3136";
+
+  // Ensure the search bar is not present initially
+  deleteSearchBar();
 });
