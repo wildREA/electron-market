@@ -155,7 +155,7 @@ async function sendLogin(identifier, password) {
     }
 }
 async function enableWebsocket(username, password){
-    console.log("test: " + username);
+    console.log("Logged in as: " + username);
     window.scriptParams = {username: username, password: password};
     const script = document.createElement("script");
     script.src = "src/websocket.js";

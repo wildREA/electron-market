@@ -183,7 +183,14 @@ async function getProfileImage(username) {
         }
         let RelativePath = `uploads/${username}.png`;
         let filePath = path.join(__dirname, RelativePath);
-        const imageBuffer = await fsP.readFile(filePath);
+        let imageBuffer = null;
+        try {
+            imageBuffer = await fsP.readFile(filePath);
+        } 
+        catch (err) {
+            filePath = path.join(__dirname, 'default.jpg');
+            imageBuffer = await fsP.readFile(filePath);
+        }
         const base64Image = imageBuffer.toString('base64');
         return { success: true, imageBase64: base64Image };
     } catch (error) {

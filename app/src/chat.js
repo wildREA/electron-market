@@ -7,11 +7,9 @@ document.addEventListener("DOMContentLoaded", () => {
         headers: {
           'Content-Type': 'application/json'
         },
-        body: JSON.stringify({ username })
+        body: JSON.stringify({ "imagePath": username })
       });
       const result = await response.json();
-      result.imageBase64
-      // exampleImage = `data:image/png;base64,${result.imageBase64}`;
       return result;
     } catch (err) {
       console.error("Error retrieving user data:", err);
@@ -31,7 +29,6 @@ document.addEventListener("DOMContentLoaded", () => {
   chatList.appendChild(chatToggle);
 
   function addUserToChat(user) {
-    if (!user) return;
     const userElement = createUserElement(user);
     userListContainer.appendChild(userElement);
   }
@@ -49,16 +46,16 @@ document.addEventListener("DOMContentLoaded", () => {
     searchBar.addEventListener("submit", async (event) => {
       event.preventDefault();
       const searchInput = searchBar.querySelector("input[name='search']");
-      const searchText = searchInput.value.trim().toLowerCase();
-      if (searchText !== "") {
-        // Use the updated fetchUserData that sends the username parameter
-        const userData = await fetchUserData(searchText);
-        if (userData.success) {
-          // Append the user to the list using fetched data
-          // Assuming the returned object is structured with a message property containing user info
-          addUserToChat(userData.message);
+      const userSearch = searchInput.value.trim().toLowerCase();
+      if (userSearch !== "") {
+        const userData = await fetchUserData(userSearch);
+        if (userData && userData.success) {
+          console.log("User found:", userSearch);
+          let contactInfo = {'img': userData.data.imageBase64, 'username': userSearch};
+          console.log("Contact info:", contactInfo);
+          addUserToChat(contactInfo);
         } else {
-          console.error("User not found:", searchText);
+          console.error("User not found:", userSearch);
         }
         searchInput.value = "";
       }
@@ -82,19 +79,18 @@ document.addEventListener("DOMContentLoaded", () => {
   function createUserElement(user) {
     const userElement = document.createElement("div");
     userElement.classList.add("user-item");
-    userElement.setAttribute("id", `user-${user.id}`);
-    userElement.setAttribute("data-user-id", user.id);
+    userElement.setAttribute("id", `user-${user.username}`);
+    userElement.setAttribute("data-user-id", user.username);
 
     // Create an image element for the profile picture
     const img = document.createElement("img");
-    // If user.profile_image is provided (e.g. as a base64 string), use it. Otherwise, fallback to default
-    img.src = user.profile_image ? user.profile_image : './images/icons/default_avatar.png';
     img.alt = user.username;
+    img.src = `data:image/png;base64,${user.img}`;
     img.classList.add("user-avatar");
     userElement.appendChild(img);
 
     // Truncate the display/username if it's too long
-    const clientName = user.displayname || user.username;
+    const clientName = user.username;
     const truncatedUserList = clientName.length > 23
       ? clientName.substring(0, 21) + "..."
       : clientName;
@@ -119,25 +115,30 @@ document.addEventListener("DOMContentLoaded", () => {
   function openChat(user, truncatedUserChat) {
     // Clear previous chat contents
     chatBox.innerHTML = "";
+    
     // Create a header for the chat box
     const header = document.createElement("div");
     header.classList.add("chat-header");
     header.textContent = truncatedUserChat;
     chatBox.appendChild(header);
+    
     // Create a container describing conversation or status
     const descriptionContainer = document.createElement("div");
     descriptionContainer.classList.add("chat-description");
     descriptionContainer.textContent = `Conversation with @${user.username}.`;
     chatBox.appendChild(descriptionContainer);
+    
     // Create a container for the messages
     const messageContainer = document.createElement("div");
     messageContainer.classList.add("chat-messages");
     messageContainer.setAttribute("id", "chatMessages");
     chatBox.appendChild(messageContainer);
+    
     // Create a container for the form field
     const chatFormField = document.createElement("div");
     chatFormField.classList.add("chat-form-field");
     chatBox.appendChild(chatFormField);
+    
     // Create a form for sending messages
     const form = document.createElement("form");
     form.classList.add("chat-form");

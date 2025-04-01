@@ -68,7 +68,7 @@ async function startServer() {
 
     // Database connection
     global.pool = new Pool({
-        host: '172.16.3.63',
+        host: '172.16.3.52',
         user: 'postgres',
         password: process.env.PASSWORD,
         database: 'eam_db',
