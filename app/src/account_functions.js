@@ -70,6 +70,7 @@ function handleLogout(event) {
     });
     // Clear user information
     delete window.userinformation;
+    disableChat();
     // Set the dropdown button for account manage to "Login"
     document.getElementById('account').innerText = "Log in";
     document.getElementById('account').addEventListener('click', createLogin);
@@ -115,6 +116,7 @@ async function sendRegister(username, email, password) {
                 confirmButtonText: 'Close'
             });
             window.userinformation = { username: username, password: password };
+            enableChat();
             enableWebsocket(username, password);
             // Add any further actions, such as triggering a profile picture change
             document.getElementById('account').innerText = "Log out";
@@ -154,6 +156,7 @@ async function sendLogin(identifier, password) {
         console.error('Error:', error);
     }
 }
+
 async function enableWebsocket(username, password){
     console.log("Logged in as: " + username);
     window.scriptParams = {username: username, password: password};
@@ -161,6 +164,23 @@ async function enableWebsocket(username, password){
     script.src = "src/websocket.js";
     script.type = "module";
     document.body.appendChild(script);
+}
+
+async function enableChat() {
+    console.log("Enabled chat!");
+    window.scriptParams = {username: window.userinformation.username, password: window.userinformation.password};
+    const script = document.createElement("script");
+    script.src = "chat.js";
+    script.type = "module";
+    document.body.appendChild(script);
+}
+
+async function disableChat() {
+    console.log("Disabled chat!");
+    const chatScript = document.querySelector('script[src="chat.js"]');
+    if (chatScript) {
+        chatScript.remove();
+    }
 }
 
 // Expose the function so it can be called from other scripts

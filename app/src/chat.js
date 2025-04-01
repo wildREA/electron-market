@@ -40,7 +40,7 @@ document.addEventListener("DOMContentLoaded", () => {
       <input type="text" name="search" placeholder="Search for users..." class="form-control" required/>
     `;
     searchBar.classList.add("search-bar");
-    chatList.appendChild(searchBar);
+    chatList.insertBefore(searchBar, chatToggle.nextSibling);
 
     // Add user to chat on search: check if user exists in database
     searchBar.addEventListener("submit", async (event) => {
@@ -172,14 +172,18 @@ document.addEventListener("DOMContentLoaded", () => {
       // If the chat box is visible, clicking the toggle icon should close it
       if (chatBox.style.display === "block") {
         chatBox.style.display = "none";
-      } else { // If closed, then open
+      } else { // If closed, then open (--> TRUE)
         if (userListContainer.style.display === "none" || userListContainer.style.display === "") {
           userListContainer.style.display = "block";
+          chatList.style.zIndex = "1";
           chatList.style.backgroundColor = "#2f3136";
+          console.log("User list opened.");
           createSearchBar();
-        } else { // If open, then close
+        } else { // If open, then close (--> FALSE)
           userListContainer.style.display = "none";
-          chatList.style.backgroundColor = "#36393f";
+          chatList.style.backgroundColor = "transparent";
+          userListContainer.style.zIndex = "-1";
+          console.log("User list closed.");
           deleteSearchBar();
         }
         // Close the chat box when toggling
@@ -191,8 +195,9 @@ document.addEventListener("DOMContentLoaded", () => {
   // Initialization & styling
   chatBox.style.display = "none";
   userListContainer.style.display = "none";
+  userListContainer.style.zIndex = "-1";
+  chatList.style.backgroundColor = "transparent";
   chatList.style.padding = "0";
-  chatList.style.backgroundColor = "#36393f";
   chatToggle.style.backgroundColor = "#2f3136";
 
   // Ensure the search bar is not present initially
