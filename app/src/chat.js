@@ -2,7 +2,7 @@ document.addEventListener("DOMContentLoaded", () => {
   // Fetch user data from the API
   async function fetchUserData() {
     try {
-      const response = await fetch('http://localhost:3000/getContact');
+      const response = await fetch('http://localhost:3000/getProfileImage');
       const result = await response.json();
       if (result.success) {
         // Create and append the user element using fetched data
@@ -29,9 +29,10 @@ document.addEventListener("DOMContentLoaded", () => {
 
   // Create and delete search bar to add users to the chat
   function createSearchBar() {
-    const searchBar = document.createElement("input");
-    searchBar.type = "text";
-    searchBar.placeholder = "Search for users...";
+    const searchBar = document.createElement("form");
+    searchBar.innerHTML = `
+    <input type="text" name="search" placeholder="Search for users..." class="form-control" required/>
+  `;
     searchBar.classList.add("search-bar");
     chatList.appendChild(searchBar);
   }
@@ -117,11 +118,25 @@ document.addEventListener("DOMContentLoaded", () => {
       const messageInput = form.querySelector("input[name='message']");
       const messageText = messageInput.value.trim();
       if (messageText !== "") {
-        const newMessage = document.createElement("div");
+        const newMessage = document.createElement("span");
         newMessage.classList.add("message");
         newMessage.textContent = messageText;
         messageContainer.appendChild(newMessage);
         messageInput.value = "";
+      }
+    });
+
+    searchBar.addEventListener("submit", (event) => {
+      event.preventDefault();
+      const searchInput = searchBar.querySelector("input[name='search']");
+      const searchText = searchInput.value.trim().toLowerCase();
+      if (searchText !== "") {
+        const newSubmission = document.createElement("span");
+        newSubmission.classList.add("username-submission");
+        newSubmission.textContent = searchText;
+        submissionContainer.appendChild(newSubmission);
+        searchInput.value = "";
+        console.log("Search submitted:", searchText);
       }
     });
 
