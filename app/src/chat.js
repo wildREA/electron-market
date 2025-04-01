@@ -1,18 +1,14 @@
 document.addEventListener("DOMContentLoaded", () => {
-  // Fetch user data from the API
-  async function fetchUserData() {
+  // Updated: fetch user data for a specific username from the API
+  async function fetchUserData(username) {
     try {
-      const response = await fetch('http://localhost:3000/getProfileImage');
+      // Pass the username as a query parameter
+      const response = await fetch(`http://localhost:3000/getProfileImage?username=${encodeURIComponent(username)}`);
       const result = await response.json();
-      if (result.success) {
-        // Create and append the user element using fetched data
-        const userElement = createUserElement(result.message);
-        userListContainer.appendChild(userElement);
-      } else {
-        console.error('Error fetching user:', result.error);
-      }
+      return result;
     } catch (err) {
       console.error("Error retrieving user data:", err);
+      return { success: false, message: err.message };
     }
   }
 
@@ -27,14 +23,39 @@ document.addEventListener("DOMContentLoaded", () => {
   chatToggle.innerHTML = `<img src="${chatIconImage}" alt="Chat Icon" id="chatIcon"/>`;
   chatList.appendChild(chatToggle);
 
+  function addUserToChat(user) {
+    if (!user) return;
+    const userElement = createUserElement(user);
+    userListContainer.appendChild(userElement);
+  }
+
   // Create and delete search bar to add users to the chat
   function createSearchBar() {
     const searchBar = document.createElement("form");
     searchBar.innerHTML = `
-    <input type="text" name="search" placeholder="Search for users..." class="form-control" required/>
-  `;
+      <input type="text" name="search" placeholder="Search for users..." class="form-control" required/>
+    `;
     searchBar.classList.add("search-bar");
     chatList.appendChild(searchBar);
+
+    // Add user to chat on search: check if user exists in database
+    searchBar.addEventListener("submit", async (event) => {
+      event.preventDefault();
+      const searchInput = searchBar.querySelector("input[name='search']");
+      const searchText = searchInput.value.trim().toLowerCase();
+      if (searchText !== "") {
+        // Use the updated fetchUserData that sends the username parameter
+        const userData = await fetchUserData(searchText);
+        if (userData.success) {
+          // Append the user to the list using fetched data
+          // Assuming the returned object is structured with a message property containing user info
+          addUserToChat(userData.message);
+        } else {
+          console.error("User not found:", searchText);
+        }
+        searchInput.value = "";
+      }
+    });
   }
 
   function deleteSearchBar() {
@@ -57,7 +78,8 @@ document.addEventListener("DOMContentLoaded", () => {
 
     // Create an image element for the profile picture
     const img = document.createElement("img");
-    img.src = user.profile_image || './images/icons/default_avatar.png';
+    // If user.profile_image is provided (e.g. as a base64 string), use it. Otherwise, fallback to default
+    img.src = user.profile_image ? user.profile_image : './images/icons/default_avatar.png';
     img.alt = user.username;
     img.classList.add("user-avatar");
     userElement.appendChild(img);
@@ -94,7 +116,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     const descriptionContainer = document.createElement("div");
     descriptionContainer.classList.add("chat-description");
-    descriptionContainer.textContent = `Conversation with @${user.name}.`;
+    descriptionContainer.textContent = `Conversation with @${user.username}.`;
     chatBox.appendChild(descriptionContainer);
 
     const messageContainer = document.createElement("div");
@@ -126,20 +148,6 @@ document.addEventListener("DOMContentLoaded", () => {
       }
     });
 
-    searchBar.addEventListener("submit", (event) => {
-      event.preventDefault();
-      const searchInput = searchBar.querySelector("input[name='search']");
-      const searchText = searchInput.value.trim().toLowerCase();
-      if (searchText !== "") {
-        const newSubmission = document.createElement("span");
-        newSubmission.classList.add("username-submission");
-        newSubmission.textContent = searchText;
-        submissionContainer.appendChild(newSubmission);
-        searchInput.value = "";
-        console.log("Search submitted:", searchText);
-      }
-    });
-
     chatBox.style.display = "block";
   }
 
@@ -163,14 +171,13 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   });
 
-  // Initialization
-  // Styling
+  // Initialization & styling
   chatBox.style.display = "none";
   userListContainer.style.display = "none";
   chatList.style.padding = "0";
   chatList.style.backgroundColor = "#36393f";
   chatToggle.style.backgroundColor = "#2f3136";
 
-  // Functionality
+  // Ensure the search bar is not present initially
   deleteSearchBar();
 });

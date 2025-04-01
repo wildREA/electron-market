@@ -178,6 +178,9 @@ async function carListSelection() {
 
 async function getProfileImage(username) {
     try {
+        if (!pingUser(username)) {
+            return { success: false, message: 'Username is required' };
+        }
         let RelativePath = `uploads/${username}.png`;
         let filePath = path.join(__dirname, RelativePath);
         const imageBuffer = await fsP.readFile(filePath);
