@@ -17,9 +17,23 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   }
 
+  // Create chat container
+  const chatContainer = document.createElement("div");
+  chatContainer.classList.add("chat-container");
+  body.appendChild(chatContainer);
+
+  // Create user chat list
+  const chatList = document.createElement("div");
+  chatList.classList.add("user-chat-list");
+  chatContainer.appendChild(chatList);
+
+  // Create chat box
+  const chatBox = document.createElement("div");
+  chatBox.classList.add("chat-box");
+  chatBox.setAttribute("id", "chatBox");
+  chatContainer.appendChild(chatBox);
+
   // Get container elements from HTML
-  const chatList = document.getElementById("chatList");
-  const chatBox = document.getElementById("chatBox");
   const chatIconImage = './images/icons/app_icon.png';
 
   // Create the chat toggle icon (at the top of the user list)
