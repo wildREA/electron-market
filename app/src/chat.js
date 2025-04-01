@@ -2,13 +2,20 @@ document.addEventListener("DOMContentLoaded", () => {
   // Updated: fetch user data for a specific username from the API
   async function fetchUserData(username) {
     try {
-      // Pass the username as a query parameter
-      const response = await fetch(`http://localhost:3000/getProfileImage?username=${encodeURIComponent(username)}`);
+      const response = await fetch('http://localhost:3000/getProfileImage', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ username })
+      });
       const result = await response.json();
+      result.imageBase64
+      // exampleImage = `data:image/png;base64,${result.imageBase64}`;
       return result;
     } catch (err) {
       console.error("Error retrieving user data:", err);
-      return { success: false, message: err.message };
+      return null;
     }
   }
 
