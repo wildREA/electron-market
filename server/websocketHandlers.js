@@ -20,15 +20,18 @@ async function addConnection(socket) {
         return;
     }
 
+    // Assign username to the socket object and store the socket in activeUsers
+    socket.username = username;
     activeUsers[username] = socket; // Store user socket
-    console.log(`User ${username} connected`);
+    console.log(`User ${socket.username} connected`);  // Log the actual username
 }
 
 // Handle the 'joinConversation' event
 async function joinConversation(socket, data, callback) {
-    const { targetUser, username, password } = data;
+    const { targetUser } = data;
+    const username = socket.username; // Access username from socket
 
-    if (!targetUser || !username || !password) {
+    if (!targetUser) {
         return callback({ success: false, error: 'Missing required fields.' });
     }
 
@@ -63,16 +66,12 @@ async function joinConversation(socket, data, callback) {
 // Handle incoming messages (direct messaging, no rooms)
 async function handleMessage(socket, data, callback) {
     const { recipient, message } = data;
-
+    console.log(`Message from ${socket.username} to ${recipient}: ${message}`); // Access username from socket
     if (!recipient || !message) {
         return callback({ success: false, error: 'Recipient and message are required.' });
     }
 
-    const sender = Object.keys(activeUsers).find(user => activeUsers[user] === socket);
-    if (!sender) {
-        return callback({ success: false, error: 'User not found.' });
-    }
-
+    const sender = socket.username; // Access the sender's username
     const recipientSocket = activeUsers[recipient];
     if (recipientSocket) {
         recipientSocket.emit('message', { sender, message });
@@ -84,9 +83,9 @@ async function handleMessage(socket, data, callback) {
 
 // Handle disconnection event
 function handleDisconnect(socket) {
-    const username = Object.keys(activeUsers).find(user => activeUsers[user] === socket);
+    const username = socket.username; // Access username from socket
     if (username) {
-        delete activeUsers[username];
+        delete activeUsers[username]; // Remove the user from activeUsers
     }
 }
 

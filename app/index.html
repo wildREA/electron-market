@@ -9,8 +9,7 @@
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
   <link rel="stylesheet" href="src/chat.css">
   <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11" defer></script>
-  <script type="module" src="src/websocket.js"></script>
-  <scipt type="module" src="src/renderer.js"></scipt>
+  <script type="module" src="src/renderer.js"></script>
   <script type="module" src="src/renderCars.js"></script>
   <script src="dist/profile.js" defer></script>
   <script src="src/navigation.js" defer></script>
@@ -20,21 +19,21 @@
   <title>Market - Slav Dev</title>
 </head>
 <body>
-  <div class="profile-container">
-    <img src="images/icons/app_icon.png" alt="Profile" draggable="false" class="profile-pic" id="profilePic">
-    <div class="dropdown" id="dropdownMenu">
-      <a id="profile">Profile</a>
-      <a>Settings</a>
-      <a id="account">Log in</a>
-    </div>
+<div class="profile-container">
+  <img src="images/icons/app_icon.png" alt="Profile" draggable="false" class="profile-pic" id="profilePic">
+  <div class="dropdown" id="dropdownMenu">
+    <a id="profile">Profile</a>
+    <a>Settings</a>
+    <a id="account">Log in</a>
   </div>
-  <div class="market-container" style="user-select: none;">
-    <h1>Available Cars</h1>
-    <div class="car-list" id="carList"></div>
-  </div>
-  <div class="chat-container">
-    <div class="user-chat-list" id="chatList"></div>
-    <div class="chat-box" id="chatBox"></div>
-  </div>
+</div>
+<div class="market-container" style="user-select: none;">
+  <h1>Available Cars</h1>
+  <div class="car-list" id="carList"></div>
+</div>
+<div class="chat-container">
+  <div class="user-chat-list" id="chatList"></div>
+  <div class="chat-box" id="chatBox"></div>
+</div>
 </body>
 </html>

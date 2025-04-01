@@ -1,5 +1,6 @@
 const express = require('express');
 const cors = require('cors');
+const path = require('path');
 const { Pool } = require('pg');
 const http = require('http');
 const socketIo = require('socket.io');
@@ -17,12 +18,12 @@ const {
 const {
     handleRegisterRequest,
     handleLoginRequest,
-    getUserContact,
     profileSelection,
     carListSelection,
     updateProfile,
     getProfileImage
 } = require('./server_functions');
+
 
 // Initialize Socket.IO Service
 function webSocketService() {
@@ -76,6 +77,7 @@ async function startServer() {
 
     app.use(cors());
     app.use(express.json());
+    app.use(express.static(path.join(__dirname, 'src')));
 
     app.post('/register', async (req, res) => {
         const [result, message] = await handleRegisterRequest(req.body.username, req.body.email, req.body.password);
@@ -84,11 +86,6 @@ async function startServer() {
 
     app.post('/login', async (req, res) => {
         const [result, message] = await handleLoginRequest(req.body.identifier, req.body.password);
-        res.json({ success: result, message });
-    });
-
-    app.get('/getContact', async (req, res) => {
-        const [result, message] = await getUserContact(req.body.username);
         res.json({ success: result, message });
     });
 

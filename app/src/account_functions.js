@@ -1,3 +1,4 @@
+
 // Function to create the window for the login modal
 function createLogin() {
     console.log("Creating login card...");
@@ -69,7 +70,6 @@ function handleLogout(event) {
     });
     // Clear user information
     delete window.userinformation;
-    disableChatWhenLogged();
     // Set the dropdown button for account manage to "Login"
     document.getElementById('account').innerText = "Log in";
     document.getElementById('account').addEventListener('click', createLogin);
@@ -83,7 +83,6 @@ function handleLogin(event) {
     const password = formData.get('password');
     // Call sendLogin with the form values
     sendLogin(username, password);
-    enableChatWhenLogged();
 }
 
 function handleRegister(event) {
@@ -95,7 +94,6 @@ function handleRegister(event) {
     const password = formData.get('password');
     // Call sendRegister with the form values
     sendRegister(username, email, password);
-    enableChatWhenLogged();
 }
 
 async function sendRegister(username, email, password) {
@@ -106,53 +104,29 @@ async function sendRegister(username, email, password) {
         },
         body: JSON.stringify({ username, email, password }),
     })
-        .then(response => response.json())
-        .then(data => {
-            console.log('Success:', data.success);
-            if (data.success) {
-                Swal.fire({
-                    title: 'Success',
-                    text: 'Successful registration',
-                    icon: 'success',
-                    confirmButtonText: 'Close'
-                });
-                getUserInformations(identifier);
-                window.userinformation.password = password;
-                // Add any further actions, such as triggering a profile picture change
-                document.getElementById('account').innerText = "Log out";
-                document.getElementById('account').addEventListener('click', handleLogout);
-            }
-        })
-        .catch((error) => {
-            console.error('Error:', error);
-        });
+    .then(response => response.json())
+    .then(data => {
+        console.log('Success:', data.success);
+        if (data.success) {
+            Swal.fire({
+                title: 'Success',
+                text: 'Successful registration',
+                icon: 'success',
+                confirmButtonText: 'Close'
+            });
+            window.userinformation = { username: username, password: password };
+            enableWebsocket(username, password);
+            // Add any further actions, such as triggering a profile picture change
+            document.getElementById('account').innerText = "Log out";
+            document.getElementById('account').addEventListener('click', handleLogout);
+        }
+    })
+    .catch((error) => {
+        console.error('Error:', error);
+    });
 }
 
-async function enableChatWhenLogged() {
-    const script = document.createElement('script');
-    script.id = 'chatScript';
-    script.src = './src/chat.js';
-    script.async = true;
-    script.defer = true;
-    script.onload = () => {
-        console.log("Chat script loaded successfully.");
-    };
-    script.onerror = () => {
-        console.error("Error loading chat script.");
-    };
-    document.body.appendChild(script);
-}
-
-async function disableChatWhenLogged() {
-    const script = document.getElementById('chatScript');
-    if (script) {
-        script.remove();
-        console.log("Chat script removed successfully.");
-    } else {
-        console.error("Chat script not found.");
-    }
-}
-
+// Function to send login data to the server
 async function sendLogin(identifier, password) {
     try {
         const response = await fetch('http://localhost:3000/login', {
@@ -170,8 +144,8 @@ async function sendLogin(identifier, password) {
                 icon: 'success',
                 confirmButtonText: 'Close'
             });
-            getUserInformations(identifier);
-
+            window.userinformation = { username: identifier, password: password };
+            enableWebsocket(identifier, password);
             // Add further actions here, such as updating the profile picture
             document.getElementById('account').innerText = "Log out";
             document.getElementById('account').addEventListener('click', handleLogout);
@@ -180,25 +154,13 @@ async function sendLogin(identifier, password) {
         console.error('Error:', error);
     }
 }
-
-async function getUserInformations(username) {
-    try {
-        const response = await fetch('http://localhost:3000/profile', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({ username: username })
-        });
-        const data = await response.json();
-        console.log(data);
-        console.log('Success:', data.success);
-        if (data.success) {
-            window.userinformation = data.message;
-        }
-    } catch (error) {
-        console.error('Error:', error);
-    }
+async function enableWebsocket(username, password){
+    console.log("test: " + username);
+    window.scriptParams = {username: username, password: password};
+    const script = document.createElement("script");
+    script.src = "src/websocket.js";
+    script.type = "module";
+    document.body.appendChild(script);
 }
 
 // Expose the function so it can be called from other scripts
