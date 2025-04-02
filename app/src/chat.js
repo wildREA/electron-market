@@ -16,35 +16,6 @@ async function fetchUserData(username) {
     return null;
   }
 }
-
-// Create body
-const body = document.body;
-
-// Create chat container
-const chatContainer = document.createElement("div");
-chatContainer.classList.add("chat-container");
-body.appendChild(chatContainer);
-
-// Create user chat list
-const chatList = document.createElement("div");
-chatList.classList.add("user-chat-list");
-chatContainer.appendChild(chatList);
-
-// Create chat box
-const chatBox = document.createElement("div");
-chatBox.classList.add("chat-box");
-chatBox.setAttribute("id", "chatBox");
-chatContainer.appendChild(chatBox);
-
-// Get container elements from HTML
-const chatIconImage = './images/icons/app_icon.png';
-
-// Create the chat toggle icon (at the top of the user list)
-const chatToggle = document.createElement("div");
-chatToggle.classList.add("chat-toggle-icon");
-chatToggle.innerHTML = `<img src="${chatIconImage}" alt="Chat Icon" id="chatIcon"/>`;
-chatList.appendChild(chatToggle);
-
 function addUserToChat(user) {
   const isSelf = user.username === window.userinformation.username;
   const existingUser = document.getElementById('user-' + user.username);
@@ -92,12 +63,6 @@ function deleteSearchBar() {
     chatList.removeChild(searchBar);
   }
 }
-
-// Create a container to hold all user profile icons
-const userListContainer = document.createElement("div");
-userListContainer.classList.add("user-list-container");
-userListContainer.setAttribute("id", "userListContainer"); // Ensure ID is set correctly
-chatList.appendChild(userListContainer);
 
 // Function to create a user element in the list
 function createUserElement(user) {
@@ -189,6 +154,40 @@ function openChat(user, truncatedUserChat) {
 
   chatBox.style.display = "block";
 }
+
+// Create body
+const body = document.body;
+
+// Create chat container
+const chatContainer = document.createElement("div");
+chatContainer.classList.add("chat-container");
+body.appendChild(chatContainer);
+
+// Create user chat list
+const chatList = document.createElement("div");
+chatList.classList.add("user-chat-list");
+chatContainer.appendChild(chatList);
+
+// Create chat box
+const chatBox = document.createElement("div");
+chatBox.classList.add("chat-box");
+chatBox.setAttribute("id", "chatBox");
+chatContainer.appendChild(chatBox);
+
+// Get container elements from HTML
+const chatIconImage = './images/icons/app_icon.png';
+
+// Create the chat toggle icon (at the top of the user list)
+const chatToggle = document.createElement("div");
+chatToggle.classList.add("chat-toggle-icon");
+chatToggle.innerHTML = `<img src="${chatIconImage}" alt="Chat Icon" id="chatIcon"/>`;
+chatList.appendChild(chatToggle);
+
+// Create a container to hold all user profile icons
+const userListContainer = document.createElement("div");
+userListContainer.classList.add("user-list-container");
+userListContainer.setAttribute("id", "userListContainer"); // Ensure ID is set correctly
+chatList.appendChild(userListContainer);
 
 // Toggle behavior for the chat toggle icon
 chatToggle.addEventListener("click", (event) => {
