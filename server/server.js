@@ -78,9 +78,7 @@ async function startServer() {
     app.use(cors());
     app.use(express.json());
     app.use(express.static(path.join(__dirname, 'src')));
-    app.use(express.json({ limit: '50mb' }));
-    // 50mb limit
-
+    app.use(express.json({ limit: '50mb' })); // 50mb limit for file uploads
 
     app.post('/register', async (req, res) => {
         const [result, message] = await handleRegisterRequest(req.body.username, req.body.email, req.body.password);

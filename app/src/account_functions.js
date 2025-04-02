@@ -63,6 +63,8 @@ function handleLogout(event) {
     event.preventDefault(); // Prevent default form submission
     // Call sendLogout to handle the logout process
     sendLogout(event);
+    // Refresh the page to clear any session data
+    location.reload();
 }
 
 function sendLogout(event) {

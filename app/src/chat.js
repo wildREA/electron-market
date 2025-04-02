@@ -2,7 +2,7 @@
 // Updated: fetch user data for a specific username from the API
 async function fetchUserData(username) {
   try {
-    const response = await fetch('http://localhost:3000/getProfileImage', {
+    const response = await fetch('http://localhost:3000/getProfileImage', { // Change to 172.16.3.52 in production
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
@@ -23,7 +23,7 @@ const body = document.body;
 // Create chat container
 const chatContainer = document.createElement("div");
 chatContainer.classList.add("chat-container");
-body.appendChild(chatContainer);
+body.insertBefore(chatContainer, document.querySelector('script[src="src/chat.js"]'));
 
 // Create user chat list
 const chatList = document.createElement("div");
@@ -73,7 +73,7 @@ function createSearchBar() {
     const userSearch = searchInput.value.trim().toLowerCase();
     if (userSearch !== "") {
       const userData = await fetchUserData(userSearch);
-      if (userData && userData.success) {
+      if (userData && userData.data.success) {
         console.log("User found:", userSearch);
         let contactInfo = {'img': userData.data.imageBase64, 'username': userSearch};
         console.log("Contact info:", contactInfo);

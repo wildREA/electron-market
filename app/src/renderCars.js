@@ -1,15 +1,17 @@
 // Fetch car data from the API
 async function fetchCarData() {
   try {
-    const response = await fetch('http://localhost:3000/cars');
+    const response = await fetch('http://localhost:3000/cars', {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    });
     const result = await response.json();
-    if(result.success) {
-      renderCars(result.message);
-    } else {
-      console.error('Error fetching cars:', result.error);
-    }
+    renderCars(result.message);
   } catch (err) {
     console.error("Error retrieving car data:", err);
+    return null;
   }
 }
 
