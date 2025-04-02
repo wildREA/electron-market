@@ -17,6 +17,9 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   }
 
+  // Create body
+  const body = document.body;
+
   // Create chat container
   const chatContainer = document.createElement("div");
   chatContainer.classList.add("chat-container");
@@ -43,6 +46,11 @@ document.addEventListener("DOMContentLoaded", () => {
   chatList.appendChild(chatToggle);
 
   function addUserToChat(user) {
+    const existingUser = document.getElementById('user-' + user.username);
+    if (existingUser) {
+      console.log("User already exists in chat:", user.username);
+      return; // User already exists, no need to add again
+    }
     const userElement = createUserElement(user);
     userListContainer.appendChild(userElement);
   }
@@ -189,14 +197,14 @@ document.addEventListener("DOMContentLoaded", () => {
       } else { // If closed, then open (--> TRUE)
         if (userListContainer.style.display === "none" || userListContainer.style.display === "") {
           userListContainer.style.display = "block";
-          chatList.style.zIndex = "1";
+          chatBox.style.backgroundColor = "#2f3136";
           chatList.style.backgroundColor = "#2f3136";
           console.log("User list opened.");
           createSearchBar();
         } else { // If open, then close (--> FALSE)
           userListContainer.style.display = "none";
+          chatBox.style.backgroundColor = "transparent";
           chatList.style.backgroundColor = "transparent";
-          userListContainer.style.zIndex = "-1";
           console.log("User list closed.");
           deleteSearchBar();
         }
@@ -208,8 +216,8 @@ document.addEventListener("DOMContentLoaded", () => {
 
   // Initialization & styling
   chatBox.style.display = "none";
+  chatBox.style.backgroundColor = "transparent";
   userListContainer.style.display = "none";
-  userListContainer.style.zIndex = "-1";
   chatList.style.backgroundColor = "transparent";
   chatList.style.padding = "0";
   chatToggle.style.backgroundColor = "#2f3136";

@@ -71,6 +71,7 @@ function handleLogout(event) {
     // Clear user information
     delete window.userinformation;
     disableChat();
+    disableWebsocket();
     // Set the dropdown button for account manage to "Login"
     document.getElementById('account').innerText = "Log in";
     document.getElementById('account').addEventListener('click', createLogin);
@@ -84,6 +85,35 @@ function handleLogin(event) {
     const password = formData.get('password');
     // Call sendLogin with the form values
     sendLogin(username, password);
+}
+
+// Function to send login data to the server
+async function sendLogin(identifier, password) {
+    try {
+        const response = await fetch('http://localhost:3000/login', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ identifier, password }),
+        });
+        const data = await response.json();
+        if (data.success) {
+            Swal.fire({
+                title: 'Success',
+                text: 'Successful login',
+                icon: 'success',
+                confirmButtonText: 'Close'
+            });
+            window.userinformation = { username: identifier, password: password };
+            enableWebsocket(identifier, password);
+            // Add further actions here, such as updating the profile picture
+            document.getElementById('account').innerText = "Log out";
+            document.getElementById('account').addEventListener('click', handleLogout);
+        }
+    } catch (error) {
+        console.error('Error:', error);
+    }
 }
 
 function handleRegister(event) {
@@ -128,35 +158,6 @@ async function sendRegister(username, email, password) {
     });
 }
 
-// Function to send login data to the server
-async function sendLogin(identifier, password) {
-    try {
-        const response = await fetch('http://localhost:3000/login', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({ identifier, password }),
-        });
-        const data = await response.json();
-        if (data.success) {
-            Swal.fire({
-                title: 'Success',
-                text: 'Successful login',
-                icon: 'success',
-                confirmButtonText: 'Close'
-            });
-            window.userinformation = { username: identifier, password: password };
-            enableWebsocket(identifier, password);
-            // Add further actions here, such as updating the profile picture
-            document.getElementById('account').innerText = "Log out";
-            document.getElementById('account').addEventListener('click', handleLogout);
-        }
-    } catch (error) {
-        console.error('Error:', error);
-    }
-}
-
 async function enableWebsocket(username, password){
     console.log("Logged in as: " + username);
     window.scriptParams = {username: username, password: password};
@@ -164,6 +165,14 @@ async function enableWebsocket(username, password){
     script.src = "src/websocket.js";
     script.type = "module";
     document.body.appendChild(script);
+}
+
+async function disableWebsocket() {
+    console.log("Logged out!");
+    const websocketScript = document.querySelector('script[src="websocket.js"]');
+    if (websocketScript) {
+        websocketScript.remove();
+    }
 }
 
 async function enableChat() {
