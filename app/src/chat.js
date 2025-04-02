@@ -177,6 +177,7 @@ function openChat(user, truncatedUserChat) {
     const messageInput = form.querySelector("input[name='message']");
     const messageText = messageInput.value.trim();
     if (messageText !== "") {
+      sendMessage();
       const newMessage = document.createElement("span");
       newMessage.classList.add("message");
       newMessage.textContent = messageText;
