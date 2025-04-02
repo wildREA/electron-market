@@ -1,4 +1,3 @@
-
 // Updated: fetch user data for a specific username from the API
 async function fetchUserData(username) {
   try {
@@ -16,34 +15,6 @@ async function fetchUserData(username) {
     return null;
   }
 }
-
-// Create body
-const body = document.body;
-
-// Create chat container
-const chatContainer = document.createElement("div");
-chatContainer.classList.add("chat-container");
-body.insertBefore(chatContainer, document.querySelector('script[src="src/chat.js"]'));
-
-// Create user chat list
-const chatList = document.createElement("div");
-chatList.classList.add("user-chat-list");
-chatContainer.appendChild(chatList);
-
-// Create chat box
-const chatBox = document.createElement("div");
-chatBox.classList.add("chat-box");
-chatBox.setAttribute("id", "chatBox");
-chatContainer.appendChild(chatBox);
-
-// Get container elements from HTML
-const chatIconImage = './images/icons/app_icon.png';
-
-// Create the chat toggle icon (at the top of the user list)
-const chatToggle = document.createElement("div");
-chatToggle.classList.add("chat-toggle-icon");
-chatToggle.innerHTML = `<img src="${chatIconImage}" alt="Chat Icon" id="chatIcon"/>`;
-chatList.appendChild(chatToggle);
 
 function addUserToChat(user) {
   const isSelf = user.username === window.userinformation.username;
@@ -93,12 +64,6 @@ function deleteSearchBar() {
   }
 }
 
-// Create a container to hold all user profile icons
-const userListContainer = document.createElement("div");
-userListContainer.classList.add("user-list-container");
-userListContainer.setAttribute("id", "userListContainer"); // Ensure ID is set correctly
-chatList.appendChild(userListContainer);
-
 // Function to create a user element in the list
 function createUserElement(user) {
   const userElement = document.createElement("div");
@@ -135,34 +100,33 @@ function createUserElement(user) {
   return userElement;
 }
 
-// Function to open a chat conversation with a user
-function openChat(user, truncatedUserChat) {
+function createChatContainer(user, truncatedUserChat) {
   // Clear previous chat contents
   chatBox.innerHTML = "";
-  
+
   // Create a header for the chat box
   const header = document.createElement("div");
   header.classList.add("chat-header");
   header.textContent = truncatedUserChat;
   chatBox.appendChild(header);
-  
+
   // Create a container describing conversation or status
   const descriptionContainer = document.createElement("div");
   descriptionContainer.classList.add("chat-description");
   descriptionContainer.textContent = `Conversation with @${user.username}.`;
   chatBox.appendChild(descriptionContainer);
-  
+
   // Create a container for the messages
   const messageContainer = document.createElement("div");
   messageContainer.classList.add("chat-messages");
   messageContainer.setAttribute("id", "chatMessages");
   chatBox.appendChild(messageContainer);
-  
+
   // Create a container for the form field
   const chatFormField = document.createElement("div");
   chatFormField.classList.add("chat-form-field");
   chatBox.appendChild(chatFormField);
-  
+
   // Create a form for sending messages
   const form = document.createElement("form");
   form.classList.add("chat-form");
@@ -171,17 +135,66 @@ function openChat(user, truncatedUserChat) {
   `;
   chatFormField.appendChild(form);
 
+  // Return the form and messageContainer for further use
+  return { form, messageContainer };
+}
+
+function createMessage(user, message, messageContainer) {
+  // Create a new message element
+  const newMessage = document.createElement("li");
+  newMessage.classList.add("message");
+  messageContainer.appendChild(newMessage);
+
+  // Create a new message content element
+  const content = document.createElement("div");
+  content.classList.add("content");
+  newMessage.appendChild(content);
+
+  // Create a timestamp element
+  const timestamp = document.createElement("div");
+  timestamp.classList.add("content-time");
+  const currentDate = new Date();
+  const formattedTime = currentDate.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+  timestamp.textContent = formattedTime;
+  content.appendChild(timestamp);
+
+  // Create a message box for username and text
+  const messageBox = document.createElement("div");
+  messageBox.classList.add("message-box");
+  content.appendChild(messageBox);
+
+  // Create a message username element
+  const messageUsername = document.createElement("div");
+  messageUsername.classList.add("message-username");
+  messageUsername.textContent = user.username;
+  messageBox.appendChild(messageUsername);
+
+  // Create a message content element that holds the actual message text
+  const messageContent = document.createElement("div");
+  messageContent.classList.add("message-content");
+  messageBox.appendChild(messageContent);
+
+  // Create a paragraph element for the message text
+  const messageText = document.createElement("p");
+  messageText.textContent = message;
+  messageContent.appendChild(messageText);
+}
+
+// Function to open a chat conversation with a user
+function openChat(user, truncatedUserChat) {
+  // Create a new chat container and get the form and messageContainer
+  const { form, messageContainer } = createChatContainer(user, truncatedUserChat);
+
   // Attach the event listener to the form
   form.addEventListener("submit", (event) => {
     event.preventDefault();
     const messageInput = form.querySelector("input[name='message']");
     const messageText = messageInput.value.trim();
     if (messageText !== "") {
-      const newMessage = document.createElement("span");
-      newMessage.classList.add("message");
-      newMessage.textContent = messageText;
-      // Append the new message to the message container
-      messageContainer.appendChild(newMessage);
+      const message = messageInput.value.trim();
+      createMessage(user, message, messageContainer);
+      // Scroll to the bottom of the message container
+      messageContainer.scrollTop = messageContainer.scrollHeight;
       // Clear the input
       messageInput.value = "";
     }
@@ -189,6 +202,40 @@ function openChat(user, truncatedUserChat) {
 
   chatBox.style.display = "block";
 }
+
+// Create body
+const body = document.body;
+
+// Create chat container
+const chatContainer = document.createElement("div");
+chatContainer.classList.add("chat-container");
+body.insertBefore(chatContainer, document.querySelector('script[src="src/chat.js"]'));
+
+// Create user chat list
+const chatList = document.createElement("div");
+chatList.classList.add("user-chat-list");
+chatContainer.appendChild(chatList);
+
+// Create chat box
+const chatBox = document.createElement("div");
+chatBox.classList.add("chat-box");
+chatBox.setAttribute("id", "chatBox");
+chatContainer.appendChild(chatBox);
+
+// Get container elements from HTML
+const chatIconImage = './images/icons/app_icon.png';
+
+// Create the chat toggle icon (at the top of the user list)
+const chatToggle = document.createElement("div");
+chatToggle.classList.add("chat-toggle-icon");
+chatToggle.innerHTML = `<img src="${chatIconImage}" alt="Chat Icon" id="chatIcon"/>`;
+chatList.appendChild(chatToggle);
+
+// Create a container to hold all user profile icons
+const userListContainer = document.createElement("div");
+userListContainer.classList.add("user-list-container");
+userListContainer.setAttribute("id", "userListContainer"); // Ensure ID is set correctly
+chatList.appendChild(userListContainer);
 
 // Toggle behavior for the chat toggle icon
 chatToggle.addEventListener("click", (event) => {
