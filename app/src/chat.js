@@ -17,9 +17,26 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   }
 
+  // Create body
+  const body = document.body;
+
+  // Create chat container
+  const chatContainer = document.createElement("div");
+  chatContainer.classList.add("chat-container");
+  body.appendChild(chatContainer);
+
+  // Create user chat list
+  const chatList = document.createElement("div");
+  chatList.classList.add("user-chat-list");
+  chatContainer.appendChild(chatList);
+
+  // Create chat box
+  const chatBox = document.createElement("div");
+  chatBox.classList.add("chat-box");
+  chatBox.setAttribute("id", "chatBox");
+  chatContainer.appendChild(chatBox);
+
   // Get container elements from HTML
-  const chatList = document.getElementById("chatList");
-  const chatBox = document.getElementById("chatBox");
   const chatIconImage = './images/icons/app_icon.png';
 
   // Create the chat toggle icon (at the top of the user list)
@@ -29,6 +46,11 @@ document.addEventListener("DOMContentLoaded", () => {
   chatList.appendChild(chatToggle);
 
   function addUserToChat(user) {
+    const existingUser = document.getElementById('user-' + user.username);
+    if (existingUser) {
+      console.log("User already exists in chat:", user.username);
+      return; // User already exists, no need to add again
+    }
     const userElement = createUserElement(user);
     userListContainer.appendChild(userElement);
   }
@@ -40,7 +62,7 @@ document.addEventListener("DOMContentLoaded", () => {
       <input type="text" name="search" placeholder="Search for users..." class="form-control" required/>
     `;
     searchBar.classList.add("search-bar");
-    chatList.appendChild(searchBar);
+    chatList.insertBefore(searchBar, chatToggle.nextSibling);
 
     // Add user to chat on search: check if user exists in database
     searchBar.addEventListener("submit", async (event) => {
@@ -173,14 +195,18 @@ document.addEventListener("DOMContentLoaded", () => {
       // If the chat box is visible, clicking the toggle icon should close it
       if (chatBox.style.display === "block") {
         chatBox.style.display = "none";
-      } else { // If closed, then open
+      } else { // If closed, then open (--> TRUE)
         if (userListContainer.style.display === "none" || userListContainer.style.display === "") {
           userListContainer.style.display = "block";
+          chatBox.style.backgroundColor = "#2f3136";
           chatList.style.backgroundColor = "#2f3136";
+          console.log("User list opened.");
           createSearchBar();
-        } else { // If open, then close
+        } else { // If open, then close (--> FALSE)
           userListContainer.style.display = "none";
-          chatList.style.backgroundColor = "#36393f";
+          chatBox.style.backgroundColor = "transparent";
+          chatList.style.backgroundColor = "transparent";
+          console.log("User list closed.");
           deleteSearchBar();
         }
         // Close the chat box when toggling
@@ -191,9 +217,10 @@ document.addEventListener("DOMContentLoaded", () => {
 
   // Initialization & styling
   chatBox.style.display = "none";
+  chatBox.style.backgroundColor = "transparent";
   userListContainer.style.display = "none";
+  chatList.style.backgroundColor = "transparent";
   chatList.style.padding = "0";
-  chatList.style.backgroundColor = "#36393f";
   chatToggle.style.backgroundColor = "#2f3136";
 
   // Ensure the search bar is not present initially
