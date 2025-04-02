@@ -61,20 +61,29 @@ function login() {
 
 function handleLogout(event) {
     event.preventDefault(); // Prevent default form submission
-    // Use SweetAlert2 to display a success message
-    Swal.fire({
-        title: 'Success',
-        text: 'Successful logout',
-        icon: 'success',
-        confirmButtonText: 'Close'
-    });
-    // Clear user information
-    delete window.userinformation;
-    disableChat();
-    disableWebsocket();
-    // Set the dropdown button for account manage to "Login"
-    document.getElementById('account').innerText = "Log in";
-    document.getElementById('account').addEventListener('click', createLogin);
+    // Call sendLogout to handle the logout process
+    sendLogout(event);
+}
+
+function sendLogout(event) {
+    try {
+        // Use SweetAlert2 to display a success message
+        Swal.fire({
+            title: 'Success',
+            text: 'Successful logout',
+            icon: 'success',
+            confirmButtonText: 'Close'
+        });
+        // Clear user information
+        delete window.userinformation;
+        disableChat();
+        disableWebsocket();
+        // Set the dropdown button for account manage to "Login"
+        document.getElementById('account').innerText = "Log in";
+        document.getElementById('account').addEventListener('click', createLogin);
+    } catch (error) {
+        console.error('Error:', error);
+    }
 }
 
 function handleLogin(event) {
@@ -106,7 +115,8 @@ async function sendLogin(identifier, password) {
                 confirmButtonText: 'Close'
             });
             window.userinformation = { username: identifier, password: password };
-            enableWebsocket(identifier, password);
+            enableChat();
+            //enableWebsocket(identifier, password);
             // Add further actions here, such as updating the profile picture
             document.getElementById('account').innerText = "Log out";
             document.getElementById('account').addEventListener('click', handleLogout);
@@ -158,13 +168,42 @@ async function sendRegister(username, email, password) {
     });
 }
 
-async function enableWebsocket(username, password){
+async function enableWebsocket(username, password) {
+    await wait10Seconds(); // Wait for 10 seconds before loading the websocket script
     console.log("Logged in as: " + username);
-    window.scriptParams = {username: username, password: password};
+    window.scriptParams = { username: username, password: password };
+
+    // Ensure chat is fully loaded before loading websocket
+    await ensureChatLoaded();
+
     const script = document.createElement("script");
     script.src = "src/websocket.js";
     script.type = "module";
     document.body.appendChild(script);
+}
+
+async function ensureChatLoaded() {
+    return new Promise((resolve) => {
+        // Check if chat script is already loaded
+        if (document.querySelector('script[src="src/chat.js"]')) {
+            console.log("Chat script already loaded.");
+            return resolve();
+        }
+
+        console.log("Loading chat script first...");
+        const script = document.createElement("script");
+        script.src = "src/chat.js";
+        script.type = "module";
+        script.onload = () => {
+            console.log("Chat script fully loaded.");
+            resolve();
+        };
+        document.body.appendChild(script);
+    });
+}
+
+function wait10Seconds() {
+    return new Promise(resolve => setTimeout(resolve, 2000));
 }
 
 async function disableWebsocket() {
@@ -179,7 +218,7 @@ async function enableChat() {
     console.log("Enabled chat!");
     window.scriptParams = {username: window.userinformation.username, password: window.userinformation.password};
     const script = document.createElement("script");
-    script.src = "chat.js";
+    script.src = "src/chat.js";
     script.type = "module";
     document.body.appendChild(script);
 }
