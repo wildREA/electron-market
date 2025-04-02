@@ -73,7 +73,7 @@ function createSearchBar() {
     const userSearch = searchInput.value.trim().toLowerCase();
     if (userSearch !== "") {
       const userData = await fetchUserData(userSearch);
-      if (userData && userData.success) {
+      if (userData && userData.data.success) {
         console.log("User found:", userSearch);
         let contactInfo = {'img': userData.data.imageBase64, 'username': userSearch};
         console.log("Contact info:", contactInfo);

@@ -3,5 +3,6 @@ node_modules
 server/pass.js
 server/.env
 server/uploads
-uploads
+uploads/*
+!uploads/.gitkeep
 app/dist
