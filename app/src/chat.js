@@ -1,4 +1,3 @@
-
 // Updated: fetch user data for a specific username from the API
 async function fetchUserData(username) {
   try {
@@ -81,11 +80,11 @@ function createUserElement(user) {
   // Truncate the display/username if it's too long
   const clientName = user.username;
   const truncatedUserList = clientName.length > 23
-    ? clientName.substring(0, 21) + "..."
-    : clientName;
+      ? clientName.substring(0, 21) + "..."
+      : clientName;
   const truncatedUserChat = clientName.length > 31
-    ? clientName.substring(0, 29) + "..."
-    : clientName;
+      ? clientName.substring(0, 29) + "..."
+      : clientName;
 
   // Add user (truncated) display name next to the avatar
   const nameSpan = document.createElement("span");
@@ -101,33 +100,33 @@ function createUserElement(user) {
 }
 
 // Function to open a chat conversation with a user
-function openChat(user, truncatedUserChat) {
+async function openChat(user, truncatedUserChat) {
   // Clear previous chat contents
   chatBox.innerHTML = "";
-  
+
   // Create a header for the chat box
   const header = document.createElement("div");
   header.classList.add("chat-header");
   header.textContent = truncatedUserChat;
   chatBox.appendChild(header);
-  
+
   // Create a container describing conversation or status
   const descriptionContainer = document.createElement("div");
   descriptionContainer.classList.add("chat-description");
   descriptionContainer.textContent = `Conversation with @${user.username}.`;
   chatBox.appendChild(descriptionContainer);
-  
+
   // Create a container for the messages
   const messageContainer = document.createElement("div");
   messageContainer.classList.add("chat-messages");
   messageContainer.setAttribute("id", "chatMessages");
   chatBox.appendChild(messageContainer);
-  
+
   // Create a container for the form field
   const chatFormField = document.createElement("div");
   chatFormField.classList.add("chat-form-field");
   chatBox.appendChild(chatFormField);
-  
+
   // Create a form for sending messages
   const form = document.createElement("form");
   form.classList.add("chat-form");
@@ -136,13 +135,16 @@ function openChat(user, truncatedUserChat) {
   `;
   chatFormField.appendChild(form);
 
+  // Dynamically import the sendMessage function from websocket.js
+  const { sendMessage } = await import('./websocket.js');
+
   // Attach the event listener to the form
   form.addEventListener("submit", (event) => {
     event.preventDefault();
     const messageInput = form.querySelector("input[name='message']");
     const messageText = messageInput.value.trim();
     if (messageText !== "") {
-      sendMessage();
+      sendMessage(window.activeRecipient);
       const newMessage = document.createElement("span");
       newMessage.classList.add("message");
       newMessage.textContent = messageText;

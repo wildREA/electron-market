@@ -33,26 +33,31 @@ function joinConversation(targetUser) {
 }
 
 // Add a variable to hold the recipient
-let activeRecipient = null;
+window.activeRecipient = null;
 
 // Function to set the active recipient
 function setActiveRecipient(recipient) {
-    activeRecipient = recipient;
+    window.activeRecipient = recipient;
     console.log(`Active recipient set to: ${recipient}`);
 }
 
 // Modify the sendMessage function to get the message from the document
-function sendMessage() {
+export function sendMessage(recipient = window.activeRecipient) {
     const messageInput = document.querySelector("input[name='message']");
     const message = messageInput.value;
 
-    if (!activeRecipient || !message) {
-        console.error('Recipient and message are required.');
+    if (!message) {
+        console.error('Message was not found');
         return;
     }
 
-    console.log(`Sending message to ${activeRecipient}: ${message}`);
-    socket.emit('message', { recipient: activeRecipient, message }, (response) => {
+    if (!recipient) {
+        console.error('Recipient not found');
+        return;
+    }
+
+    console.log(`Sending message to ${recipient}: ${message}`);
+    socket.emit('message', { recipient: recipient, message }, (response) => {
         if (response.success) {
             console.log('Message sent successfully');
             messageInput.value = ''; // Clear the input field after sending
