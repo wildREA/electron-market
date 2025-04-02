@@ -311,6 +311,8 @@ body {
   background: linear-gradient(135deg, #1e1e2f, #3a3a5a);
   color: white;
   font-family: Arial, sans-serif;
+  user-select: none;
+  pointer-events: none;
 }
 .custom-profile-img {
   width: 80px;
@@ -323,22 +325,30 @@ body {
   font-size: 24px;
   font-weight: bold;
   text-transform: uppercase;
+  user-select: none;
+  pointer-events: none;
 }
 .custom-flag {
   width: 24px;
   height: 16px;
   margin-left: 5px;
+  user-select: none;
+  pointer-events: none;
 }
 .custom-username {
   font-size: 18px;
   font-weight: bold;
   margin-top: 10px;
+  user-select: none;
+  pointer-events: none;
 }
 .custom-biography {
   font-size: 14px;
   margin-top: 8px;
   text-align: center;
   opacity: 0.8;
+  user-select: none;
+  pointer-events: none;
 }
 .custom-badge {
   background: #ff9800;
@@ -347,4 +357,6 @@ body {
   border-radius: 5px;
   font-size: 12px;
   margin-top: 8px;
+  user-select: none;
+  pointer-events: none;
 }
