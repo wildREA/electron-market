@@ -178,7 +178,8 @@ async function carListSelection() {
 
 async function getProfileImage(username) {
     try {
-        if (!pingUser(username)) {
+        const userExists = await pingUser(username);
+        if (!userExists[0]) {
             return { success: false, message: 'Username is required' };
         }
         let RelativePath = `uploads/${username}.png`;
@@ -211,7 +212,7 @@ async function pingUser(username) {
 
 function generateRoomName(user1, user2) {
     // Sort usernames alphabetically
-    const [firstUser, secondUser] = sortUsers();
+    const [firstUser, secondUser] = sortUsers(user1, user2);
 
     // Concatenate usernames with a separator
     return `${firstUser}***${secondUser}`;
@@ -230,13 +231,13 @@ async function checkForChannel(targetUser, username) {
 
         // Return an array with existence and channel name
         if (channel && channel.name) {
-            return [channel.name];
+            return channel.name;
         } else {
-            return [null];
+            return null;
         }
     } catch (err) {
         // Handle error and return the error with the result
-        return [channel.name];
+        return [err];
     }
 }
 
@@ -255,8 +256,7 @@ async function retrieveMessages(channelName) {
 
 async function getUser(username) {
     try {
-        const user = await getUserByName(username);
-        return user;
+        return await getUserByName(username);
     } catch (error) {
         console.error('Error fetching user:', error);
         return null;

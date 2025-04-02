@@ -37,9 +37,8 @@ async function joinConversation(socket, data, callback) {
 
     try {
         // Check if a channel already exists
-        const { channel_name } = await checkForChannel(targetUser, username);
+        const channel_name = await checkForChannel(targetUser, username);
         let conversationName = channel_name || generateRoomName(username, targetUser);
-
         if (!channel_name) {
             const isUser = await pingUser(targetUser);
             if (!isUser) {
@@ -51,8 +50,8 @@ async function joinConversation(socket, data, callback) {
         // Retrieve and send earlier messages
         const earlierMessages = await retrieveMessages(conversationName);
         const messages = await Promise.all(earlierMessages.map(async (msg) => {
-            const decryptedMessage = decrypt(msg.message);
-            const sender = await getUser(msg.sender_name);
+            const decryptedMessage = decrypt(msg.content); // Decrypt the message content
+            const sender = await getUser(msg.sender_name); // Get the sender's information
             return { sender, message: decryptedMessage };
         }));
 

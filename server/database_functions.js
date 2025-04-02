@@ -104,6 +104,46 @@ async function getCarList() {
     }
 }
 
+async function createChannel(channelName, targetUser, username) {
+    try {
+        const query = 'INSERT INTO channels (name, user1, user2) VALUES ($1, $2, $3)';
+        await pool.query(query, [channelName, username, targetUser]);
+        return true;
+    } catch (error) {
+        console.error('Error creating channel:', error);
+        return false;
+    }
+}
+
+async function getMessages(channelName) {
+    try {
+        const query = 'SELECT * FROM messages WHERE channel_name = $1 ORDER BY timestamp ASC';
+        const { rows } = await pool.query(query, [channelName]);
+        return rows;
+    } catch (error) {
+        console.error('Error getting messages:', error);
+        return [];
+    }
+}
+
+async function getChannel(channelName) {
+    try {
+        const query = 'SELECT * FROM channels WHERE name = $1';
+        const { rows } = await pool.query(query, [channelName]);
+        if (rows.length > 0) {
+            return rows[0];
+        } else {
+            return null;
+        }
+    } catch (error) {
+        console.error('Error getting channel:', error);
+        return null;
+    }
+}
+
+
+
+
 module.exports = {
     checkIfUnique,
     registerUser,
@@ -111,6 +151,9 @@ module.exports = {
     getContact,
     getUserProfile,
     profileUpdate,
-    getCarList
+    getCarList,
+    createChannel,
+    getMessages,
+    getChannel
 };
  
