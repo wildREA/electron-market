@@ -158,15 +158,27 @@ function createMessage(user, message, messageContainer) {
   timestamp.textContent = formattedTime;
   content.appendChild(timestamp);
 
-  // Create a message box for username and text
+  // Create a placeholder element for message box and profile image
+  const placeholder = document.createElement("div");
+  placeholder.classList.add("placeholder");
+  content.appendChild(placeholder);
+
+  // Create a profile image element
+  const profileImage = document.createElement("img");
+  profileImage.classList.add("profile-image");
+  profileImage.src = `data:image/png;base64,${user.img}`;
+  profileImage.alt = user.username, "profile_image";
+  placeholder.appendChild(profileImage);
+
+  // Create a message box to hold username and message content
   const messageBox = document.createElement("div");
   messageBox.classList.add("message-box");
-  content.appendChild(messageBox);
+  placeholder.appendChild(messageBox);
 
-  // Create a message username element
+  // Create a message username element that holds the sender's username
   const messageUsername = document.createElement("div");
   messageUsername.classList.add("message-username");
-  messageUsername.textContent = user.username;
+  messageUsername.textContent = window.userinformation.username;
   messageBox.appendChild(messageUsername);
 
   // Create a message content element that holds the actual message text

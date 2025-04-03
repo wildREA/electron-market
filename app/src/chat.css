@@ -68,6 +68,11 @@
     position: relative;
     overflow: hidden;
     padding-right: 0;
+    border-top: transparent;
+    border-right: transparent;
+    border-bottom: transparent;
+    border-left: #f0ffff12;
+    border-style: groove;
 }
 
 .chat-header {
@@ -120,11 +125,31 @@
     margin-bottom: 2px;
 }
 
+.placeholder {
+    display: flex;
+    min-height: 1em;
+    vertical-align: middle;
+    cursor: wait;
+    background-color: transparent;
+    opacity: 1;
+}
+
+.profile-image {
+    position: absolute;
+    width: 42px;
+    height: 42px;
+    border-radius: 50%;
+    border-style: groove;
+    border-width: 2px;
+    border-color: #cdcdcd;
+}
+
 .message-box {
     background-color: #6e87d7;
     color: #fff;
     padding: 5px 10px;
     border-radius: 5px;
+    margin-left: 50px;
 }
 
 .message-username {
