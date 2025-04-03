@@ -118,7 +118,15 @@ async function sendLogin(identifier, password) {
             });
             window.userinformation = { username: identifier, password: password };
             enableChat();
-            //enableWebsocket(identifier, password);
+            enableWebsocket(identifier, password);
+            fetchUserData(identifier).then((response) => {
+                if (response && response.data.success) {
+                    document.getElementById('profilePic').src = `data:image/png;base64,${response.data.imageBase64}`;
+                } else {
+                    console.error("Failed to fetch user image:", data.sender);
+                    document.getElementById('profilePic').src = "./images/icons/default_profile.png"; // Default image if fetch fails
+                }
+            });
             // Add further actions here, such as updating the profile picture
             document.getElementById('account').innerText = "Log out";
             document.getElementById('account').addEventListener('click', handleLogout);
@@ -132,10 +140,11 @@ function handleRegister(event) {
     event.preventDefault(); // Prevent default form submission
     // Extract values from the form
     const formData = new FormData(event.target);
-    const username = formData.get('username');
+    let username = formData.get('username');
     const email = formData.get('email');
     const password = formData.get('password');
     // Call sendRegister with the form values
+    username = username.toLowerCase();
     sendRegister(username, email, password);
 }
 
@@ -160,6 +169,14 @@ async function sendRegister(username, email, password) {
             window.userinformation = { username: username, password: password };
             enableChat();
             enableWebsocket(username, password);
+            fetchUserData(username).then((response) => {
+                if (response && response.data.success) {
+                    document.getElementById('profilePic').src = `data:image/png;base64,${response.data.imageBase64}`;
+                } else {
+                    console.error("Failed to fetch user image:", data.sender);
+                    document.getElementById('profilePic').src = "./images/icons/default_profile.png"; // Default image if fetch fails
+                }
+            });
             // Add any further actions, such as triggering a profile picture change
             document.getElementById('account').innerText = "Log out";
             document.getElementById('account').addEventListener('click', handleLogout);
@@ -168,6 +185,23 @@ async function sendRegister(username, email, password) {
     .catch((error) => {
         console.error('Error:', error);
     });
+}
+
+async function fetchUserData(username) {  //re used function delete and make a reference to the og function later
+    try {
+        const response = await fetch('http://localhost:3000/getProfileImage', { // Change to 172.16.3.52 in production
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ "imagePath": username })
+        });
+        const result = await response.json();
+        return result;
+    } catch (err) {
+        console.error("Error retrieving user data:", err);
+        return null;
+    }
 }
 
 async function enableWebsocket(username, password) {

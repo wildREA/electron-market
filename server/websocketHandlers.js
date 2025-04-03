@@ -59,7 +59,7 @@ async function joinConversation(socket, data, callback) {
 
         const messages = earlierMessages.map((msg) => {
             const decryptedMessage = decrypt(msg.content);
-            return { sender: msg.sender_name, message: decryptedMessage };
+            return { sender: msg.sender_name, message: decryptedMessage, timestamp: msg.timestamp };
         });
 
         callback({ success: true, messages });
