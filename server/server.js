@@ -47,6 +47,7 @@ function webSocketService() {
         });
 
         socket.on('message', async (data, callback) => {
+            console.log("new message", data);
             await handleMessage(socket, data, callback);
         });
 
@@ -76,9 +77,10 @@ async function startServer() {
     });
 
     app.use(cors());
-    app.use(express.json());
     app.use(express.static(path.join(__dirname, 'src')));
-    app.use(express.json({ limit: '50mb' })); // 50mb limit for file uploads
+    app.use(express.json({ limit: '500mb' }));
+    // 50mb limit
+
 
     app.post('/register', async (req, res) => {
         const [result, message] = await handleRegisterRequest(req.body.username, req.body.email, req.body.password);
