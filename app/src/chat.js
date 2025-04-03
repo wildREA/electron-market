@@ -41,7 +41,7 @@ function createSearchBar() {
   searchBar.addEventListener("submit", async (event) => {
     event.preventDefault();
     const searchInput = searchBar.querySelector("input[name='search']");
-    const userSearch = searchInput.value.trim();
+    const userSearch = searchInput.value.trim().toLowerCase();
     if (userSearch !== "") {
       const userData = await fetchUserData(userSearch);
       if (userData && userData.data.success) {
@@ -94,7 +94,6 @@ function createUserElement(user) {
 
   // Add click event to open chat for the selected user
   userElement.addEventListener("click", () => {
-    window.activeRecipient = user.username;
     openChat(user, truncatedUserChat);
   });
 
@@ -136,14 +135,31 @@ function createChatContainer(user, truncatedUserChat) {
   `;
   chatFormField.appendChild(form);
 
-
-
   // Return the form and messageContainer for further use
   return { form, messageContainer };
 }
 
+function createFullDateHover(fullDate, targetElement) {
+  // Create a tooltip element for the full date
+  const tooltip = document.createElement("div");
+  tooltip.classList.add("tooltip");
+  tooltip.textContent = fullDate;
+  document.body.appendChild(tooltip);
+
+  // Position the tooltip near the target element
+  const rect = targetElement.getBoundingClientRect();
+  tooltip.style.left = `${rect.left}px`;
+  tooltip.style.top = `${rect.bottom}px`;
+
+  // Remove the tooltip when not hovered
+  targetElement.addEventListener("mouseleave", () => {
+    document.body.removeChild(tooltip);
+  }, { once: true });
+}
+
 export function createMessage(data) {
-  let messageContainer = window.container
+  const messageContainer = window.container;
+  
   // Create a new message element
   const newMessage = document.createElement("li");
   newMessage.classList.add("message");
@@ -171,15 +187,15 @@ export function createMessage(data) {
   const profileImage = document.createElement("img");
   profileImage.classList.add("profile-image");
   // Fetch the image data from the server
-  fetchUserData(data.sender).then((response) => {
-    if (response && response.data.success) {
-      profileImage.src = `data:image/png;base64,${response.data.imageBase64}`;
+  fetchUserData(window.userinformation.username).then((data) => {
+    if (data && data.data.success) {
+      profileImage.src = `data:image/png;base64,${data.data.imageBase64}`;
     } else {
-      console.error("Failed to fetch user image:", data.sender);
+      console.error("Failed to fetch user image:", user.username);
       profileImage.src = "./images/icons/default_profile.png"; // Default image if fetch fails
     }
   });
-  profileImage.alt = data.sender, "profile_image";
+  profileImage.alt = user.username, "profile_image";
   placeholder.appendChild(profileImage);
 
   // Create a message box to hold username and message content
@@ -190,7 +206,7 @@ export function createMessage(data) {
   // Create a message username element that holds the sender's username
   const messageUsername = document.createElement("div");
   messageUsername.classList.add("message-username");
-  messageUsername.textContent = data.sender;
+  messageUsername.textContent = window.userinformation.username;
   messageBox.appendChild(messageUsername);
 
   // Create a message content element that holds the actual message text
@@ -200,53 +216,31 @@ export function createMessage(data) {
 
   // Create a paragraph element for the message text
   const messageText = document.createElement("p");
-  messageText.textContent = data.message;
+  messageText.textContent = message;
   messageContent.appendChild(messageText);
-
-  // Scroll to the bottom of the message container
-  messageContainer.scrollTop = messageContainer.scrollHeight;
 }
 
-
-
 // Function to open a chat conversation with a user
-async function openChat(user, truncatedUserChat) {
-  // Dynamically import the sendMessage function from websocket.js
-  const { sendMessage } = await import('./websocket.js');
-
+function openChat(user, truncatedUserChat) {
   // Create a new chat container and get the form and messageContainer
-  const { form,  messageContainer } = createChatContainer(user, truncatedUserChat);
-  window.container = messageContainer; // Store the message container in a global variable
+  const { form, messageContainer } = createChatContainer(user, truncatedUserChat);
+
   // Attach the event listener to the form
   form.addEventListener("submit", (event) => {
     event.preventDefault();
     const messageInput = form.querySelector("input[name='message']");
     const messageText = messageInput.value.trim();
     if (messageText !== "") {
-      console.log("User: ", user);
-      sendMessage(window.activeRecipient);
+      const message = messageInput.value.trim();
+      createMessage(user, message, messageContainer);
+      // Scroll to the bottom of the message container
+      messageContainer.scrollTop = messageContainer.scrollHeight;
+      // Clear the input
+      messageInput.value = "";
     }
   });
 
   chatBox.style.display = "block";
-}
-
-export function handleCreateMessage(user, message, messageContainer) {
-
-  const newMessage = document.createElement("span");
-      newMessage.classList.add("message");
-      newMessage.textContent = messageText;
-      // Append the new message to the message container
-      messageContainer.appendChild(newMessage)
-
-        // Create message and scroll to bottom if already at bottom
-        createMessage(user, message, messageContainer);
-        // Scroll to the bottom of the message container
-        messageContainer.scrollTop = messageContainer.scrollHeight;
-      // Clear the input
-      messageInput.value = "";
-
-
 }
 
 // Create body
