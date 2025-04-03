@@ -52,7 +52,9 @@
     width: 40px;
     height: 40px;
     border-radius: 50%;
-    margin-right: 10px;
+    border-style: groove;
+    border-width: 2px;
+    border-color: #a3a3a3;
 }
 
 #chatIcon {
@@ -141,7 +143,7 @@
     border-radius: 50%;
     border-style: groove;
     border-width: 2px;
-    border-color: #cdcdcd;
+    border-color: #a3a3a3;
 }
 
 .message-box {

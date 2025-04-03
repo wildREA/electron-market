@@ -166,7 +166,15 @@ function createMessage(user, message, messageContainer) {
   // Create a profile image element
   const profileImage = document.createElement("img");
   profileImage.classList.add("profile-image");
-  profileImage.src = `data:image/png;base64,${user.img}`;
+  // Fetch the image data from the server
+  fetchUserData(window.userinformation.username).then((data) => {
+    if (data && data.data.success) {
+      profileImage.src = `data:image/png;base64,${data.data.imageBase64}`;
+    } else {
+      console.error("Failed to fetch user image:", user.username);
+      profileImage.src = "./images/icons/default_profile.png"; // Default image if fetch fails
+    }
+  });
   profileImage.alt = user.username, "profile_image";
   placeholder.appendChild(profileImage);
 
