@@ -105,6 +105,7 @@ async function getCarList() {
 }
 
 async function createChannel(channelName, targetUser, username) {
+    console.log("Creating table with: ", channelName, targetUser, username);
     try {
         const query = 'INSERT INTO channels (name, user1, user2) VALUES ($1, $2, $3)';
         await pool.query(query, [channelName, username, targetUser]);
@@ -141,7 +142,16 @@ async function getChannel(channelName) {
     }
 }
 
-
+async function saveMessage(channel, message, sender){
+    try {
+        const query = 'INSERT INTO messages (channel_name, content, sender_name) VALUES ($1, $2, $3)';
+        await pool.query(query, [channel, message, sender]);
+        return true;
+    } catch (error) {
+        console.error('Error saving message:', error);
+        return false;
+    }
+}
 
 
 module.exports = {
@@ -154,6 +164,7 @@ module.exports = {
     getCarList,
     createChannel,
     getMessages,
-    getChannel
+    getChannel,
+    saveMessage
 };
  

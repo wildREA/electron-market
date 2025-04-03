@@ -62,7 +62,6 @@ export function sendMessage(recipient = window.activeRecipient) {
 function addUserListEventListener() {
     document.getElementById('userListContainer').addEventListener('click', (event) => {
         const recipient = event.target.closest('.user-item').dataset.userId; // Corrected to use closest user-item
-        setActiveRecipient(recipient);
         console.log(`User selected: ${recipient}`);
         joinConversation(recipient);
     });
