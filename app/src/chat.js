@@ -94,6 +94,7 @@ function createUserElement(user) {
 
   // Add click event to open chat for the selected user
   userElement.addEventListener("click", () => {
+    window.activeRecipient = user.username;
     openChat(user, truncatedUserChat);
   });
 
@@ -134,6 +135,8 @@ function createChatContainer(user, truncatedUserChat) {
     <input type="text" name="message" placeholder="Type a message..." class="form-control" required/>
   `;
   chatFormField.appendChild(form);
+
+
 
   // Return the form and messageContainer for further use
   return { form, messageContainer };
@@ -201,7 +204,10 @@ function createMessage(user, message, messageContainer) {
 }
 
 // Function to open a chat conversation with a user
-function openChat(user, truncatedUserChat) {
+async function openChat(user, truncatedUserChat) {
+    // Dynamically import the sendMessage function from websocket.js
+    const { sendMessage } = await import('./websocket.js');
+
   // Create a new chat container and get the form and messageContainer
   const { form, messageContainer } = createChatContainer(user, truncatedUserChat);
 
@@ -211,10 +217,18 @@ function openChat(user, truncatedUserChat) {
     const messageInput = form.querySelector("input[name='message']");
     const messageText = messageInput.value.trim();
     if (messageText !== "") {
-      const message = messageInput.value.trim();
-      createMessage(user, message, messageContainer);
-      // Scroll to the bottom of the message container
-      messageContainer.scrollTop = messageContainer.scrollHeight;
+      sendMessage(window.activeRecipient);
+      const newMessage = document.createElement("span");
+      newMessage.classList.add("message");
+      newMessage.textContent = messageText;
+      // Append the new message to the message container
+      messageContainer.appendChild(newMessage)
+
+        // Create message and scroll to bottom if already at bottom
+        const message = messageInput.value.trim();
+        createMessage(user, message, messageContainer);
+        // Scroll to the bottom of the message container
+        messageContainer.scrollTop = messageContainer.scrollHeight;
       // Clear the input
       messageInput.value = "";
     }

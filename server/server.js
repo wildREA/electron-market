@@ -43,6 +43,7 @@ function webSocketService() {
 
         // Set up Socket.IO events
         socket.on('joinConversation', async (data, callback) => {
+            console.log("Triggered this");
             await joinConversation(socket, data, callback);
         });
 
