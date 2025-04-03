@@ -41,7 +41,7 @@ function createSearchBar() {
   searchBar.addEventListener("submit", async (event) => {
     event.preventDefault();
     const searchInput = searchBar.querySelector("input[name='search']");
-    const userSearch = searchInput.value.trim().toLowerCase();
+    const userSearch = searchInput.value.trim();
     if (userSearch !== "") {
       const userData = await fetchUserData(userSearch);
       if (userData && userData.data.success) {

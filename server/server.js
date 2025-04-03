@@ -43,15 +43,11 @@ function webSocketService() {
 
         // Set up Socket.IO events
         socket.on('joinConversation', async (data, callback) => {
-            console.log("Triggered this");
             await joinConversation(socket, data, callback);
         });
-
         socket.on('message', async (data, callback) => {
-            console.log("new message", data);
             await handleMessage(socket, data, callback);
         });
-
         socket.on('disconnect', () => {
             handleDisconnect(socket);
             console.log(`Client ${socket.id} disconnected.`);
