@@ -56,11 +56,11 @@ async function joinConversation(socket, data, callback) {
 
         // Retrieve and send earlier messages
         const earlierMessages = await retrieveMessages(conversationName);
-        const messages = await Promise.all(earlierMessages.map(async (msg) => {
+
+        const messages = earlierMessages.map((msg) => {
             const decryptedMessage = decrypt(msg.content);
-            const sender = await getUser(msg.sender_name);
-            return { sender, message: decryptedMessage };
-        }));
+            return { sender: msg.sender_name, message: decryptedMessage };
+        });
 
         callback({ success: true, messages });
     } catch (error) {
@@ -80,11 +80,13 @@ async function handleMessage(socket, data, callback) {
     const sender = socket.username;
     const recipientSocket = activeUsers[recipient];
     if (recipientSocket) {
-        recipientSocket.emit('message', { sender, message });
+        recipientSocket.emit('message', { sender, message});
         callback({ success: true });
     } else {
         callback({ success: true, error: 'Recipient is offline.' });
     }
+
+    socket.emit('message', { sender, message });
 
     //save message
     let channel = socket.channel || generateRoomName(sender, recipient);
@@ -96,10 +98,6 @@ async function handleMessage(socket, data, callback) {
         .catch((error) => {
             console.error('Error saving message:', error);
         });
-    
-
-    
-
 }
 
 // Handle disconnection event

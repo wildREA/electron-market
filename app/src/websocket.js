@@ -1,4 +1,5 @@
 import { io } from "https://cdn.socket.io/4.4.0/socket.io.esm.min.js";
+import { createMessage } from "./chat.js";
 
 // Fetch username and password from your application's context
 const socket = io('http://localhost:3001', {
@@ -58,6 +59,12 @@ export function sendMessage(recipient = window.activeRecipient) {
     });
 }
 
+function displayMessages(messages) {
+    messages.forEach((message) => {
+        createMessage(message); // Assuming createMessage is a function that handles displaying the message
+    });
+}
+
 // Add event listener to the user list container
 function addUserListEventListener() {
     document.getElementById('userListContainer').addEventListener('click', (event) => {
@@ -70,26 +77,6 @@ function addUserListEventListener() {
 // Listen for incoming messages
 socket.on('message', (data) => {
     console.log('New message received:', data);
-    displayMessage(data);
+    createMessage(data);
 });
 
-function displayMessages(messages) {
-    const messageContainer = document.getElementById('chatMessages');
-    messageContainer.innerHTML = ''; // Clear any previous messages
-    messages.forEach((msg) => {
-        const messageElement = document.createElement('div');
-        messageElement.classList.add('message');
-        messageElement.textContent = `${msg.sender}: ${msg.message}`;
-        messageContainer.appendChild(messageElement);
-    });
-    console.log(`Displayed ${messages.length} messages`);
-}
-
-function displayMessage(data) {
-    const messageContainer = document.getElementById('chatMessages');
-    const messageElement = document.createElement('div');
-    messageElement.classList.add('message');
-    messageElement.textContent = `${data.sender}: ${data.message}`;
-    messageContainer.appendChild(messageElement);
-    console.log('Displayed new message:', data);
-}
