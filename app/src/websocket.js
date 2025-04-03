@@ -32,15 +32,6 @@ function joinConversation(targetUser) {
     });
 }
 
-// Add a variable to hold the recipient
-window.activeRecipient = null;
-
-// Function to set the active recipient
-function setActiveRecipient(recipient) {
-    window.activeRecipient = recipient;
-    console.log(`Active recipient set to: ${recipient}`);
-}
-
 // Modify the sendMessage function to get the message from the document
 export function sendMessage(recipient = window.activeRecipient) {
     const messageInput = document.querySelector("input[name='message']");

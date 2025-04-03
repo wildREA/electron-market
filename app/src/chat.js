@@ -93,6 +93,7 @@ function createUserElement(user) {
 
   // Add click event to open chat for the selected user
   userElement.addEventListener("click", () => {
+    window.activeRecipient = user.username;
     openChat(user, truncatedUserChat);
   });
 

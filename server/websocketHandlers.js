@@ -76,7 +76,7 @@ async function handleMessage(socket, data, callback) {
         recipientSocket.emit('message', { sender, message });
         callback({ success: true });
     } else {
-        callback({ success: false, error: 'Recipient is offline.' });
+        callback({ success: true, error: 'Recipient is offline.' });
     }
 }
 
