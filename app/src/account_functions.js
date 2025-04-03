@@ -118,7 +118,7 @@ async function sendLogin(identifier, password) {
             });
             window.userinformation = { username: identifier, password: password };
             enableChat();
-            //enableWebsocket(identifier, password);
+            enableWebsocket(identifier, password);
             // Add further actions here, such as updating the profile picture
             document.getElementById('account').innerText = "Log out";
             document.getElementById('account').addEventListener('click', handleLogout);
@@ -136,6 +136,7 @@ function handleRegister(event) {
     const email = formData.get('email');
     const password = formData.get('password');
     // Call sendRegister with the form values
+    username = username.toLowerCase();
     sendRegister(username, email, password);
 }
 
