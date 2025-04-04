@@ -157,26 +157,10 @@ export function createMessage(data) {
   // Create a timestamp element
   const timestamp = document.createElement("div");
   timestamp.classList.add("content-time");
-  const messageDate = new Date(data.timestamp).toString();
-  const formattedDate = messageDate.split("GMT")[0].trim();
-  const dateParts = formattedDate.split(" ");
-  const day = dateParts[1];
-  const month = dateParts[2].substring(0, 3).toUpperCase(); // Get the first three letters of the month
-  const year = dateParts[3];
-  const time = dateParts[4].substring(0, 5); // Get the first five characters of the time
-  const formattedTime = `${day} ${month} ${year} | ${time}`;
-  const messageDateParts = formattedTime.split(" ");
-  const date = `${messageDateParts[0]} ${messageDateParts[1]} ${messageDateParts[2]} ${messageDateParts[3]} ${messageDateParts[4]}`;
-  const truncatedTime = `${time}`;
-  timestamp.textContent = truncatedTime;
+  const currentDate = new Date();
+  const formattedTime = currentDate.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', hour12: false });
+  timestamp.textContent = formattedTime;
   content.appendChild(timestamp);
-
-  timestamp.addEventListener("mouseover", () => {
-    console.log("Hovered over timestamp:", date);
-    // Show full date on hover
-    const fullDate = new Date(data.timestamp).toString();
-    createFullDateHover(fullDate);
-  });
 
   // Create a placeholder element for message box and profile image
   const placeholder = document.createElement("div");
