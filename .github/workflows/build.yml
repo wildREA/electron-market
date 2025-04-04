@@ -5,12 +5,14 @@ on:
     branches:
       - master
     paths:
-      - 'app/**'  # Only run when files in the app folder are modified
+      - 'app/**'  # Trigger on changes within the app directory
+      - '.github/workflows/**'  # Trigger on changes within the workflows directory
   pull_request:
     branches:
       - master
     paths:
-      - 'app/**'  # Trigger for pull requests on the app folder only
+      - 'app/**'  # Trigger on pull requests affecting the app directory
+      - '.github/workflows/**'  # Trigger on pull requests affecting the workflows directory
 
 jobs:
   build:
@@ -18,10 +20,10 @@ jobs:
 
     steps:
       - name: Checkout code
-        uses: actions/checkout@v4  # Updated to v4
+        uses: actions/checkout@v4  # Ensure you're using the latest version
 
       - name: Set up Node.js
-        uses: actions/setup-node@v4  # Updated to v4
+        uses: actions/setup-node@v4  # Ensure you're using the latest version
         with:
           node-version: '16'
 
@@ -36,7 +38,7 @@ jobs:
           npm run dist
 
       - name: Upload Build Artifacts
-        uses: actions/upload-artifact@v4  # Updated to v4
+        uses: actions/upload-artifact@v4  # Ensure you're using the latest version
         with:
           name: electron-market-build
           path: ./app/dist/
