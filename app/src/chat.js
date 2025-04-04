@@ -15,7 +15,7 @@ async function fetchUserData(username) {
     return null;
   }
 }
-
+//lets try to push again
 function addUserToChat(user) {
   const isSelf = user.username === window.userinformation.username;
   const existingUser = document.getElementById('user-' + user.username);
