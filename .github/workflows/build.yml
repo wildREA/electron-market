@@ -5,12 +5,14 @@ on:
     branches:
       - master
     paths:
-      - 'app/**'  # Only run when files in the app folder are modified
+      - 'app/**'         # Only run when files in the app folder are modified
+      - '.github/workflows/**'  # Also run when files in the workflows folder are modified
   pull_request:
     branches:
       - master
     paths:
-      - 'app/**'  # Trigger for pull requests on the app folder only. .  .
+      - 'app/**'         # Trigger for pull requests on the app folder only
+      - '.github/workflows/**'  # Also trigger for pull requests on the workflows folder
 
 jobs:
   build:
