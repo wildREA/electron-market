@@ -139,27 +139,7 @@ function createChatContainer(user, truncatedUserChat) {
   return { form, messageContainer };
 }
 
-function createFullDateHover(fullDate, targetElement) {
-  // Create a tooltip element for the full date
-  const tooltip = document.createElement("div");
-  tooltip.classList.add("tooltip");
-  tooltip.textContent = fullDate;
-  document.body.appendChild(tooltip);
-
-  // Position the tooltip near the target element
-  const rect = targetElement.getBoundingClientRect();
-  tooltip.style.left = `${rect.left}px`;
-  tooltip.style.top = `${rect.bottom}px`;
-
-  // Remove the tooltip when not hovered
-  targetElement.addEventListener("mouseleave", () => {
-    document.body.removeChild(tooltip);
-  }, { once: true });
-}
-
-export function createMessage(data) {
-  const messageContainer = window.container;
-  
+function createMessage(user, message, messageContainer) {
   // Create a new message element
   const newMessage = document.createElement("li");
   newMessage.classList.add("message");
