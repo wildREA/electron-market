@@ -142,8 +142,27 @@ function createChatContainer(user, truncatedUserChat) {
   return { form, messageContainer };
 }
 
+function createFullDateHover(fullDate, targetElement) {
+  // Create a tooltip element for the full date
+  const tooltip = document.createElement("div");
+  tooltip.classList.add("tooltip");
+  tooltip.textContent = fullDate;
+  document.body.appendChild(tooltip);
+
+  // Position the tooltip near the target element
+  const rect = targetElement.getBoundingClientRect();
+  tooltip.style.left = `${rect.left}px`;
+  tooltip.style.top = `${rect.bottom}px`;
+
+  // Remove the tooltip when not hovered
+  targetElement.addEventListener("mouseleave", () => {
+    document.body.removeChild(tooltip);
+  }, { once: true });
+}
+
 export function createMessage(data) {
-  let messageContainer = window.container
+  const messageContainer = window.container;
+  
   // Create a new message element
   const newMessage = document.createElement("li");
   newMessage.classList.add("message");
@@ -157,10 +176,26 @@ export function createMessage(data) {
   // Create a timestamp element
   const timestamp = document.createElement("div");
   timestamp.classList.add("content-time");
-  const currentDate = new Date();
-  const formattedTime = currentDate.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
-  timestamp.textContent = formattedTime;
+  const messageDate = new Date(data.timestamp); // Error here
+
+  // Error handling for data.timestamp
+  if (isNaN(messageDate)) {
+    console.error("Invalid Date:", data.timestamp);
+    return; // Optionally, handle the error or set a fallback
+  }
+
+  // Locale 24 hour format
+  const options = { hour: '2-digit', minute: '2-digit', hour12: false };
+  const localTime = messageDate.toLocaleString('en-US', options);
+  timestamp.textContent = localTime;
   content.appendChild(timestamp);
+
+  // Add tooltip on hover to show the full date
+  timestamp.addEventListener("mouseover", (event) => {
+    console.log("Hovered over timestamp:", localTime);
+    const fullDate = messageDate.toString();
+    createFullDateHover(fullDate, event.target);
+  });
 
   // Create a placeholder element for message box and profile image
   const placeholder = document.createElement("div");
