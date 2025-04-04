@@ -14,6 +14,9 @@ on:
       - 'app/**'  # Trigger on pull requests affecting the app directory
       - '.github/workflows/**'  # Trigger on pull requests affecting the workflows directory
 
+permissions:
+  contents: write  # Allows the GITHUB_TOKEN to create releases
+
 jobs:
   build:
     runs-on: ${{ matrix.os }}
@@ -56,7 +59,7 @@ jobs:
 
       - name: Create Release
         id: create_release
-        uses: actions/create-release@v1
+        uses: softprops/action-gh-release@v1  # Recommended action for creating releases
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
