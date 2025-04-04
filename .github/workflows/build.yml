@@ -10,7 +10,7 @@ on:
     branches:
       - master
     paths:
-      - 'app/**'  # Trigger for pull requests on the app folder only
+      - 'app/**'  # Trigger for pull requests on the app folder only. .  .
 
 jobs:
   build:
