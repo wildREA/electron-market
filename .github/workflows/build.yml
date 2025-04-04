@@ -5,7 +5,7 @@ on:
     branches:
       - master
     paths:
-      - 'app/**'  # Trigger on changes within the app directory. .
+      - 'app/**'  # Trigger on changes within the app directory
       - '.github/workflows/**'  # Trigger on changes within the workflows directory
   pull_request:
     branches:
@@ -43,7 +43,7 @@ jobs:
       - name: Upload Build Artifacts
         uses: actions/upload-artifact@v4  # Ensure you're using the latest version
         with:
-          name: electron-market-build-${{ github.run_id }}-${{ github.run_number }}
+          name: electron-market-build-${{ github.run_id }}-${{ github.run_number }}-${{ matrix.os }}
           path: ./app/dist/
 
   create_release:
