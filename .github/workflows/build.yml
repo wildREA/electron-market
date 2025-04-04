@@ -1,42 +1,63 @@
-name: Build Electron App
+name: Build and Release Electron App
 
 on:
   push:
     branches:
       - master
     paths:
-      - 'app/**'  # Only run when files in the app folder are modified
+      - 'app/**'
   pull_request:
     branches:
       - master
     paths:
-      - 'app/**'  # Trigger for pull requests on the app folder only
+      - 'app/**'
 
 jobs:
   build:
-    runs-on: ubuntu-latest
-
+    strategy:
+      matrix:
+        os: [ubuntu-latest, macos-latest, windows-latest]
+    runs-on: ${{ matrix.os }}
+    defaults:
+      run:
+        working-directory: ./app
     steps:
-      - name: Checkout code
+      - name: Checkout Code
         uses: actions/checkout@v3
 
-      - name: Set up Node.js
+      - name: Set Up Node.js
         uses: actions/setup-node@v3
         with:
           node-version: '16'
 
-      - name: Install dependencies
-        working-directory: ./app  # Specify the app directory
-        run: |
-          npm install
+      - name: Install Dependencies
+        run: npm install
 
-      - name: Build Electron app
-        working-directory: ./app  # Specify the app directory
-        run: |
-          npm run dist
+      - name: Build Electron App
+        run: npm run dist
 
-      - name: Upload Build Artifacts
-        uses: actions/upload-artifact@v4
+      - name: Upload Artifact
+        uses: actions/upload-artifact@v3
         with:
-          name: electron-market-build
-          path: ./app/dist/
+          name: build-${{ matrix.os }}
+          path: dist/
+
+  release:
+    needs: build
+    runs-on: ubuntu-latest
+    steps:
+      - name: Download Artifacts
+        uses: actions/download-artifact@v3
+        with:
+          path: build-artifacts
+
+      - name: Create GitHub Release
+        id: create_release
+        uses: softprops/action-gh-release@v1
+        with:
+          tag_name: ${{ github.sha }}
+          name: Release ${{ github.sha }}
+          body: "Automated release from GitHub Actions."
+          files: build-artifacts/**
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

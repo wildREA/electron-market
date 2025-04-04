@@ -94,6 +94,12 @@
   "build": {
     "appId": "com.electron.market",
     "productName": "Electron Market",
+    "directories": {
+      "output": "dist"
+    },
+    "files": [
+      "**/*"
+    ],
     "mac": {
       "target": "dmg",
       "category": "public.app-category.utilities",
@@ -105,12 +111,10 @@
     },
     "linux": {
       "target": "AppImage",
-      "icon": "app/images/icons/app_icon.png"
-    },
-    "directories": {
-      "output": "dist"
+      "icon": "app/images/icons/app_icon.png",
+      "maintainer": "Your Name <youremail@example.com>",
+      "description": "Your app description goes here"
     },
     "publish": null
   }
-
 }
