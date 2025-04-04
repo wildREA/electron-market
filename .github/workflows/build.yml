@@ -26,12 +26,12 @@ jobs:
           node-version: '16'
 
       - name: Install dependencies
-        working-directory: ./app  # Specify the app directory
+        working-directory: app  # Specify the app directory
         run: |
           npm install
 
       - name: Build Electron app
-        working-directory: ./app  # Specify the app directory
+        working-directory: app  # Specify the app directory
         run: |
           npm run dist
 
@@ -39,4 +39,4 @@ jobs:
         uses: actions/upload-artifact@v3
         with:
           name: electron-market-build
-          path: ./app/dist/
+          path: app/dist/
