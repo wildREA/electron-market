@@ -5,7 +5,7 @@
   "scripts": {
     "start": "electron .",
     "dev": "nodemon",
-    "build": "electron-builder",
+    "build": "electron-builder --dir",
     "dist": "electron-builder --publish never"
   },
   "repository": {
@@ -95,22 +95,31 @@
     "appId": "com.electron.market",
     "productName": "Electron Market",
     "directories": {
-      "output": "dist"
+      "output": "app/dist"
     },
     "files": [
       "**/*"
     ],
     "mac": {
-      "target": "dmg",
+      "target": [
+        "dmg",
+        "zip"
+      ],
       "category": "public.app-category.utilities",
       "icon": "app/images/icons/app_icon.png"
     },
     "win": {
-      "target": "nsis",
+      "target": [
+        "nsis",
+        "zip"
+      ],
       "icon": "app/images/icons/app_icon.png"
     },
     "linux": {
-      "target": "AppImage",
+      "target": [
+        "AppImage",
+        "zip"
+      ],
       "icon": "app/images/icons/app_icon.png",
       "maintainer": "Your Name <youremail@example.com>",
       "description": "Your app description goes here"
