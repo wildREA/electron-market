@@ -4,7 +4,9 @@
   "main": "main.js",
   "scripts": {
     "start": "electron .",
-    "dev": "nodemon"
+    "dev": "nodemon",
+    "build": "electron-builder",
+    "dist": "electron-builder --publish never"
   },
   "repository": {
     "type": "git",
@@ -19,6 +21,7 @@
   "homepage": "https://github.com/wildREA/electron-market#readme",
   "devDependencies": {
     "electron": "^34.2.0",
+    "electron-builder": "^24.7.0",
     "nodemon": "^3.1.9",
     "snowpack": "^1.7.1",
     "ts-node": "^10.9.2",
@@ -87,5 +90,27 @@
     "wrappy": "^1.0.2",
     "yauzl": "^2.10.0"
   },
-  "description": ""
+  "description": "",
+  "build": {
+    "appId": "com.electron.market",
+    "productName": "Electron Market",
+    "mac": {
+      "target": "dmg",
+      "category": "public.app-category.utilities",
+      "icon": "app/images/icons/app_icon.png"
+    },
+    "win": {
+      "target": "nsis",
+      "icon": "app/images/icons/app_icon.png"
+    },
+    "linux": {
+      "target": "AppImage",
+      "icon": "app/images/icons/app_icon.png"
+    },
+    "directories": {
+      "output": "dist"
+    },
+    "publish": null
+  }
+
 }

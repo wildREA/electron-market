@@ -23,18 +23,15 @@
 
 <h3 align="center">Electronic Automotive Market</h3>
 
-<div>
-  <p align="center">
-    Also known as, Electron or EAM (ˈiː.æm / иям)
-    <br />
-    <a href="https://github.com/wildREA/computerComponentsTracker"><strong>Explore the docs »</strong></a>
-    <br />
+<div align="center">
+  <p>
+    Also known as Electron or EAM (ˈiː.æm / иям)<br />
+    <a href=""><strong>Explore the docs »</strong></a>
   </p>
 </div>
 
+---
 
-
-<!-- TABLE OF CONTENTS -->
 <details>
   <summary>Table of Contents</summary>
   <ol>
@@ -59,107 +56,105 @@
   </ol>
 </details>
 
+---
 
-
-<!-- ABOUT THE PROJECT -->
 ## About The Project
 
-This is a software application made with Electron as a mock automotive marketplace. The purpose of the software is to be a placeholder for a list of cars ranging from different body types and including the cars I like. This is a simple project to learn Electron and any additional features than the aforementioned purposed are made purely from having the spared time to do so.
+Electronic Automotive Market is a modern, sleek application built with Electron that serves as a mock automotive marketplace. It is designed as a placeholder to showcase a curated selection of cars from various body types, including some of my personal favorites.
 
-Features:
-* All details about every car is meant to be accurate except for the price. I kept the price for a few cars (one to three) lower than usual to list what I would define the cars' price at.
-* For extra information regarding vehicles, it is possible to click on a listed car to open a smaller window of an expansion of information on the selected car.
-* The software is sleek and minimalistic. All features seem seemless and clean (just like my code).
+**Key Features:**
+
+- **Accurate Vehicle Information:** Every car listing includes comprehensive details. Prices have been adjusted on a few listings to reflect my personal valuation.
+- **Detailed View:** Click on any car to open a dedicated window with expanded information.
+- **Sleek, Minimalistic Design:** Enjoy a clean and intuitive interface that prioritizes user experience and ease of use.
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
-
+---
 
 ### Built With
 
 <div align="center">
-	<code><img width="50" src="https://raw.githubusercontent.com/marwin1991/profile-technology-icons/refs/heads/main/icons/git.png" alt="Git" title="Git"/></code>
-	<code><img width="50" src="https://raw.githubusercontent.com/marwin1991/profile-technology-icons/refs/heads/main/icons/github.png" alt="GitHub" title="GitHub"/></code>
-	<code><img width="50" src="https://raw.githubusercontent.com/marwin1991/profile-technology-icons/refs/heads/main/icons/visual_studio_code.png" alt="Visual Studio Code" title="Visual Studio Code"/></code>
-	<code><img width="50" src="https://raw.githubusercontent.com/marwin1991/profile-technology-icons/refs/heads/main/icons/html.png" alt="HTML" title="HTML"/></code>
-	<code><img width="50" src="https://raw.githubusercontent.com/marwin1991/profile-technology-icons/refs/heads/main/icons/css.png" alt="CSS" title="CSS"/></code>
-	<code><img width="50" src="https://raw.githubusercontent.com/marwin1991/profile-technology-icons/refs/heads/main/icons/javascript.png" alt="JavaScript" title="JavaScript"/></code>
-	<code><img width="50" src="https://raw.githubusercontent.com/marwin1991/profile-technology-icons/refs/heads/main/icons/npm.png" alt="npm" title="npm"/></code>
-	<code><img width="50" src="https://raw.githubusercontent.com/marwin1991/profile-technology-icons/refs/heads/main/icons/node_js.png" alt="Node.js" title="Node.js"/></code>
-	<code><img width="50" src="https://raw.githubusercontent.com/marwin1991/profile-technology-icons/refs/heads/main/icons/electron.png" alt="Electron" title="Electron"/></code>
-	<code><img width="50" src="https://raw.githubusercontent.com/marwin1991/profile-technology-icons/refs/heads/main/icons/windows.png" alt="Windows" title="Windows"/></code>
-	<code><img width="50" src="https://raw.githubusercontent.com/marwin1991/profile-technology-icons/refs/heads/main/icons/linux.png" alt="Linux" title="Linux"/></code>
+  <code><img width="50" src="https://raw.githubusercontent.com/marwin1991/profile-technology-icons/refs/heads/main/icons/git.png" alt="Git" title="Git"/></code>
+  <code><img width="50" src="https://raw.githubusercontent.com/marwin1991/profile-technology-icons/refs/heads/main/icons/github.png" alt="GitHub" title="GitHub"/></code>
+  <code><img width="50" src="https://raw.githubusercontent.com/marwin1991/profile-technology-icons/refs/heads/main/icons/visual_studio_code.png" alt="Visual Studio Code" title="Visual Studio Code"/></code>
+  <code><img width="50" src="https://raw.githubusercontent.com/marwin1991/profile-technology-icons/refs/heads/main/icons/html.png" alt="HTML" title="HTML"/></code>
+  <code><img width="50" src="https://raw.githubusercontent.com/marwin1991/profile-technology-icons/refs/heads/main/icons/css.png" alt="CSS" title="CSS"/></code>
+  <code><img width="50" src="https://raw.githubusercontent.com/marwin1991/profile-technology-icons/refs/heads/main/icons/javascript.png" alt="JavaScript" title="JavaScript"/></code>
+  <code><img width="50" src="https://raw.githubusercontent.com/marwin1991/profile-technology-icons/refs/heads/main/icons/npm.png" alt="npm" title="npm"/></code>
+  <code><img width="50" src="https://raw.githubusercontent.com/marwin1991/profile-technology-icons/refs/heads/main/icons/node_js.png" alt="Node.js" title="Node.js"/></code>
+  <code><img width="50" src="https://raw.githubusercontent.com/marwin1991/profile-technology-icons/refs/heads/main/icons/electron.png" alt="Electron" title="Electron"/></code>
+  <code><img width="50" src="https://raw.githubusercontent.com/marwin1991/profile-technology-icons/refs/heads/main/icons/windows.png" alt="Windows" title="Windows"/></code>
+  <code><img width="50" src="https://raw.githubusercontent.com/marwin1991/profile-technology-icons/refs/heads/main/icons/linux.png" alt="Linux" title="Linux"/></code>
 </div>
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
+---
 
+### Main Page
 
-<!-- GETTING STARTED -->
+<img src="https://github.com/Mech654/Resources/blob/main/eam/main.png?raw=true" alt="Main Page Screenshot" style="max-width: 100%; height: auto;">
+
+### Chat Page
+
+<img src="https://github.com/Mech654/Resources/blob/main/eam/chat.png?raw=true" alt="Chat Page Screenshot" style="max-width: 100%; height: auto;">
+
+---
+
 ## Getting Started
 
-If you wish to try the software out for yourself, then follow the steps below.
+Interested in exploring the application firsthand? Follow these simple steps to get started:
 
 ### Installation
 
-_The software does... something._
+1. **Download:** Head over to the [Releases](https://github.com/wildREA/computerComponentsTracker/tags) page and download the latest version.
+2. **Extract:** Unzip the downloaded folder to your preferred location.
+3. **Run Setup:** Launch `setup.exe` and follow the installation prompts.
+4. **Installation:** Click `Install` when prompted.
 
-1. Get the latest version at [Releases](https://github.com/wildREA/computerComponentsTracker/tags)
-2. Extract the `.zip` folder's files into a personally preferred location
-3. Run setup.exe
-5. Click `Install`
-
-The software will automatically run after installation, resulting in popping up on your screen. You should be able to see different hardware statistics of your system.
-Do not worry about an Unknown Publisher warning. It usually stems from an unsigned software.
+Once installed, the application will automatically launch, providing you with an engaging interface that showcases a variety of cars along with their hardware statistics. If you encounter an "Unknown Publisher" warning, rest assured it is due to the software not being signed—a common situation with unsigned applications.
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
+---
 
-
-<!-- USAGE EXAMPLES -->
 ## Usage
 
-The purpose of the software is to see a listing of cars to purchase on an international (fictional) market. There's to be a way to register an account to then login and browse through the list of automobiles. There are two statuses for accounts: customer and seller. It'll then be determined whether a seller is a private or commercial seller (to be displayed with the account's seller status).
+Electronic Automotive Market simulates an international (fictional) automotive marketplace with the following functionalities:
 
-Sellers will also be able to create posts to list new cars they have available, whether it's a private, one-time seller or a commercial, frequent seller. A way of communicating between a buyer and seller will be through private chats.
+- **Account Creation:** Easily register for an account to start browsing.
+- **Role-Based Access:** Choose between customer and seller accounts. Sellers can further indicate whether they are private individuals or commercial dealers.
+- **Posting and Communication:** Sellers can create listings for available cars, and both buyers and sellers can engage in private chats to communicate seamlessly.
 
-<!-- PROJECT LOGO -->
-<br />
-<div align="center">
-  <a href="https://github.com/wildREA/computerComponentsTracker">
-    <img src="app/images/screenshot_light_showcase.jpg" alt="Logo" width="auto" height="auto">
-  </a>
-  <a href="https://github.com/wildREA/computerComponentsTracker">
-    <img src="app/images/screenshot_dark_showcase.jpg" alt="Logo" width="auto" height="auto">
-  </a>
-</div>
-<p align="right">(<a href="#readme-top">back to top</a>)</p>
+This design ensures a user-friendly experience while maintaining a professional look and feel.
 
+---
 
-
-<!-- ROADMAP -->
 ## Roadmap
 
-- [x] Add Readme
-- [x] Add Releases
-- [ ] Add different currencies
-    - [X] Euro
-    - [ ] USD
-    - [ ] RUB
-- [ ] Add currency option (top)
-- [x] Add window background (behind listing)لبناني
+We have an exciting roadmap planned for future updates:
+
+- [x] Complete README documentation
+- [x] Release management and updates
+- [ ] Implement multiple currency support:
+  - [x] Euro
+  - [ ] USD
+  - [ ] RUB
+- [ ] Integrate a currency selection option on the top navigation
+- [x] Add dynamic window backgrounds (behind the listings)
+
+Your feedback and suggestions are always welcome as we continue to evolve this project.
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
+---
 
-
-<!-- CONTRIBUTING -->
 ## Contributing
 
-Contributions are what make the open source community such an amazing place to learn, inspire, and create. Any contributions you make are **greatly appreciated**.
+Contributions are warmly welcomed! The open source community thrives on shared ideas and collaboration. If you have suggestions or improvements, feel free to fork the repository and submit a pull request. Alternatively, you can open an issue labeled "enhancement" to share your thoughts.
 
-If you have a suggestion that would make this better, please fork the repo and create a pull request. You can also simply open an issue with the tag "enhancement".
-Don't forget to give the project a star! Thanks again!
+**Quick Contribution Guide:**
 
 1. Fork the Project
 2. Create your Feature Branch (`git checkout -b feature/AmazingFeature`)
@@ -167,24 +162,33 @@ Don't forget to give the project a star! Thanks again!
 4. Push to the Branch (`git push origin feature/AmazingFeature`)
 5. Open a Pull Request
 
+Your efforts help make this project even better—thank you!
+
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
+---
 
-
-<!-- LICENSE -->
 ## License
 
-Distributed under the CC0 1.0 Universal License. See [`LICENSE.txt`](https://github.com/wildREA/electron-market?tab=CC0-1.0-1-ov-file) for more information.
+This project is distributed under the [CC0 1.0 Universal License](https://github.com/wildREA/electron-market?tab=CC0-1.0-1-ov-file). Please review the license file for more details.
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
+---
 
-
-<!-- CONTACT -->
 ## Contact
 
-wildREA - @wildrea / wildREA#8123 (Discord)
+Feel free to reach out with any questions or suggestions:
 
-Project Link: [https://github.com/wildREA/electron-market]()
+- **wildREA:** @wildrea / wildREA#8123 (Discord)
+- **Project Repository:** [https://github.com/wildREA/electron-market](https://github.com/wildREA/electron-market)
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
+
+---
+
+## Acknowledgments
+
+A special thank you to all contributors and supporters of the Electronic Automotive Market project. Your involvement makes our community vibrant and innovative.
+
+---

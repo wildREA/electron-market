@@ -95,6 +95,7 @@ async function startServer() {
     });
 
     app.post('/updateProfile', async (req, res) => {
+        console.log("Here is all data: ", "username: ", req.body.username, "password: ", req.body.password, "countryCode: ", req.body.countryCode, "profileImage: ", req.body.profileImage, "biography: ", req.body.biography);
         const [result, message] = await updateProfile(
             req.body.username,
             req.body.password,

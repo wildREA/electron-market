@@ -6,6 +6,7 @@ function createLogin() {
         <div id="login-body">
             <div class="login-container">
                 <h2>Login</h2>
+                <p id="error" style="text-align: center; color: #ff0000; font-size: 12px;"></p>
                 <form onsubmit="handleLogin(event)">
                     <input type="text" name="username" class="input-field" placeholder="Username" required>
                     <input type="password" name="password" class="input-field" placeholder="Password" required>
@@ -31,6 +32,7 @@ function register() {
     let registerHTML = `
         <div class="login-container">
             <h2>Register</h2>
+            <p id="error" style="text-align: center; color: #ff0000; font-size: 12px;"></p>
             <form onsubmit="handleRegister(event)">
                 <input type="text" name="username" class="input-field" placeholder="Username" required>
                 <input type="email" name="email" class="input-field" placeholder="Email" required>
@@ -48,6 +50,7 @@ function login() {
     let loginHTML = `
         <div class="login-container">
             <h2>Login</h2>
+            <p id="error" style="text-align: center; color: #ff0000; font-size: 12px;"></p>
             <form onsubmit="handleLogin(event)">
                 <input type="text" name="username" class="input-field" placeholder="Username" required>
                 <input type="password" name="password" class="input-field" placeholder="Password" required>
@@ -130,6 +133,8 @@ async function sendLogin(identifier, password) {
             // Add further actions here, such as updating the profile picture
             document.getElementById('account').innerText = "Log out";
             document.getElementById('account').addEventListener('click', handleLogout);
+        } else {
+            document.getElementById('error').innerText = data.message;
         }
     } catch (error) {
         console.error('Error:', error);
@@ -180,7 +185,9 @@ async function sendRegister(username, email, password) {
             // Add any further actions, such as triggering a profile picture change
             document.getElementById('account').innerText = "Log out";
             document.getElementById('account').addEventListener('click', handleLogout);
-        }
+        } else {
+            document.getElementById('error').innerText = data.message;
+        }  
     })
     .catch((error) => {
         console.error('Error:', error);

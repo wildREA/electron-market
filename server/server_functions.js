@@ -141,9 +141,10 @@ async function updateProfile(username, password, countryCode, profileImage, desc
 
         const query = `
             UPDATE profiles
-            SET country_code = ?, profile_image = ?, biography = ?
-            WHERE username = ?
+            SET country_code = $1, profile_image = $2, biography = $3
+            WHERE username = $4
         `;
+
 
         return await profileUpdate(query, countryCode, imagePath, description, username) ? [true, 'Profile updated successfully'] : [false, 'Profile update failed'];
     } catch (error) {

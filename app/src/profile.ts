@@ -2,11 +2,11 @@ declare var Swal: any;
 // Define interfaces for user and user information
 interface User {
   username: string;
-  countryCode?: string;
+  country_code?: string;
   biography?: string;
-  sellerStatus?: number;
-  sellerType?: number;
-  profileImage?: string;
+  seller_status?: number;
+  seller_type?: number;
+  profile_image?: string;
 }
 
 interface UserInformation {
@@ -64,8 +64,8 @@ const fetchProfileImage = async (imageIdentifier: string): Promise<string | null
 
 // Displays the final profile using SweetAlert2
 const displayProfileCard = (user: User, imageData: string | null): void => {
-  const sellerStatusDisplay = (user.sellerStatus !== undefined && user.sellerStatus !== null) ? user.sellerStatus : '';
-  const sellerTypeDisplay = (user.sellerType !== undefined && user.sellerType !== null) ? user.sellerType : '';
+  const sellerStatusDisplay = (user.seller_status !== undefined && user.seller_status !== null) ? user.seller_status : '';
+  const sellerTypeDisplay = (user.seller_type !== undefined && user.seller_type !== null) ? user.seller_type : '';
   const profileCardHTML = `
     <div class="custom-profile-card">
       ${imageData ? `
@@ -76,7 +76,7 @@ const displayProfileCard = (user: User, imageData: string | null): void => {
       `}
       <div class="custom-username">
         ${user.username} 
-        <img src="https://flagcdn.com/w40/${user.countryCode?.toLowerCase()}.png" class="custom-flag" />
+        <img src="https://flagcdn.com/w40/${user.country_code?.toLowerCase()}.png" class="custom-flag" />
       </div>
       <div class="custom-biography">${user.biography || ''}</div>
       <div class="custom-badge">${sellerStatusDisplay} - ${sellerTypeDisplay}</div>
@@ -94,10 +94,10 @@ const displayProfileCard = (user: User, imageData: string | null): void => {
 const promptProfileCompletion = async (missingFields: string[]): Promise<{ isConfirmed: boolean; value?: { [key: string]: any } }> => {
   const formHTML = `
     <form id="profileCompletionForm" class="modern-form">
-      ${missingFields.includes('countryCode') ? `
+      ${missingFields.includes('country_code') ? `
         <div>
-          <label for="countryCode">Country Code</label>
-          <select id="countryCode" name="countryCode">
+          <label for="country_code">Country Code</label>
+          <select id="country_code" name="country_code">
             <option value="">Select Country Code</option>
             <option value="us">US</option>
             <option value="gb">GB</option>
@@ -107,10 +107,10 @@ const promptProfileCompletion = async (missingFields: string[]): Promise<{ isCon
           </select>
         </div>
       ` : ''}
-      ${missingFields.includes('profileImage') ? `
+      ${missingFields.includes('profile_image') ? `
         <div>
-          <label for="profileImage">Profile Image</label>
-          <input type="file" id="profileImage" name="profileImage" accept="image/*">
+          <label for="profile_image">Profile Image</label>
+          <input type="file" id="profile_image" name="profile_image" accept="image/*">
         </div>
       ` : ''}
       ${missingFields.includes('biography') ? `
@@ -132,16 +132,16 @@ const promptProfileCompletion = async (missingFields: string[]): Promise<{ isCon
       const formData = new FormData(formElement);
       const updateData: { [key: string]: any } = {};
 
-      if (missingFields.includes('countryCode')) {
-        updateData.countryCode = formData.get('countryCode');
+      if (missingFields.includes('country_code')) {
+        updateData.country_code = formData.get('country_code');
       }
       if (missingFields.includes('biography')) {
         updateData.biography = formData.get('biography');
       }
-      if (missingFields.includes('profileImage')) {
-        const fileInput = document.getElementById('profileImage') as HTMLInputElement;
+      if (missingFields.includes('profile_image')) {
+        const fileInput = document.getElementById('profile_image') as HTMLInputElement;
         if (fileInput.files && fileInput.files[0]) {
-          updateData.profileImage = await convertFileToBase64(fileInput.files[0]);
+          updateData.profile_image = await convertFileToBase64(fileInput.files[0]);
         }
       }
       return updateData;
@@ -169,7 +169,7 @@ async function buildProfileCard(): Promise<void> {
 
     // Pre-fetch profile image if provided as a file path
     let fetchedProfileImage: string | null = null;
-    if (user.profileImage) {
+    if (user.profile_image) {
       try {
         fetchedProfileImage = await fetchProfileImage(user.username);
       } catch (error) {
@@ -178,7 +178,7 @@ async function buildProfileCard(): Promise<void> {
     }
 
     // Determine missing fields that need to be completed
-    const requiredFields: (keyof User)[] = ['countryCode', 'profileImage', 'biography'];
+    const requiredFields: (keyof User)[] = ['country_code', 'profile_image', 'biography'];
     const missingFields = requiredFields.filter(field => !user[field]);
 
     if (missingFields.length > 0) {
@@ -194,8 +194,8 @@ async function buildProfileCard(): Promise<void> {
         user = { ...user, ...result.value };    // Note that it's not a response from the server; it's user's own input directly
 
         // If a new profile image was provided, update our local copy
-        if (result.value.profileImage) {
-          fetchedProfileImage = result.value.profileImage;
+        if (result.value.profile_image) {
+          fetchedProfileImage = result.value.profile_image;
         }
       } else {
         // User canceled profile completion
