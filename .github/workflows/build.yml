@@ -5,7 +5,7 @@ on:
     branches:
       - master
     paths:
-      - 'app/**'  # Trigger on changes within the app directory
+      - 'app/**'  # Trigger on changes within the app directory. .
       - '.github/workflows/**'  # Trigger on changes within the workflows directory
   pull_request:
     branches:
