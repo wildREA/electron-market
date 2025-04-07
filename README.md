@@ -64,7 +64,7 @@ Electronic Automotive Market is a modern, sleek application built with Electron 
 
 **Key Features:**
 
-- **Accurate Vehicle Information:** Every car listing includes comprehensive details. Prices have been adjusted on a few listings to reflect my personal valuation.
+- **Accurate Vehicle Information:** Every car listing includes comprehensive details. Prices have been set based on the average retail price for the cars available.
 - **Detailed View:** Click on any car to open a dedicated window with expanded information.
 - **Sleek, Minimalistic Design:** Enjoy a clean and intuitive interface that prioritizes user experience and ease of use.
 
@@ -73,19 +73,29 @@ Electronic Automotive Market is a modern, sleek application built with Electron 
 ---
 
 ### Built With
-
 <div align="center">
-  <code><img width="50" src="https://raw.githubusercontent.com/marwin1991/profile-technology-icons/refs/heads/main/icons/git.png" alt="Git" title="Git"/></code>
-  <code><img width="50" src="https://raw.githubusercontent.com/marwin1991/profile-technology-icons/refs/heads/main/icons/github.png" alt="GitHub" title="GitHub"/></code>
-  <code><img width="50" src="https://raw.githubusercontent.com/marwin1991/profile-technology-icons/refs/heads/main/icons/visual_studio_code.png" alt="Visual Studio Code" title="Visual Studio Code"/></code>
-  <code><img width="50" src="https://raw.githubusercontent.com/marwin1991/profile-technology-icons/refs/heads/main/icons/html.png" alt="HTML" title="HTML"/></code>
-  <code><img width="50" src="https://raw.githubusercontent.com/marwin1991/profile-technology-icons/refs/heads/main/icons/css.png" alt="CSS" title="CSS"/></code>
-  <code><img width="50" src="https://raw.githubusercontent.com/marwin1991/profile-technology-icons/refs/heads/main/icons/javascript.png" alt="JavaScript" title="JavaScript"/></code>
-  <code><img width="50" src="https://raw.githubusercontent.com/marwin1991/profile-technology-icons/refs/heads/main/icons/npm.png" alt="npm" title="npm"/></code>
-  <code><img width="50" src="https://raw.githubusercontent.com/marwin1991/profile-technology-icons/refs/heads/main/icons/node_js.png" alt="Node.js" title="Node.js"/></code>
-  <code><img width="50" src="https://raw.githubusercontent.com/marwin1991/profile-technology-icons/refs/heads/main/icons/electron.png" alt="Electron" title="Electron"/></code>
-  <code><img width="50" src="https://raw.githubusercontent.com/marwin1991/profile-technology-icons/refs/heads/main/icons/windows.png" alt="Windows" title="Windows"/></code>
-  <code><img width="50" src="https://raw.githubusercontent.com/marwin1991/profile-technology-icons/refs/heads/main/icons/linux.png" alt="Linux" title="Linux"/></code>
+	<table>
+		<tr>
+			<td><code><img width="50" src="https://raw.githubusercontent.com/marwin1991/profile-technology-icons/refs/heads/main/icons/http.png" alt="HTTP" title="HTTP"/></code></td>
+			<td><code><img width="50" src="https://raw.githubusercontent.com/marwin1991/profile-technology-icons/refs/heads/main/icons/websocket.png" alt="websocket" title="websocket"/></code></td>
+			<td><code><img width="50" src="https://raw.githubusercontent.com/marwin1991/profile-technology-icons/refs/heads/main/icons/rest.png" alt="REST" title="REST"/></code></td>
+			<td><code><img width="50" src="https://raw.githubusercontent.com/marwin1991/profile-technology-icons/refs/heads/main/icons/git.png" alt="Git" title="Git"/></code></td>
+			<td><code><img width="50" src="https://raw.githubusercontent.com/marwin1991/profile-technology-icons/refs/heads/main/icons/github.png" alt="GitHub" title="GitHub"/></code></td>
+			<td><code><img width="50" src="https://raw.githubusercontent.com/marwin1991/profile-technology-icons/refs/heads/main/icons/webstorm.png" alt="WebStorm" title="WebStorm"/></code></td>
+			<td><code><img width="50" src="https://raw.githubusercontent.com/marwin1991/profile-technology-icons/refs/heads/main/icons/visual_studio_code.png" alt="Visual Studio Code" title="Visual Studio Code"/></code></td>
+			<td><code><img width="50" src="https://raw.githubusercontent.com/marwin1991/profile-technology-icons/refs/heads/main/icons/html.png" alt="HTML" title="HTML"/></code></td>
+		</tr>
+		<tr>
+			<td><code><img width="50" src="https://raw.githubusercontent.com/marwin1991/profile-technology-icons/refs/heads/main/icons/css.png" alt="CSS" title="CSS"/></code></td>
+			<td><code><img width="50" src="https://raw.githubusercontent.com/marwin1991/profile-technology-icons/refs/heads/main/icons/bootstrap.png" alt="Bootstrap" title="Bootstrap"/></code></td>
+			<td><code><img width="50" src="https://raw.githubusercontent.com/marwin1991/profile-technology-icons/refs/heads/main/icons/javascript.png" alt="JavaScript" title="JavaScript"/></code></td>
+			<td><code><img width="50" src="https://raw.githubusercontent.com/marwin1991/profile-technology-icons/refs/heads/main/icons/typescript.png" alt="TypeScript" title="TypeScript"/></code></td>
+			<td><code><img width="50" src="https://raw.githubusercontent.com/marwin1991/profile-technology-icons/refs/heads/main/icons/npm.png" alt="npm" title="npm"/></code></td>
+			<td><code><img width="50" src="https://raw.githubusercontent.com/marwin1991/profile-technology-icons/refs/heads/main/icons/node_js.png" alt="Node.js" title="Node.js"/></code></td>
+			<td><code><img width="50" src="https://raw.githubusercontent.com/marwin1991/profile-technology-icons/refs/heads/main/icons/electron.png" alt="Electron" title="Electron"/></code></td>
+			<td><code><img width="50" src="https://raw.githubusercontent.com/marwin1991/profile-technology-icons/refs/heads/main/icons/postgresql.png" alt="PostgreSQL" title="PostgreSQL"/></code></td>
+		</tr>
+	</table>
 </div>
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
@@ -106,7 +116,7 @@ Electronic Automotive Market is a modern, sleek application built with Electron 
 
 Interested in exploring the application firsthand? Follow these simple steps to get started:
 
-### Installation
+### Installation (RELEASES TBD)
 
 1. **Download:** Head over to the [Releases](https://github.com/wildREA/computerComponentsTracker/tags) page and download the latest version.
 2. **Extract:** Unzip the downloaded folder to your preferred location.
@@ -123,8 +133,8 @@ Once installed, the application will automatically launch, providing you with an
 
 Electronic Automotive Market simulates an international (fictional) automotive marketplace with the following functionalities:
 
-- **Account Creation:** Easily register for an account to start browsing.
-- **Role-Based Access:** Choose between customer and seller accounts. Sellers can further indicate whether they are private individuals or commercial dealers.
+- **Account Creation:** Easily register for an account to chatting with sellers and other buyers.
+- **Status-Based Access:** Choose between customer and seller accounts. Sellers can further indicate whether they are private individuals or commercial dealers, but will need to provide verification for validity of sale.
 - **Posting and Communication:** Sellers can create listings for available cars, and both buyers and sellers can engage in private chats to communicate seamlessly.
 
 This design ensures a user-friendly experience while maintaining a professional look and feel.
@@ -137,12 +147,12 @@ We have an exciting roadmap planned for future updates:
 
 - [x] Complete README documentation
 - [x] Release management and updates
-- [ ] Implement multiple currency support:
-  - [x] Euro
-  - [ ] USD
-  - [ ] RUB
-- [ ] Integrate a currency selection option on the top navigation
-- [x] Add dynamic window backgrounds (behind the listings)
+- [ ] Implement seller posting feature:
+  - [x] 'Made By'
+  - [ ] Present on mouse over username, click-to-chat feature
+  - [ ] Listed seller type (commerical / private)
+- [ ] Integrate a verification system for sellers
+- [ ] Wallet-based payment system (legitimate / illegitimate)
 
 Your feedback and suggestions are always welcome as we continue to evolve this project.
 
@@ -189,6 +199,6 @@ Feel free to reach out with any questions or suggestions:
 
 ## Acknowledgments
 
-A special thank you to all contributors and supporters of the Electronic Automotive Market project. Your involvement makes our community vibrant and innovative.
+A special thank you to all contributors and supporters of the Electronic Automotive Market project. Your involvement makes our projects vibrant and innovative.
 
 ---
