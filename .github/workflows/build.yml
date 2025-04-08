@@ -44,6 +44,7 @@ jobs:
 
       - name: Check if dist directory exists
         id: check-dist
+        shell: bash
         run: |
           if [ -d "app/dist" ]; then
             echo "dist_exists=true" >> $GITHUB_ENV
