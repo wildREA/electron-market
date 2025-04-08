@@ -14,6 +14,9 @@ on:
       - 'app/**'         # Trigger for pull requests on the app folder only
       - '.github/workflows/**'  # Also trigger for pull requests on the workflows folder
 
+permissions:
+  contents: write
+
 jobs:
   build:
     runs-on: ${{ matrix.os }}
@@ -68,6 +71,8 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
 
       - name: Get version from package.json
         id: version
