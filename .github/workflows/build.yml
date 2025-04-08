@@ -59,3 +59,26 @@ jobs:
           name: electron-market-build-${{ matrix.os }}
           path: app/dist/
           retention-days: 7
+
+  release:
+    needs: build
+    runs-on: ubuntu-latest
+    if: github.ref == 'refs/heads/master'
+    
+    steps:
+      - name: Download all build artifacts
+        uses: actions/download-artifact@v4
+        with:
+          path: artifacts
+
+      - name: Create Release
+        id: create_release
+        uses: softprops/action-gh-release@v1
+        with:
+          files: |
+            artifacts/electron-market-build-ubuntu-latest/*
+            artifacts/electron-market-build-windows-latest/*
+            artifacts/electron-market-build-macos-latest/*
+          generate_release_notes: true
+          draft: false
+          prerelease: false
