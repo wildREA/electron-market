@@ -126,13 +126,6 @@ jobs:
         uses: softprops/action-gh-release@v1
         with:
           tag_name: v${{ steps.version.outputs.version }}
-          files: |
-            artifacts/electron-market-build-ubuntu-latest/*.AppImage
-            artifacts/electron-market-build-ubuntu-latest/*.zip
-            artifacts/electron-market-build-windows-latest/*.exe
-            artifacts/electron-market-build-windows-latest/*.zip
-            artifacts/electron-market-build-macos-latest/*.dmg
-            artifacts/electron-market-build-macos-latest/*.zip
           generate_release_notes: true
           draft: false
           prerelease: false
@@ -142,18 +135,35 @@ jobs:
         with:
           script: |
             const releaseId = context.release.id;
-            const { data: assets } = await github.rest.repos.listReleaseAssets({
-              owner: context.repo.owner,
-              repo: context.repo.repo,
-              release_id: releaseId
-            });
+            let page = 1;
+            let hasMore = true;
             
-            for (const asset of assets) {
-              await github.rest.repos.deleteReleaseAsset({
+            while (hasMore) {
+              const { data: assets } = await github.rest.repos.listReleaseAssets({
                 owner: context.repo.owner,
                 repo: context.repo.repo,
-                asset_id: asset.id
+                release_id: releaseId,
+                per_page: 100,
+                page: page
               });
+              
+              if (assets.length === 0) {
+                hasMore = false;
+              } else {
+                for (const asset of assets) {
+                  try {
+                    await github.rest.repos.deleteReleaseAsset({
+                      owner: context.repo.owner,
+                      repo: context.repo.repo,
+                      asset_id: asset.id
+                    });
+                    console.log(`Deleted asset: ${asset.name}`);
+                  } catch (error) {
+                    console.error(`Failed to delete asset ${asset.name}:`, error);
+                  }
+                }
+                page++;
+              }
             }
 
       - name: Upload release assets
