@@ -152,7 +152,6 @@ We have an exciting roadmap planned for future updates:
   - [ ] Present on mouse over username, click-to-chat feature
   - [ ] Listed seller type (commerical / private)
 - [ ] Integrate a verification system for sellers
-- [ ] Wallet-based payment system (legitimate / illegitimate)
 
 Your feedback and suggestions are always welcome as we continue to evolve this project.
 
